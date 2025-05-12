@@ -2,3 +2,7 @@ header h1 {
     padding: 20px;
     margin: 0 auto;
 }
+
+.card {
+    border: 2px, black;
+}
