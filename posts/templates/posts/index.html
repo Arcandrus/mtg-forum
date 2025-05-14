@@ -19,7 +19,7 @@
                         </div>
                         <div class="row">
                             <div class="col-9">
-                                <h3>{{ post.title|upper }}</h3>
+                                <a href="{% url 'post_detail' post.slug %}"><h3>{{ post.title|upper }}</h3></a>
                             </div>
                             <div class="col-3">{{ post.created_on }}</div>
                         </div>

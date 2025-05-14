@@ -1,8 +1,91 @@
-header h1 {
+body,
+html {
+    width: 100%;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: bisque;
+    text-align: center;
+}
+
+h1 {
     padding: 20px;
-    margin: 0 auto;
+}
+
+.sidebar {
+    position: absolute;
+    top: 110px;
+    height: 80%;
+    float: left;
+    width: 15%;
+    text-align: center;
+    align-content: center;
+}
+
+.sidebar > ul {
+    list-style: none;
+}
+
+.sidebar > ul > li {
+    padding: 10px;
+    margin: 5px;
+    border: 1px, solid, black;
+}
+
+main {
+    height: calc(100% - 120px);
+}
+
+.scroll {
+    height: 100%;
+    overflow-y: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.content {
+    margin: 100px 10% 0 15%;
+    max-width: 100%;
+    height: 80%;
 }
 
 .card {
-    border: 2px, black;
+    display: flex;
+    border: 2px, black, solid;
+    max-width: 80%;
+    margin: 20px 10%;
+    max-height: 400px;
+}
+
+.card-inner {
+    padding: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.card-full {
+    display: flex;
+    max-width: 80%;
+    margin: 20px 10%;
+}
+
+.card-full > .card-inner{
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: bisque;
+    text-align: center;
 }

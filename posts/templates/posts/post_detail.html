@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid scroll content">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-12 mt-3 left">
+            <div class="row">
+                <div class="card-full">
+                    <div class="card-inner-full">
+                        <div class="row">
+                            <div class="col-9">{{ post.author }}</div>
+                            <div class="col-3">{{ post.get_category_display }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-9">
+                                <h3>{{ post.title|upper }}</h3>
+                            </div>
+                            <div class="col-3">{{ post.created_on }}</div>
+                        </div>
+                        <p>{{ post.content | safe }}</p>
+                        <div class="card-footer">
+                            Likes: {{ post.likes }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block extras %}
+<script src="{% static 'js/comments.js' %}"></script>
+{% endblock %}

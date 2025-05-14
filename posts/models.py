@@ -1,4 +1,5 @@
 from django.db import models
+from django_summernote.fields import SummernoteTextField
 from users.models import CustomUser
 
 # Create your models here.
@@ -9,7 +10,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="posts")
     category = models.IntegerField(choices=CATEGORY, default=0)
-    content = models.TextField()
+    content = SummernoteTextField()
     created_on = models.DateTimeField(auto_now_add=True)
     excerpt = models.TextField(blank=True)
     updated_on = models.DateTimeField(auto_now=True)
