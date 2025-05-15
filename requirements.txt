@@ -1,5 +1,4 @@
 asgiref==3.8.1
-bleach==6.2.0
 Django==5.2
 django-summernote==0.8.20.0
 sqlparse==0.5.3

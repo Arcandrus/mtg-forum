@@ -73,13 +73,9 @@ main {
 
 .card-full {
     display: flex;
+    border: 2px, black, solid;
     max-width: 80%;
     margin: 20px 10%;
-}
-
-.card-full > .card-inner{
-    padding: 20px;
-    margin-bottom: 20px;
 }
 
 footer {
