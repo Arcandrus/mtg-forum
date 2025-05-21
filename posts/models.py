@@ -14,12 +14,16 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     excerpt = models.TextField(blank=True)
     updated_on = models.DateTimeField(auto_now=True)
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(CustomUser, related_name='post_likes')
     is_favourite = models.BooleanField(default=False)
     is_popular = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-created_on"]
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return f"{self.title} | written by {self.author}"

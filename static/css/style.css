@@ -21,6 +21,7 @@ h1 {
 }
 
 .sidebar {
+    margin-left: 20px;
     position: absolute;
     top: 110px;
     height: 80%;
@@ -35,9 +36,10 @@ h1 {
 }
 
 .sidebar > ul > li {
-    padding: 10px;
+    width: 80%;
+    padding: 5px;
     margin: 5px;
-    border: 1px, solid, black;
+    border: 1px solid black;
 }
 
 main {
@@ -76,6 +78,16 @@ main {
     border: 2px, black, solid;
     max-width: 80%;
     margin: 20px 10%;
+}
+
+.btn {
+    border: 1px solid black;
+}
+
+.btn:hover {
+    border: 1px solid black;
+    color: white;
+    background-color: blue;
 }
 
 footer {

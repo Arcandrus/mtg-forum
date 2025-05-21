@@ -22,7 +22,19 @@
                         </div>
                         <p>{{ post.content | safe }}</p>
                         <div class="card-footer">
-                            Likes: {{ post.likes }}
+                            <form class="like-form" data-slug="{{ post.slug }}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit">
+                                    {% if user in post.likes.all %}
+                                    Unlike
+                                    {% else %}
+                                    Like
+                                    {% endif %}
+                                </button>
+                                <span class="like-count">
+                                    {{ post.total_likes }} like{{ post.total_likes|pluralize }}
+                                </span>
+                            </form>
                         </div>
                     </div>
                 </div>
