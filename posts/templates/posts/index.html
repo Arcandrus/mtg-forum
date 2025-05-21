@@ -23,7 +23,7 @@
                             </div>
                             <div class="col-3">{{ post.created_on }}</div>
                         </div>
-                        <p>{{ post.excerpt }}</p>
+                        <p>{{ post.excerpt | safe }}</p>
                         <div class="card-footer">
                             {{ post.total_likes }} like{{ post.total_likes|pluralize }}
                         </div>

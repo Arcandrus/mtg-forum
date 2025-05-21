@@ -26,28 +26,37 @@
     <header>
         <h1>This is imported from base.html</h1>
     </header>
-<div class="sidebar">
-    {% if user.is_authenticated %}
-        <p>You are logged in as {{ user }}</p>
-    {% endif %}
-    <ul>
+    <div class="sidebar">
         {% if user.is_authenticated %}
+        <p>You are logged in as {{ user }}</p>
+        {% endif %}
+        <ul>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'create_post' %}">New Post</a></li>
             <li><a href="{% url 'account_logout' %}">Logout</a></li>
-        {% else %}
+            {% else %}
             <li><a href="{% url 'account_signup' %}">Register</a></li>
             <li><a href="{% url 'account_login' %}">Login</a></li>
-        {% endif %}
-        <br>
-        <li><a href="{% url 'post_list' %}">Home</a></li>
-        <li>Categories</li>
-        <li>Favourites</li>
-        <li>Popular</li>
-        <br>
-        <li>Profile</li>
-        <li>Settings</li>
+            {% endif %}
+            <br>
+            <li><a href="{% url 'post_list' %}">Home</a></li>
+            <li>Categories</li>
+            <li>Favourites</li>
+            <li>Popular</li>
+            <br>
+            <li>Profile</li>
+            <li>Settings</li>
+        </ul>
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+            {{ message }}
+            </li>
+            {% endfor %}
     </ul>
-</div>
-
+    {% endif %}
     {% block content %}
     <!-- Content Goes here -->
     {% endblock content %}
@@ -57,4 +66,5 @@
     </footer>
 </body>
 <script src="{% static 'js/like.js' %}"></script>
+
 </html>
