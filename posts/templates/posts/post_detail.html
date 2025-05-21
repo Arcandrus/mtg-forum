@@ -22,6 +22,7 @@
                         </div>
                         <p>{{ post.content | safe }}</p>
                         <div class="card-footer">
+                            {% if user.is_authenticated %}
                             <form class="like-form" data-slug="{{ post.slug }}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit">
@@ -34,6 +35,9 @@
                                 <span class="like-count">
                                     {{ post.total_likes }} like{{ post.total_likes|pluralize }}
                                 </span>
+                            {% else %}
+                            {{ post.total_likes }} like{{ post.total_likes|pluralize }}
+                            {% endif %}
                             </form>
                         </div>
                     </div>

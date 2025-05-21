@@ -25,7 +25,7 @@
                         </div>
                         <p>{{ post.excerpt }}</p>
                         <div class="card-footer">
-                            Likes: {{ post.likes }}
+                            {{ post.total_likes }} like{{ post.total_likes|pluralize }}
                         </div>
                     </div>
                 </div>
