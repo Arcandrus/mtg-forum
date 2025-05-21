@@ -72,6 +72,7 @@ main {
     padding: 20px;
     overflow: hidden;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .card-full {
