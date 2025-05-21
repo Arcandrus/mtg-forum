@@ -1,1 +1,1 @@
-web: gunicorn mtg-forum.wsgi
+web: gunicorn mtg_forum.wsgi
