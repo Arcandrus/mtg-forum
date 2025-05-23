@@ -59,7 +59,7 @@
             {% for comment in comments %}
             <div class="comment-thread" id="comment-{{ comment.id }}">
                 <div class="comment">
-                    <p>{{ post.created_on }}</p>
+                    <p>{{ comment.created_on }}</p>
                     <p><strong>{{ comment.author }}</strong> said:</p>
                     <p>{{ comment.content | safe }}</p>
                     <div class="d-flex gap-2 align-items-center">
