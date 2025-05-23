@@ -1,25 +1,25 @@
 {% if replies %}
-  <div class="collapse replies-container" id="replies-{{ parent_id }}">
+<div class="collapse replies-container" id="replies-{{ parent_id }}">
     {% for reply in replies %}
-      <div class="reply-thread">
+    <div class="reply-thread">
         <div class="comment comment-reply">
-          <p><strong>{{ reply.author }}</strong> replied:</p>
-          <p>{{ reply.content | safe }}</p>
-          <div class="d-flex gap-2 align-items-center">
-            <button type="button" class="btn reply-btn btn-sm" data-bs-toggle="modal" data-bs-target="#commentModal" data-comment-id="{{ reply.id }}">Reply</button>
-            {% if reply.replies.exists %}
-            <button class="btn btn-sm toggle-replies" type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#replies-{{ reply.id }}" 
-                    aria-expanded="false"
+            <p>{{ reply.created_on }}</p>
+            <p><strong>{{ reply.author }}</strong> replied:</p>
+            <p>{{ reply.content | safe }}</p>
+            <div class="d-flex gap-2 align-items-center">
+                <button type="button" class="btn reply-btn btn-sm" data-bs-toggle="modal" data-bs-target="#commentModal"
+                    data-comment-id="{{ reply.id }}">Reply</button>
+                {% if reply.replies.exists %}
+                <button class="btn btn-sm toggle-replies" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#replies-{{ reply.id }}" aria-expanded="false"
                     aria-controls="replies-{{ reply.id }}">
-              Show Replies ({{ reply.replies.count }})
-            </button>
-            {% endif %}
-          </div>
+                    Show Replies ({{ reply.replies.count }})
+                </button>
+                {% endif %}
+            </div>
         </div>
         {% include 'posts/comment_replies.html' with replies=reply.replies.all parent_id=reply.id %}
-      </div>
+    </div>
     {% endfor %}
-  </div>
+</div>
 {% endif %}
