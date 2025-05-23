@@ -1,3 +1,4 @@
+from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.db import models
 from django_summernote.fields import SummernoteTextField
 from users.models import CustomUser
@@ -24,6 +25,26 @@ class Post(models.Model):
     @property
     def total_likes(self):
         return self.likes.count()
+    
+    @property
+    def comment_count(self):
+        return self.comments.count()
 
     def __str__(self):
         return f"{self.title} | written by {self.author}"
+    
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'slug': self.slug})
+    
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
+
+    class Meta:
+        ordering = ['-created_on']
+
+    def __str__(self):
+        return f"Comment by {self.author} on {self.post}"

@@ -14,11 +14,12 @@
                             <div class="col-9">{{ post.author }}</div>
                             <div class="col-3">{{ post.get_category_display }}</div>
                         </div>
-                        <div class="row fill">
-                            <div class="col-9">
-                                <h3>{{ post.title|upper }}</h3>
-                            </div>
+                        <div class="row">
+                            <div class="col-9"></div>
                             <div class="col-3">{{ post.created_on }}</div>
+                        </div>
+                        <div class="row col-12">
+                            <h3>{{ post.title|upper }}</h3>
                         </div>
                         <p>{{ post.content | safe }}</p>
                         <div class="card-footer">
@@ -33,11 +34,18 @@
                                     {% endif %}
                                 </button>
                                 <span class="like-count">
-                                    {{ post.total_likes }} like{{ post.total_likes|pluralize }}
+                                    <i class="fa-regular fa-thumbs-up"></i> {{ post.total_likes }}
                                 </span>
-                            {% else %}
-                            {{ post.total_likes }} like{{ post.total_likes|pluralize }}
-                            {% endif %}
+                                {% else %}
+                                {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                                {% endif %}
+                                <div class="right">
+                                    {{ post.comment_count }} <i class="fa-solid fa-comments"></i>
+                                    <button type="button" class="btn" data-bs-toggle="modal"
+                                        data-bs-target="#commentModal">
+                                        Reply
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -45,10 +53,52 @@
             </div>
         </div>
     </div>
+
+    <div class="comments">
+        <div class="row">
+            {% for comment in comments %}
+            <div class="comment-thread" id="comment-{{ comment.id }}">
+                <div class="comment">
+                    <p><strong>{{ comment.author }}</strong> said:</p>
+                    <p>{{ comment.content | safe }}</p>
+                    <div class="d-flex gap-2 align-items-center">
+                        <button type="button" class="btn reply-btn btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#commentModal" data-comment-id="{{ comment.id }}">Reply</button>
+                        {% if comment.replies.exists %}
+                        <button class="btn btn-link btn-sm toggle-replies" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#replies-{{ comment.id }}" aria-expanded="false"
+                            aria-controls="replies-{{ comment.id }}">
+                            Show Replies ({{ comment.replies.count }})
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% include 'posts/comment_replies.html' with replies=comment.replies.all parent_id=comment.id %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="comment-form" method="post" action="{% url 'post_detail' post.slug %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commentModalLabel">Leave a Reply</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ comment_form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn">Post Reply</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}
-
-{% block extras %}
-<script src="{% static 'js/comments.js' %}"></script>
-{% endblock %}

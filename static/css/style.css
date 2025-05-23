@@ -8,6 +8,10 @@ html {
     overflow: hidden;
 }
 
+a {
+    text-decoration: none;
+}
+
 header {
     position: fixed;
     top: 0;
@@ -31,11 +35,11 @@ h1 {
     align-content: center;
 }
 
-.sidebar > ul {
+.sidebar>ul {
     list-style: none;
 }
 
-.sidebar > ul > li {
+.sidebar>ul>li {
     width: 80%;
     padding: 5px;
     margin: 5px;
@@ -83,8 +87,63 @@ main {
     margin: 20px 10%;
 }
 
+.comments {
+    display: flex;
+    margin: 20px 10%;
+    max-width: 80%;
+    height: fit-content;
+}
+
+.comment {
+    width: 100%;
+    background-color: #f3f3f3;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.comment-thread {
+    margin-bottom: 1rem;
+    border-left: 3px solid transparent;
+}
+
+.reply-thread {
+    margin-left: 20px;
+    border-left: 3px solid #ccc;
+    padding-left: 15px;
+}
+
+.comment-reply {
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.replies-container {
+    margin-top: 0.5rem;
+}
+
+.toggle-replies {
+    cursor: pointer;
+}
+
+.right {
+    float: right;
+}
+
+.modal .note-editor {
+    max-width: 100%;
+    width: 100%;
+}
+
 .btn {
     border: 1px solid black;
+}
+
+.btn-link {
+    text-decoration: none;
+    color: black;
 }
 
 .btn:hover {

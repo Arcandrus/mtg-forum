@@ -160,3 +160,44 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+SUMMERNOTE_CONFIG = {
+    'summernote': {
+        'width': '100%',  # you can customize width/height here
+        'height': '300',
+        'toolbar': [
+            ['style', ['style']],                         # style dropdown (normal, h1, h2, etc)
+            ['fontname', ['fontname']],                   # font family
+            ['fontsize', ['fontsize']],                   # font size
+            ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],  # basic font styles
+            ['color', ['color']],                         # font color
+            ['para', ['ul', 'ol', 'paragraph', 'height']],  # lists and paragraph format
+            ['table', ['table']],                         # tables
+            ['insert', ['link', 'picture', 'video', 'hr']],  # insert stuff
+            ['view', ['fullscreen', 'codeview', 'help']],    # view options and help
+            ['undo', ['undo', 'redo']],                   # undo/redo
+        ],
+        'codemirror': {
+            'mode': 'htmlmixed',
+            'lineNumbers': 'true',
+            'theme': 'monokai',
+        },
+        'popover': {
+            'image': [
+                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']],
+            ],
+            'link': [
+                ['link', ['linkDialogShow', 'unlink']],
+            ],
+            'air': [
+                ['color', ['color']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['ul', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
+            ],
+        },
+    },
+}

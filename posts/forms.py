@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, CATEGORY
+from .models import Post, CATEGORY, Comment
 from django_summernote.widgets import SummernoteWidget
 
 class PostForm(forms.ModelForm):
@@ -11,4 +11,13 @@ class PostForm(forms.ModelForm):
         }
         labels = {
             'category': 'Select a Category',
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content', 'parent']
+        widgets = {
+            'content': SummernoteWidget(),
+            'parent': forms.HiddenInput(),
         }

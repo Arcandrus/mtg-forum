@@ -18,14 +18,20 @@
                             <div class="col-3">{{ post.get_category_display }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-9">
-                                <a href="{% url 'post_detail' post.slug %}"><h3>{{ post.title|upper }}</h3></a>
-                            </div>
+                            <div class="col-9"></div>
                             <div class="col-3">{{ post.created_on }}</div>
+                        </div>
+                        <div class="row col-12">
+                            <a href="{% url 'post_detail' post.slug %}">
+                                <h3>{{ post.title|upper }}</h3>
+                            </a>
                         </div>
                         <p>{{ post.excerpt | safe }}</p>
                         <div class="card-footer">
-                            {{ post.total_likes }} like{{ post.total_likes|pluralize }}
+                            {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                            <div class="right">
+                                {{ post.comment_count }} <i class="fa-solid fa-comments"></i>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 from django.http import JsonResponse
 from django.contrib import messages
-from .forms import PostForm
-from .models import Post
+from .forms import PostForm, CommentForm
+from .models import Post, Comment
 
 # Create your views here.
 
@@ -15,21 +15,27 @@ class PostList(generic.ListView):
     paginate_by = 6
 
 def post_detail(request, slug):
-    """
-    Display an individual :model:`posts.Post`.
-
-    **Context**
-
-    ``post``
-        An instance of :model:`posts.Post`.
-
-    **Template:**
-
-    :template:`posts/post_detail.html`
-    """
-
     post = get_object_or_404(Post, slug=slug)
-    return render(request, 'posts/post_detail.html', {'post': post})
+    comments = post.comments.filter(parent__isnull=True)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            # parent is automatically assigned via form.cleaned_data['parent']
+            comment.parent = form.cleaned_data.get('parent')
+            comment.save()
+            return redirect('post_detail', slug=slug)
+    else:
+        form = CommentForm()
+
+    return render(request, 'posts/post_detail.html', {
+        'post': post,
+        'comments': comments,
+        'comment_form': form,
+    })
 
 @login_required
 def like_post(request, slug):
@@ -78,3 +84,31 @@ def create_post(request):
     else:
         form = PostForm()
     return render(request, 'posts/create_post.html', {'form': form})
+
+@login_required
+def post_comment(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    top_level_comments = post.comments.filter(parent__isnull=True)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+
+            # DEBUG: If parent is missing here, this is the problem
+            if not comment.parent:
+                messages("Parent not assigned in form.cleaned_data!")
+
+            comment.save()
+            return redirect('post_detail', slug=post.slug)
+    else:
+        form = CommentForm()
+
+    return render(request, 'posts/post_detail.html', {
+        'post': post,
+        'form': form,
+        'comments': top_level_comments,
+    })
