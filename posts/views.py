@@ -1,14 +1,16 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.utils.text import slugify
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
 from django.template.loader import render_to_string
 from django.utils.timezone import localtime
 from django.utils.dateformat import format as django_date_format
 from django.contrib import messages
 from .forms import PostForm, CommentForm
-from .models import Post
+from .models import Post, Comment
+import json
 # Create your views here.
 
 class PostList(generic.ListView):
@@ -79,7 +81,8 @@ def create_post(request):
             post.excerpt = ' '.join(post.content.split()[:200])
             post.save()
             messages.success(request, 'Your post was created successfully!')
-            return redirect('post_list')
+            
+            return redirect('post_detail', slug=post.slug)
         else:
             messages.error(request, 'There was an error in your form. Please fix the issues below.')
     else:
@@ -143,3 +146,48 @@ def edit_post(request, slug):
             'post': post,
         }, request=request)
         return HttpResponse(html)
+    
+@login_required
+def delete_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+
+    if request.user != post.author:
+        messages.error(request, "You are not authorized to delete this post.")
+        return redirect('post_detail', slug=slug)
+
+    if request.method == "POST":
+        post.delete()
+        messages.success(request, "Post and its comments were deleted successfully.")
+        return redirect('post_list')
+    
+    return render(request, 'posts/confirm_delete.html', {'post': post})
+
+
+@login_required
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, author=request.user)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Comment updated successfully.")
+            return redirect('post_detail', slug=comment.post.slug)
+
+    return HttpResponseNotAllowed(['POST'])
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if request.user != comment.author:
+        messages.error(request, "You are not authorized to delete this comment.")
+        return redirect('post_detail', slug=comment.post.slug)
+
+    if request.method == "POST":
+        post_slug = comment.post.slug
+        comment.delete()
+        messages.success(request, "Comment deleted successfully.")
+        return redirect('post_detail', slug=post_slug)
+
+    return render(request, 'posts/confirm_delete_comment.html', {'comment': comment})

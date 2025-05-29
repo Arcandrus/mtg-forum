@@ -1,6 +1,6 @@
 // Reply function
 document.querySelectorAll('.reply-btn').forEach(button => {
-  button.addEventListener('click', function(e) {
+  button.addEventListener('click', function (e) {
     e.preventDefault();
     console.log("Reply button clicked!");
 
@@ -24,28 +24,92 @@ document.querySelectorAll('.reply-btn').forEach(button => {
 });
 
 // Collapsable reply thread
-document.querySelectorAll('.toggle-replies').forEach(button => {
-  const targetSelector = button.getAttribute('data-bs-target');
-  const target = document.querySelector(targetSelector);
-  if (!target) return;
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.toggle-replies').forEach(button => {
+    const targetSelector = button.getAttribute('data-bs-target');
+    const target = document.querySelector(targetSelector);
 
-  const replyCount = button.dataset.replyCount || target.children.length;
+    if (!target) return;
 
-  target.addEventListener('show.bs.collapse', (event) => {
-    // Only update button if event target matches
-    if (event.target === target) {
-      button.textContent = `Hide Replies (${replyCount})`;
+    // Use data attribute or fallback to count children
+    const replyCount = button.getAttribute('data-reply-count') || target.children.length;
+
+    // Create a Bootstrap Collapse instance for this target (do NOT auto-toggle)
+    const collapseInstance = bootstrap.Collapse.getOrCreateInstance(target, {
+      toggle: false
+    });
+
+    // Update button text based on target state
+    function updateButtonText() {
+      if (target.classList.contains('show')) {
+        button.textContent = `Hide Replies (${replyCount})`;
+        button.setAttribute('aria-expanded', 'true');
+      } else {
+        button.textContent = `Show Replies (${replyCount})`;
+        button.setAttribute('aria-expanded', 'false');
+      }
     }
+
+    // Listen only to this collapse's shown/hidden events
+    target.addEventListener('shown.bs.collapse', updateButtonText);
+    target.addEventListener('hidden.bs.collapse', updateButtonText);
+
+    // Initialize text
+    updateButtonText();
+
+    // Toggle the collapse on button click
+    button.addEventListener('click', (e) => {
+      collapseInstance.toggle();
+      e.preventDefault();
+    });
+  });
+});
+
+
+// Edit comments
+document.addEventListener('DOMContentLoaded', () => {
+  const editModal = document.getElementById('editCommentModal');
+  const editForm = document.getElementById('editCommentForm');
+  const editContent = document.getElementById('editCommentContent');
+  const editParent = document.getElementById('editCommentParent'); // new hidden input
+
+  let pendingContent = '';  // Store comment content temporarily
+  let pendingCommentId = ''; // Store comment ID
+  let pendingParentId = '';  // Store parent ID
+
+  // Initialize Summernote when modal is shown
+  $(editModal).on('shown.bs.modal', function () {
+    $(editContent).summernote({
+      height: 150,
+      focus: true
+    });
+
+    // Now that it's initialized, set the content
+    $(editContent).summernote('code', pendingContent);
+
+    // Set form action
+    editForm.action = `/comments/edit/${pendingCommentId}/`;
+
+    // Set hidden parent input
+    editParent.value = pendingParentId || '';
   });
 
-  target.addEventListener('hide.bs.collapse', (event) => {
-    if (event.target === target) {
-      button.textContent = `Show Replies (${replyCount})`;
-    }
+  // Destroy Summernote when modal hidden
+  $(editModal).on('hidden.bs.modal', function () {
+    $(editContent).summernote('destroy');
+    editForm.action = '';
+    pendingContent = '';
+    pendingCommentId = '';
+    pendingParentId = '';
+    editParent.value = '';
   });
 
-  // Initialize on load
-  button.textContent = target.classList.contains('show') ? 
-    `Hide Replies (${replyCount})` : 
-    `Show Replies (${replyCount})`;
+  // Set pending data when edit button is clicked
+  document.querySelectorAll('.edit-comment-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      pendingCommentId = button.getAttribute('data-comment-id');
+      pendingContent = button.getAttribute('data-content');
+      pendingParentId = button.getAttribute('data-parent-id') || '';
+    });
+  });
 });

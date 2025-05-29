@@ -1,4 +1,4 @@
-<form id="editPostForm" method="post" action="{% url 'edit_post' slug=post.slug %}">
+<form id="editPostForm" data-ajax="true" method="post" action="{% url 'edit_post' slug=post.slug %}">
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
