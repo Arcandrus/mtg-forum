@@ -2,11 +2,13 @@ from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.template.loader import render_to_string
+from django.utils.timezone import localtime
+from django.utils.dateformat import format as django_date_format
 from django.contrib import messages
 from .forms import PostForm, CommentForm
-from .models import Post, Comment
-
+from .models import Post
 # Create your views here.
 
 class PostList(generic.ListView):
@@ -24,7 +26,6 @@ def post_detail(request, slug):
             comment = form.save(commit=False)
             comment.post = post
             comment.author = request.user
-            # parent is automatically assigned via form.cleaned_data['parent']
             comment.parent = form.cleaned_data.get('parent')
             comment.save()
             return redirect('post_detail', slug=slug)
@@ -112,3 +113,33 @@ def post_comment(request, slug):
         'form': form,
         'comments': top_level_comments,
     })
+
+@login_required
+def edit_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.user != post.author:
+        return JsonResponse({'success': False, 'error': 'Unauthorized'}, status=403)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            # Update excerpt: first 200 words of content
+            post.excerpt = ' '.join(post.content.split()[:200])
+            post.save()
+            
+            updated_time = django_date_format(localtime(post.updated_on), 'N j, Y, P')
+            return JsonResponse({
+                'success': True,
+                'updated_content': post.content,
+                'updated_on': updated_time,
+            })
+        return JsonResponse({'success': False, 'errors': form.errors})
+
+    else:
+        form = PostForm(instance=post)
+        html = render_to_string('posts/edit_post.html', {
+            'form': form,
+            'post': post,
+        }, request=request)
+        return HttpResponse(html)

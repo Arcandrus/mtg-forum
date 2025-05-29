@@ -1,0 +1,7 @@
+<form id="editPostForm" method="post" action="{% url 'edit_post' slug=post.slug %}">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+    <button type="button" id="cancel-edit">Cancel</button>
+</form>

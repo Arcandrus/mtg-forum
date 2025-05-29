@@ -10,6 +10,10 @@
             <div class="row">
                 <div class="card-full">
                     <div class="card-inner">
+                        {% if user == post.author %}
+                        <button id="edit-post-btn" class="btn btn-sm btn-outline-primary"
+                            data-slug="{{ post.slug }}">Edit Post</button>
+                        {% endif %}
                         <div class="row">
                             <div class="col-9">{{ post.author }}</div>
                             <div class="col-3">{{ post.get_category_display }}</div>
@@ -21,7 +25,14 @@
                         <div class="row col-12">
                             <h3>{{ post.title|upper }}</h3>
                         </div>
-                        <p>{{ post.content | safe }}</p>
+                        <div id="post-content">
+                            {{ post.content | safe }}
+                        </div>
+                        <div id="post-updated-on" style="font-size: small; color: gray;">
+                            {% if post.updated_on and post.updated_on > post.created_on %}
+                            Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
+                            {% endif %}
+                        </div>
                         <div class="card-footer">
                             {% if user.is_authenticated %}
                             <form class="like-form" data-slug="{{ post.slug }}" method="POST">
@@ -81,7 +92,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Comment Modal -->
 <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

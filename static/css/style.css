@@ -87,6 +87,10 @@ main {
     margin: 20px 10%;
 }
 
+.card-footer {
+    padding-top: 10px;
+}
+
 .comments {
     display: flex;
     margin: 20px 10%;
