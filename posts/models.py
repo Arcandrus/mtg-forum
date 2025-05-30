@@ -4,9 +4,15 @@ from django_summernote.fields import SummernoteTextField
 from users.models import CustomUser
 
 # Create your models here.
-CATEGORY = ((0, "Deck Techs"),(1, "Combos & Strategy"),(2, "Rules & Card Help"),(3, "Looking for Games"), (4, "Social & Trading"))
 
 class Post(models.Model):
+    CATEGORY = (
+        (0, "Deck Techs"),
+        (1, "Combos & Strategy"),
+        (2, "Rules & Card Help"),
+        (3, "Looking for Games"), 
+        (4, "Social & Trading")
+        )
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="posts")
@@ -16,7 +22,7 @@ class Post(models.Model):
     excerpt = models.TextField(blank=True)
     updated_on = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(CustomUser, related_name='post_likes')
-    is_favourite = models.BooleanField(default=False)
+    favourites = models.ManyToManyField(CustomUser, related_name='favourite_posts', blank=True)
     is_popular = models.BooleanField(default=False)
 
     class Meta:
@@ -35,6 +41,9 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'slug': self.slug})
+    
+    def get_category_display_name(self):
+        return dict(self.CATEGORY).get(self.category)
     
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')

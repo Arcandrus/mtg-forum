@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, CATEGORY, Comment
+from .models import Post, Comment
 from django_summernote.widgets import SummernoteWidget
 
 class PostForm(forms.ModelForm):

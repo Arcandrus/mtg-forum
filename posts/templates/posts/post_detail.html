@@ -40,32 +40,31 @@
                             Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
                             {% endif %}
                         </div>
-                        <div class="card-footer">
-                            {% if user.is_authenticated %}
-                            <form class="like-form" data-ajax="true" data-slug="{{ post.slug }}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="btn">
-                                    {% if user in post.likes.all %}
-                                    Unlike
-                                    {% else %}
-                                    Like
-                                    {% endif %}
-                                </button>
-                                <span class="like-count">
-                                    <i class="fa-regular fa-thumbs-up"></i> {{ post.total_likes }}
-                                </span>
+                    </div>
+                    <div class="card-footer">
+                        {% if user.is_authenticated %}
+                        <form class="like-form" data-ajax="true" data-slug="{{ post.slug }}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">
+                                {% if user in post.likes.all %}
+                                Unlike
                                 {% else %}
-                                {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                                Like
                                 {% endif %}
-                                <div class="right">
-                                    {{ post.comment_count }} <i class="fa-solid fa-comments"></i>
-                                    <button type="button" class="btn" data-bs-toggle="modal"
-                                        data-bs-target="#commentModal">
-                                        Reply
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                            </button>
+                            <span class="like-count">
+                                <i class="fa-regular fa-thumbs-up"></i> {{ post.total_likes }}
+                            </span>
+                            {% else %}
+                            {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                            {% endif %}
+                            <div class="right">
+                                {{ post.comment_count }} <i class="fa-solid fa-comments"></i>
+                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#commentModal">
+                                    Reply
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

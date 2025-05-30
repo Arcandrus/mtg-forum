@@ -1,16 +1,15 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
 from django.utils.text import slugify
 from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
 from django.template.loader import render_to_string
 from django.utils.timezone import localtime
 from django.utils.dateformat import format as django_date_format
 from django.contrib import messages
+from django.core.paginator import Paginator
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
-import json
 # Create your views here.
 
 class PostList(generic.ListView):
@@ -191,3 +190,32 @@ def delete_comment(request, comment_id):
         return redirect('post_detail', slug=post_slug)
 
     return render(request, 'posts/confirm_delete_comment.html', {'comment': comment})
+
+CATEGORY_CHOICES = dict(Post.CATEGORY)
+CATEGORY_SLUGS = {slugify(name): id for id, name in CATEGORY_CHOICES.items()}
+
+def category_posts(request, category_name=None):
+    categories = CATEGORY_CHOICES 
+
+    if category_name in CATEGORY_SLUGS:
+        category_id = CATEGORY_SLUGS[category_name]
+        posts = Post.objects.filter(category=category_id)
+        pretty_category_name = CATEGORY_CHOICES[category_id]
+        selected_category = category_name
+    else:
+        posts = Post.objects.none()
+        pretty_category_name = "Unknown Category"
+        selected_category = None
+
+    paginator = Paginator(posts, 4)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'categories': categories,
+        'posts': page_obj, 
+        'page_obj': page_obj,
+        'selected_category': selected_category,
+        'category_name': pretty_category_name,
+    }
+    return render(request, 'posts/categories.html', context)
