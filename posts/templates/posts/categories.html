@@ -6,7 +6,11 @@
 <div class="container-fluid scroll content">
 
     <div class="row text-center">
+        {% if selected_category %}
+        <h1 class="text-center">Posts in "{{ category_name }}"</h1>
+        {% else %}
         <h1>Select a Category</h1>
+        {% endif %}
     </div>
 
     <div class="row">
@@ -22,8 +26,6 @@
 
     <div class="row content">
         {% if selected_category %}
-        <h1 class="text-center">Posts in "{{ category_name }}"</h1>
-
         {% if page_obj.object_list %}
         {% for post in page_obj %}
         {% if forloop.counter0|divisibleby:2 %}

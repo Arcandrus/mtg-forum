@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid scroll content">
+<div class="container-fluid">
     <div class="container my-4">
         <div class="mx-auto" style="max-width: 800px;">
             <h2 class="text-center mb-4">User Profile for <strong>{{ profile_user.username }}</strong></h2>
@@ -21,7 +21,7 @@
                 </ul>
             </div>
 
-            <div class="row align-items-center">
+            <div class="scroll content row align-items-center">
                 <!-- Profile Picture -->
                 <div class="col-md-4 text-center mb-3 mb-md-0">
                     <img class="profile_picture img-fluid rounded"
@@ -31,9 +31,9 @@
 
                 <!-- Profile Details -->
                 <div class="col-md-8">
-                    <p><strong>Full Name:</strong> {{ profile_user.full_name|default:"Not set" }}</p>
                     {% if user.is_authenticated %}
                     {% if profile_user == user %}
+                    <p><strong>Full Name:</strong> {{ profile_user.full_name | default:"Not set" }}</p>
                     <p><strong>Email:</strong> {{ profile_user.email }}</p>
                     {% endif %}
                     <p><strong>Posts:</strong> {{ profile_user.post_count }}</p>

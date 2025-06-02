@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4 scroll content">
+<div class="container mt-4 content scroll">
     <h2 class="text-center mb-4">Posts Commented on by {{ profile_user.username }}</h2>
     <ul class="nav justify-content-center">
         {% with username=profile_user.username %}
@@ -16,17 +16,23 @@
         </li>
         {% endwith %}
     </ul>
+    {% if user.is_authenticated %}
     {% if posts %}
     <div class="list-group post_list">
         {% for post in posts %}
         <a href="{% url 'post_detail' post.slug %}" class="list-group-item list-group-item-action">
             <h5>{{ post.title }}</h5>
-            <small class="text-muted">Posted by {{ post.author.username }} on {{ post.created_on | date:"F j, Y, g:i a"}}</small>
+            <small class="text-muted">Posted by {{ post.author.username }} on {{ post.created_on | date:"F j, Y, g:i
+                a"}}</small>
         </a>
         {% endfor %}
     </div>
     {% else %}
     <p class="text-center">No commented posts found.</p>
+    {% endif %}
+    {% else %}
+    <p class="text-center"><small class="text-muted">Only <a href="{% url 'account_login' %}">logged in</a> users can
+            see this page.</small></p>
     {% endif %}
 </div>
 {% endblock %}
