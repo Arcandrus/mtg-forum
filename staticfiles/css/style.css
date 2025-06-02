@@ -238,6 +238,38 @@ main {
     color: black;
 }
 
+.profile_picture {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.profile_picture_small {
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 2px solid #ccc;
+}
+
+.profile_container {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.profile_picture img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 2px solid #ccc;
+}
+
+.profile_details p {
+    margin: 5px 10px;
+}
+
 footer {
     width: 100%;
     position: absolute;
