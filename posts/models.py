@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.db import models
 from django_summernote.fields import SummernoteTextField
 from users.models import CustomUser
+from django.conf import settings
 
 # Create your models here.
 
@@ -15,7 +16,11 @@ class Post(models.Model):
         )
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="posts")
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='posts',
+        on_delete=models.CASCADE
+    )
     category = models.IntegerField(choices=CATEGORY, default=0)
     content = SummernoteTextField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -44,10 +49,14 @@ class Post(models.Model):
     
     def get_category_display_name(self):
         return dict(self.CATEGORY).get(self.category)
-    
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='comments',
+        on_delete=models.CASCADE
+    )
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')

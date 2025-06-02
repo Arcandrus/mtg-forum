@@ -21,7 +21,8 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='/posts/', permanent=False)),
-    path('', include("posts.urls"), name="posts-urls"),
+    path('', include("posts.urls")),
     path('summernote/', include('django_summernote.urls')),
     path('accounts/', include('allauth.urls')),
+    path('users/', include('users.urls')),
 ]

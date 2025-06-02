@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid scroll content">
+    <h2>User Profile</h2>
+
+    {% if user.is_authenticated %}
+    <p><img class="profile_picture" src="{{ user.profile_picture.url }}"></p>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Full Name:</strong> {{ user.full_name|default:"Not set" }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Posts:</strong> {{ user.post_count }}</p>
+    <p><strong>Comments:</strong> {{ user.comment_count }}</p>
+    <p><strong>Status:</strong> {{ user.user_status }}</p>
+    <p><strong>Member Since:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+    <a href="{% url 'update_profile' %}">Edit Profile</a>
+    {% else %}
+    <p>You need to <a href="{% url 'account_login' %}">log in</a> to view your profile.</p>
+    {% endif %}
+</div>
+{% endblock %}

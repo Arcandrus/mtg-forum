@@ -15,6 +15,23 @@ import os
 import dj_database_url
 if os.path.isfile('env.py'):
     import env
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config( 
+  cloud_name = 'dpbcyiayr', 
+  api_key = '439596314561751', 
+  api_secret = 'l7SBEbXRho3qW3TUxrCO14D9HT4' 
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dpbcyiayr',
+    'API_KEY': '439596314561751',
+    'API_SECRET': 'l7SBEbXRho3qW3TUxrCO14D9HT4',
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +45,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  '.herokuapp.com']
@@ -48,6 +65,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'crispy_forms',
+    'cloudinary',
+    'cloudinary_storage',
     'django_summernote',
     'users',
     'posts',
@@ -151,8 +170,10 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',  # Allauth
 )
 
-
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_FORMS = {
+    'signup': 'users.forms.CustomSignupForm',
+}
 LOGIN_REDIRECT_URL = '/posts'
 LOGOUT_REDIRECT_URL = '/posts'
 ACCOUNT_LOGIN_METHODS = {'username'}
@@ -163,6 +184,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 SUMMERNOTE_CONFIG = {
+    'attachment_storage_class': 'cloudinary_storage.storage.MediaCloudinaryStorage',
     'summernote': {
         'width': '100%',  # you can customize width/height here
         'height': '300',

@@ -81,7 +81,6 @@ def create_post(request):
             post.excerpt = ' '.join(post.content.split()[:200])
             post.save()
             messages.success(request, 'Your post was created successfully!')
-            
             return redirect('post_detail', slug=post.slug)
         else:
             messages.error(request, 'There was an error in your form. Please fix the issues below.')
