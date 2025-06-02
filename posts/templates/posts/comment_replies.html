@@ -15,7 +15,7 @@
         </form>
         {% endif %}
         <p>{{ reply.created_on }}</p>
-        <p><strong>{{ reply.author }}</strong> replied:</p>
+        <p><strong><a href="{% url 'profile' reply.author.username %}">{{ reply.author.username }}</a></strong> replied:</p>
         <p>{{ reply.content | safe }}</p>
         <div class="d-flex gap-2 align-items-center">
             <button type="button" class="btn reply-btn btn-sm" data-bs-toggle="modal" data-bs-target="#commentModal"

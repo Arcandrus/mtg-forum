@@ -20,7 +20,7 @@
                                     {% else %}
                                     <img class="profile_picture_small"
                                         src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
-                                    {% endif %}<a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>
+                                    {% endif %}<strong><a href="{% url 'profile' post.author.username %}">{{post.author.username }}</a></strong>
                                 </div>
                             </div>
                             <div class="col-4 d-flex flex-column align-items-end">
@@ -46,6 +46,11 @@
                             </a>
                         </div>
                         <p>{{ post.excerpt | safe }}</p>
+                        <div id="post-updated-on" style="font-size: small; color: gray;">
+                            {% if post.is_edited %}
+                                Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="card-footer">
                         {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>

@@ -22,8 +22,7 @@
         {% for post in posts %}
         <a href="{% url 'post_detail' post.slug %}" class="list-group-item list-group-item-action">
             <h5>{{ post.title }}</h5>
-            <small class="text-muted">Posted by {{ post.author.username }} on {{ post.created_on | date:"F j, Y, g:i
-                a"}}</small>
+            <small class="text-muted">Posted by {{ post.author.username }} on {{ post.created_on | date:"F j, Y, g:i a"}}</small>
         </a>
         {% endfor %}
     </div>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.db import models
 from django_summernote.fields import SummernoteTextField
+from datetime import timedelta
 from users.models import CustomUser
 from django.conf import settings
 
@@ -33,6 +34,11 @@ class Post(models.Model):
     class Meta:
         ordering = ["-created_on"]
 
+    @property
+    def is_edited(self):
+        """Returns True if the post has been edited after creation (ignoring microsecond noise)."""
+        return (self.updated_on - self.created_on) > timedelta(seconds=1)
+    
     @property
     def total_likes(self):
         return self.likes.count()

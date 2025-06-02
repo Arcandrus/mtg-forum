@@ -30,7 +30,7 @@
                                     <img class="profile_picture_small"
                                         src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
                                     {% endif %}
-                                    <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>
+                                    <strong><a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a></strong>
                                 </div>
                             </div>
                             <div class="col-5 d-flex flex-column align-items-end">
@@ -57,8 +57,8 @@
                             <p>{{ post.content | safe }}</p>
                         </div>
                         <div id="post-updated-on" style="font-size: small; color: gray;">
-                            {% if post.updated_on and post.updated_on > post.created_on %}
-                            Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
+                            {% if post.is_edited %}
+                                Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
                             {% endif %}
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                     </form>
                     {% endif %}
                     <p>{{ comment.created_on }}</p>
-                    <p><strong>{{ comment.author }}</strong> said:</p>
+                    <p><strong><a href="{% url 'profile' comment.author.username %}">{{ comment.author.username }}</a></strong> said:</p>
                     <span class="comment-content">{{ comment.content | safe }}</span>
                     <div class="d-flex gap-2 align-items-center">
                         <button type="button" class="btn reply-btn btn-sm" data-bs-toggle="modal"
