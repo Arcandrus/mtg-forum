@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import ProfileUpdateForm
+from posts.models import Post
 
 @login_required
 def update_profile(request):
@@ -18,5 +19,18 @@ def update_profile(request):
 User = get_user_model()
 
 def profile_view(request, username):
+    profile_user = get_object_or_404(User, username=username)
+    context = {
+        'profile_user': profile_user,
+    }
+    return render(request, 'users/profile.html', context)
+
+def user_posts(request, username):
     user = get_object_or_404(User, username=username)
-    return render(request, 'users/profile.html', {'profile_user': user})
+    posts = Post.objects.filter(author=user)
+    return render(request, 'users/user_posts.html', {'profile_user': user, 'posts': posts})
+
+def user_commented_posts(request, username):
+    user = get_object_or_404(User, username=username)
+    posts = Post.objects.filter(comments__author=user).distinct()
+    return render(request, 'users/user_commented_posts.html', {'profile_user': user, 'posts': posts})

@@ -2,20 +2,55 @@
 
 {% block content %}
 <div class="container-fluid scroll content">
-    <h2>User Profile</h2>
+    <div class="container my-4">
+        <div class="mx-auto" style="max-width: 800px;">
+            <h2 class="text-center mb-4">User Profile for <strong>{{ profile_user.username }}</strong></h2>
+            <div class="row">
+                <ul class="nav justify-content-center">
+                    {% with username=profile_user.username %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' username %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_posts' username %}">Posts by {{ username }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_commented_posts' username %}">Commented Posts</a>
+                    </li>
+                    {% endwith %}
+                </ul>
+            </div>
 
-    {% if user.is_authenticated %}
-    <p><img class="profile_picture" src="{{ user.profile_picture.url }}"></p>
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Full Name:</strong> {{ user.full_name|default:"Not set" }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Posts:</strong> {{ user.post_count }}</p>
-    <p><strong>Comments:</strong> {{ user.comment_count }}</p>
-    <p><strong>Status:</strong> {{ user.user_status }}</p>
-    <p><strong>Member Since:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
-    <a href="{% url 'update_profile' %}">Edit Profile</a>
-    {% else %}
-    <p>You need to <a href="{% url 'account_login' %}">log in</a> to view your profile.</p>
-    {% endif %}
+            <div class="row align-items-center">
+                <!-- Profile Picture -->
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <img class="profile_picture img-fluid rounded"
+                        src="{{ profile_user.profile_picture.url|default:'/static/images/default_profile.png' }}"
+                        alt="Profile Picture">
+                </div>
+
+                <!-- Profile Details -->
+                <div class="col-md-8">
+                    <p><strong>Full Name:</strong> {{ profile_user.full_name|default:"Not set" }}</p>
+                    {% if user.is_authenticated %}
+                    {% if profile_user == user %}
+                    <p><strong>Email:</strong> {{ profile_user.email }}</p>
+                    {% endif %}
+                    <p><strong>Posts:</strong> {{ profile_user.post_count }}</p>
+                    <p><strong>Comments:</strong> {{ profile_user.comment_count }}</p>
+                    <p><strong>Status:</strong> {{ profile_user.user_status }}</p>
+                    {% else %}
+                    <p><em>Posts: <small class="text-muted">Log in to see</small></em></p>
+                    <p><em>Comments: <small class="text-muted">Log in to see</small></em></p>
+                    <p><em>Status: <small class="text-muted">Log in to see</small></em></p>
+                    {% endif %}
+                    <p><strong>Member Since:</strong> {{ profile_user.date_joined|date:"F j, Y" }}</p>
+                    {% if user.is_authenticated and profile_user == user %}
+                    <a href="{% url 'update_profile' %}" class="btn btn-primary">Edit Profile</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

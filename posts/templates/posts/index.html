@@ -15,12 +15,12 @@
                     <div class="card-inner">
                         <div class="row">
                             <div class="col-8">
-                                <div>{% if user.profile_picture %}
+                                <div>{% if post.author.profile_picture %}
                                     <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
                                     {% else %}
                                     <img class="profile_picture_small"
                                         src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
-                                    {% endif %}{{ post.author }}
+                                    {% endif %}<a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>
                                 </div>
                             </div>
                             <div class="col-4 d-flex flex-column align-items-end">
