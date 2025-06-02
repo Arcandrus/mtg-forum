@@ -34,7 +34,21 @@
                 <div class="card-small h-100">
                     <div class="card-inner">
                         <div class="row mb-2">
-                            <div class="col">{{ post.author }} | {{ post.created_on }}</div>
+                            <div class="col d-flex justify-content-between align-items-center">
+                                <div>
+                                    {{ post.author }} | {{ post.created_on|date:"M d, Y" }}
+                                </div>
+                                <form class="favourite-form m-0" data-slug="{{ post.slug }}">
+                                    {% csrf_token %}
+                                    <button class="btn fav-btn p-0" type="submit" style="font-size: 1.2rem;">
+                                        {% if user in post.favourites.all %}
+                                        <i class="gold fa-solid fa-star"></i>
+                                        {% else %}
+                                        <i class="black fa-regular fa-star"></i>
+                                        {% endif %}
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col">

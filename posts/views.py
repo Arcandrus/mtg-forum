@@ -8,6 +8,7 @@ from django.utils.timezone import localtime
 from django.utils.dateformat import format as django_date_format
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.views.decorators.http import require_POST
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
 # Create your views here.
@@ -219,3 +220,37 @@ def category_posts(request, category_name=None):
         'category_name': pretty_category_name,
     }
     return render(request, 'posts/categories.html', context)
+
+@require_POST
+@login_required
+def toggle_favourite(request, slug):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        post = get_object_or_404(Post, slug=slug)
+        user = request.user
+        favourited = False
+
+        if post.favourites.filter(id=user.id).exists():
+            post.favourites.remove(user)
+        else:
+            post.favourites.add(user)
+            favourited = True
+
+        return JsonResponse({
+            'favourited': favourited,
+            'total_favourites': post.favourites.count()
+        })
+
+    # Fallback if not an AJAX request — optional
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+@login_required
+def favourite_posts(request):
+    posts = request.user.favourite_posts.all().order_by('-created_on')
+    paginator = Paginator(posts, 4)  # 6 posts per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'posts/favourite_posts.html', {
+        'page_obj': page_obj
+    })

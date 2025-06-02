@@ -215,6 +215,29 @@ main {
     background-color: blue;
 }
 
+.fav-btn {
+    background: none;
+    border: none;
+    padding: 10px;
+    font-size: 1.25rem;
+    color: black;
+}
+
+.fav-btn:hover {
+    border: none;
+    color: gold;
+    background: none;
+    opacity: 0.8;
+}
+
+.gold {
+    color: gold;
+}
+
+.black {
+    color: black;
+}
+
 footer {
     width: 100%;
     position: absolute;

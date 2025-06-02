@@ -34,7 +34,7 @@
 
 <body>
     <header>
-        <h1>This is imported from base.html</h1>
+        <h1>MTG FORUM</h1>
     </header>
 
     <div class="page-wrapper d-flex"> <!-- Flex container -->
@@ -54,7 +54,7 @@
                 <br>
                 <li><a href="{% url 'post_list' %}">Home</a></li>
                 <li><a href="{% url 'category_list' %}">Categories</a></M></li>
-                <li>Favourites</li>
+                <li><a href="{% url 'favourite_posts' %}">Favourites</a></li>
                 <li>Popular</li>
                 <br>
                 <li>Profile</li>
@@ -88,6 +88,7 @@
     <script src="{% static 'js/comments.js' %}"></script>
     <script src="{% static 'js/post_edit.js' %}"></script>
     <script src="{% static 'js/messages.js' %}"></script>
+    <script src="{% static 'js/favourite.js' %}"></script>
 </body>
 
 </html>
