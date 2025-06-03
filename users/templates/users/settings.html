@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center mt-5">
+    <div class="text-center" style="max-width: 600px; width: 100%;">
+        <h1>Account Settings</h1>
+        <p>Welcome, {{ request.user.username }}!</p>
+        <ul class="list-unstyled">
+            <li><a href="{% url 'account_reset_password' %}">Reset Password</a></li>
+            <li><a href="{% url 'account_delete' %}">Delete Account</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

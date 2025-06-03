@@ -18,6 +18,45 @@ header {
     width: 100%;
     background-color: bisque;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    z-index: 10;
+}
+
+header h1 {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+header form {
+    display: flex;
+    align-items: center;
+}
+
+header input[type="text"] {
+    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+}
+
+header button {
+    padding: 0.3rem 0.8rem;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+}
+
+.header-spacer {
+    width: 150px; 
 }
 
 h1 {
@@ -74,11 +113,11 @@ ul {
     list-style: none;
 }
 
-.sidebar> ul {
+.sidebar>ul {
     list-style: none;
 }
 
-.sidebar> ul> li {
+.sidebar>ul>li {
     width: 80%;
     padding: 5px;
     margin: 5px;
@@ -127,11 +166,11 @@ main {
     content: "";
     pointer-events: none;
     position: absolute;
-    bottom: 0; 
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 120px;
-    background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1));
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 }
 
 .card-footer {

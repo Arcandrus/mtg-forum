@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container d-flex justify-content-center mt-5">
+    <div class="text-center" style="max-width: 600px; width: 100%;">
+        <h2>Are you sure you want to delete your account?</h2>
+        <p>This action cannot be undone.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, delete my account</button>
+            <a href="{% url 'user_settings' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

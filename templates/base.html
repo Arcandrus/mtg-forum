@@ -33,7 +33,16 @@
 
 <body>
     <header>
+        <div class="search-wrapper">
+            <form method="GET" action="{% url 'search_results' %}">
+                <input type="text" name="q" placeholder="Search posts..." required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
         <h1>MTG FORUM</h1>
+
+        <div class="header-spacer"></div>
     </header>
 
     <div class="page-wrapper d-flex"> <!-- Flex container -->
@@ -65,14 +74,14 @@
                 <li><a href="{% url 'category_list' %}">Categories</a></M>
                 </li>
                 <li><a href="{% url 'favourite_posts' %}">Favourites</a></li>
-                <li>Popular</li>
+                <li><a href="{% url 'popular_posts' %}">Popular</a></li>
                 <br>
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' username=request.user.username %}">Profile</a></li>
+                <li><a href="{% url 'user_settings' %}">Settings</a></li>
                 {% else %}
                 <li><a href="{% url 'account_login' %}">Profile</a></li>
                 {% endif %}
-                <li>Settings</li>
             </ul>
         </aside>
 

@@ -4,12 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.timezone import localtime
 from django.utils.dateformat import format as django_date_format
 from django.contrib import messages
+from datetime import timedelta
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
-from datetime import timedelta
+from django.db.models import Count, Q, F
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
 # Create your views here.
@@ -254,3 +256,49 @@ def favourite_posts(request):
     return render(request, 'posts/favourite_posts.html', {
         'page_obj': page_obj
     })
+
+def popular_posts(request):
+    # Get the 'period' parameter from URL query string, default to 'all'
+    period = request.GET.get('period', 'all')
+
+    now = timezone.now()
+    if period == '24h':
+        time_threshold = now - timedelta(hours=24)
+    elif period == '7d':
+        time_threshold = now - timedelta(days=7)
+    elif period == '30d':
+        time_threshold = now - timedelta(days=30)
+    else:  # 'all' or anything else
+        time_threshold = None
+
+    posts = Post.objects.all()
+
+    # If filtering by time, filter posts created after the threshold
+    if time_threshold:
+        posts = posts.filter(created_on__gte=time_threshold)
+
+    # Annotate total activity (comments, replies, likes)
+    posts = posts.annotate(
+        total_activity=Count('comments') + Count('likes') + Count('comments__replies')
+    ).order_by('-total_activity')
+
+    context = {
+        'posts': posts,
+        'period': period,
+    }
+    return render(request, 'posts/popular.html', context)
+
+def search_results(request):
+    query = request.GET.get('q', '')
+    posts = Post.objects.none() 
+
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        ).distinct()
+
+    context = {
+        'posts': posts,
+        'query': query,
+    }
+    return render(request, 'posts/search_results.html', context)

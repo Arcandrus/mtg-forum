@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center mt-5 scroll">
+    <div class="text-center" style="max-width: 600px; width: 100%;">
+        <h1 class="p-0">Popular Posts</h1>
+        {% if user.is_authenticated %}
+        <div class="filter-links content">
+            <a href="{% url 'popular_posts' %}?period=24h" class="{% if period == '24h' %}active{% endif %}">Last 24
+                Hours</a> |
+            <a href="{% url 'popular_posts' %}?period=7d" class="{% if period == '7d' %}active{% endif %}">Last 7
+                Days</a> |
+            <a href="{% url 'popular_posts' %}?period=30d" class="{% if period == '30d' %}active{% endif %}">Last 30
+                Days</a> |
+            <a href="{% url 'popular_posts' %}?period=all" class="{% if period == 'all' %}active{% endif %}">All
+                Time</a>
+        </div>
+        <div class="list-group post_list">
+            {% for post in posts %}
+            <a href="{% url 'post_detail' post.slug %}" class="list-group-item list-group-item-action">
+                <h5>{{ post.title }} — Activity: {{ post.total_activity }}</h5>
+                <small class="text-muted">Posted on {{ post.created_on|date:"F j, Y, g:i a" }}</small>
+            </a>
+            {% empty %}
+            <li>No posts found for this period.</li>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center"><small class="text-muted">Only <a href="{% url 'account_login' %}">logged in</a> users
+                can
+                see this page.</small></p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

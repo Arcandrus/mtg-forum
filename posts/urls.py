@@ -4,8 +4,10 @@ from .views import PostList
 
 urlpatterns = [
     path('posts/', PostList.as_view(), name='post_list'),
+    path('search/', views.search_results, name='search_results'),
     path("posts/categories/", views.category_posts, name="category_list"),
     path("posts/categories/<str:category_name>/", views.category_posts, name="category_posts_filtered"),
+    path('popular/', views.popular_posts, name='popular_posts'),
     path('post/<slug:slug>/favourite/', views.toggle_favourite, name='toggle_favourite'),
     path('favourites/', views.favourite_posts, name='favourite_posts'),
     path('posts/create/', views.create_post, name='create_post'),
