@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.like-form').forEach(form => {
         form.addEventListener('submit', async (e) => {
-            e.preventDefault();  // Prevent page reload
+            e.preventDefault();
 
             const slug = form.dataset.slug;
             const csrfToken = form.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -20,12 +20,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.ok) {
                     const data = await response.json();
 
-                    // Toggle button text
-                    button.textContent = data.liked ? 'Unlike' : 'Like';
+                    // Toggle icon classes on the <i> inside the button
+                    const icon = button.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-solid', data.liked);
+                        icon.classList.toggle('fa-regular', !data.liked);
+                        icon.classList.toggle('blue', data.liked);
+                    }
 
-                    // Update like count
-                    const likeText = `${data.total_likes} like${data.total_likes === 1 ? '' : 's'}`;
-                    countSpan.textContent = likeText;
+                    // Update like count text
+                    countSpan.textContent = `${data.total_likes} like${data.total_likes === 1 ? '' : 's'}`;
                 } else {
                     alert("Error submitting like.");
                 }

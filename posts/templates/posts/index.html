@@ -53,7 +53,22 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                        {% if user.is_authenticated %}
+                        <form class="like-form" data-ajax="true" data-slug="{{ post.slug }}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn like-btn">
+                                {% if user in post.likes.all %}
+                                <i class="blue fa-solid fa-thumbs-up"></i>
+                                {% else %}
+                                <i class="fa-regular fa-thumbs-up"></i>
+                                {% endif %}
+                            </button>
+                            <span class="like-count">
+                                {{ post.total_likes }} like{{ post.total_likes | pluralize}}
+                            </span>
+                            {% else %}
+                            {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                            {% endif %}
                         <div class="right">
                             {{ post.comment_count }} <i class="fa-solid fa-comments"></i>
                         </div>

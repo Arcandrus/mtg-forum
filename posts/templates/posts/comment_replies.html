@@ -2,29 +2,41 @@
 {% for reply in replies %}
 <div class="reply-thread">
     <div class="comment comment-reply">
-        {% if user == reply.author %}
-        <button class="btn btn-sm btn-outline-primary edit-comment-btn" data-bs-toggle="modal"
-            data-bs-target="#editCommentModal" data-comment-id="{{ reply.id }}" data-content="{{ reply.content|safe }}"
-            {% if reply.parent %} data-parent-id="{{ reply.parent.id }}" {% else %} data-parent-id="" {% endif %}>
-            Edit
-        </button>
-        <form action="{% url 'delete_comment' reply.id %}" method="post" style="display:inline;"
-            onsubmit="return confirm('Are you sure you want to delete this reply? This cannot be undone.')">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-        </form>
-        {% endif %}
-        <p>{{ reply.created_on }}</p>
-        <p><strong><a href="{% url 'profile' reply.author.username %}">{{ reply.author.username }}</a></strong> replied:</p>
-        <p>{{ reply.content | safe }}</p>
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <div>
+                <strong>
+                    <a href="{% url 'profile' comment.author.username %}">
+                        {{ reply.author.username }}
+                    </a>
+                </strong> said:
+            </div>
+            <small class="text-muted">{{ reply.created_on }}</small>
+        </div>
+        <span class="reply-content">{{ reply.content|safe }}</span>
         <div class="d-flex gap-2 align-items-center">
             <button type="button" class="btn reply-btn btn-sm" data-bs-toggle="modal" data-bs-target="#commentModal"
-                data-comment-id="{{ reply.id }}">Reply</button>
+                data-comment-id="{{ reply.id }}">
+                <i class="fa-solid fa-reply"></i>
+            </button>
             {% if reply.replies.exists %}
             <button class="btn btn-sm toggle-replies" type="button" data-bs-target="#replies-{{ reply.id }}"
                 aria-expanded="false" aria-controls="replies-{{ reply.id }}">
                 Show Replies ({{ reply.replies.count }})
             </button>
+            {% endif %}
+            {% if user == reply.author %}
+            <button class="btn btn-sm btn-outline-primary edit-comment-btn" data-bs-toggle="modal"
+                data-bs-target="#editCommentModal" data-comment-id="{{ reply.id }}" data-content="{{ reply.content|safe }}"
+                {% if reply.parent %} data-parent-id="{{ reply.parent.id }}" {% else %} data-parent-id="" {% endif %}>
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <form action="{% url 'delete_comment' reply.id %}" method="post" style="display:inline;"
+                onsubmit="return confirm('Are you sure you want to delete this reply? This cannot be undone.')">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">
+                    <i class="fa-solid fa-square-xmark"></i>
+                </button>
+            </form>
             {% endif %}
         </div>
     </div>

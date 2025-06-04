@@ -2,26 +2,22 @@
 document.querySelectorAll('.reply-btn').forEach(button => {
     button.addEventListener('click', function (e) {
         e.preventDefault();
-        console.log("Reply button clicked!");
 
-        const commentId = e.target.dataset.commentId;
-        console.log("commentId:", commentId);
+        const btn = e.currentTarget;
 
+        const commentId = btn.dataset.commentId;
         const parentInput = document.querySelector('#id_parent');
-        console.log("Before setting:", parentInput.value);
 
         parentInput.value = commentId;
 
-        console.log("After setting:", parentInput.value);
-
         form.querySelector('textarea[name="content"]').value = '';
-
         form.querySelector('textarea[name="content"]').focus();
 
         const commentModal = new bootstrap.Modal(document.getElementById('commentModal'));
         commentModal.show();
     });
 });
+
 
 // Collapsable reply thread
 document.addEventListener('DOMContentLoaded', () => {

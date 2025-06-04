@@ -269,12 +269,21 @@ main {
     opacity: 0.8;
 }
 
+.like-btn:hover {
+    color: black;
+    background-color: #ccc;
+}
+
 .gold {
     color: gold;
 }
 
 .black {
     color: black;
+}
+
+.blue {
+    color: blue;
 }
 
 .profile_picture {
