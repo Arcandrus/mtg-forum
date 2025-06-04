@@ -4,17 +4,19 @@ document.querySelectorAll('.reply-btn').forEach(button => {
         e.preventDefault();
 
         const btn = e.currentTarget;
-
         const commentId = btn.dataset.commentId;
         const parentInput = document.querySelector('#id_parent');
 
-        parentInput.value = commentId;
+        if (commentId) {
+            parentInput.value = commentId;
+        } else {
+            parentInput.value = ''; 
+        }
 
+        const form = document.querySelector('form');
         form.querySelector('textarea[name="content"]').value = '';
         form.querySelector('textarea[name="content"]').focus();
 
-        const commentModal = new bootstrap.Modal(document.getElementById('commentModal'));
-        commentModal.show();
     });
 });
 
