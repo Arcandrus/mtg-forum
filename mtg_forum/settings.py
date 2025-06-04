@@ -19,18 +19,12 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-cloudinary.config( 
-  cloud_name = 'dpbcyiayr', 
-  api_key = '439596314561751', 
-  api_secret = 'l7SBEbXRho3qW3TUxrCO14D9HT4' 
-)
-
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dpbcyiayr',
-    'API_KEY': '439596314561751',
-    'API_SECRET': 'l7SBEbXRho3qW3TUxrCO14D9HT4',
+    'CLOUD_NAME': os.environ.get("CLOUD_NAME"),
+    'API_KEY': os.environ.get("API_KEY"),
+    'API_SECRET': os.environ.get("API_SECRET"),
 }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
