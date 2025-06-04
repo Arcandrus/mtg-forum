@@ -20,7 +20,6 @@ document.querySelectorAll('.reply-btn').forEach(button => {
     });
 });
 
-
 // Collapsable reply thread
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.toggle-replies').forEach(button => {
@@ -62,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
 
 // Edit comments
 document.addEventListener('DOMContentLoaded', () => {

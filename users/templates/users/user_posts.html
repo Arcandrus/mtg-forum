@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-4 content scroll">
     <h2 class="text-center">Posts by {{ profile_user.username }}</h2>
-    <ul class="nav justify-content-center mb-4">
+    <ul class="nav justify-content-center">
         {% with username=profile_user.username %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'profile' username %}">Profile</a>

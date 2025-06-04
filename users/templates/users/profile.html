@@ -5,7 +5,7 @@
     <div class="mx-auto" style="max-width: 800px;">
         <h2 class="text-center">User Profile for <strong>{{ profile_user.username }}</strong></h2>
         <div class="row">
-            <ul class="nav justify-content-center mb-4">
+            <ul class="nav justify-content-center">
                 {% with username=profile_user.username %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profile' username %}">Profile</a>
