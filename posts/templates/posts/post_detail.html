@@ -88,14 +88,18 @@
                             <span class="like-count">
                                 {{ post.total_likes }} like{{ post.total_likes | pluralize}}
                             </span>
-                            {% else %}
-                            {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                                <div class="right">
+                                    {{ post.comment_count }} comment{{ post.comment_count | pluralize }}</i>
+                                    <button type="button" class="reply-btn btn" data-bs-toggle="modal" data-bs-target="#commentModal">
+                                        <i class="fa-solid fa-comments"></i>
+                                    </button>
+                                </div>
+                                {% else %}
+                                {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                                <div class="right">
+                                    {{ post.comment_count }} comment{{ post.comment_count | pluralize }}<i class="p-2 fa-solid fa-comments"></i>
+                                </div>
                             {% endif %}
-                            <div class="right">
-                                {{ post.comment_count }} comment{{ post.comment_count | pluralize }}</i>
-                                <button type="button" class="reply-btn btn" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                    <i class="fa-solid fa-comments"></i>
-                                </button>
                             </div>
                         </form>
                     </div>
@@ -103,8 +107,7 @@
             </div>
         </div>
     </div>
-
-    <div class="comments">
+    <div class="comments justify-content-center">
         <div class="row col-12">
             {% for comment in comments %}
             <div class="comment-thread" id="comment-{{ comment.id }}">

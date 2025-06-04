@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container d-flex justify-content-center mt-5 scroll">
+<div class="container d-flex justify-content-center scroll">
     <div class="text-center" style="max-width: 600px; width: 100%;">
-        <h1 class="p-0">Popular Posts</h1>
+        <h1>Popular Posts</h1>
         {% if user.is_authenticated %}
-        <div class="filter-links content">
+        <div class="filter-links pb-2">
             <a href="{% url 'popular_posts' %}?period=24h" class="{% if period == '24h' %}active{% endif %}">Last 24
                 Hours</a> |
             <a href="{% url 'popular_posts' %}?period=7d" class="{% if period == '7d' %}active{% endif %}">Last 7
