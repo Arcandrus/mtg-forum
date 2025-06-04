@@ -251,7 +251,27 @@ main {
 .btn:hover {
     border: 1px solid black;
     color: white;
+    background-color: #ccc;
+}
+
+#edit-post-btn:hover, .edit-comment-btn:hover {
+    border: 1px solid black;
+    color: white;
     background-color: blue;
+}
+
+.reply-btn:hover {
+    color: black;
+}
+
+.btn-danger {
+    background: none;
+    color: black;
+}
+
+.btn-danger:hover {
+    background-color: red;
+    color: white;
 }
 
 .fav-btn {

@@ -8,35 +8,44 @@
         <!-- Blog Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
-                {% if user == post.author %}
-                <div class="d-flex justify-content-end gap-2">
-                    <button id="edit-post-btn" class="btn btn-outline-primary" data-slug="{{ post.slug }}">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <form action="{% url 'delete_post' post.slug %}" method="post"
-                        onsubmit="return confirm('Are you sure you want to delete this post? This action cannot be undone.')">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fa-solid fa-square-xmark"></i>
-                        </button>
-                    </form>
-                </div>
-                {% endif %}
                 <div class="card-full">
                     <div class="card-inner">
                         <div class="row justify-content-between">
-                            <div class="col-7">
-                                <div>
-                                    {% if post.author.profile_picture %}
-                                    <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
-                                    {% else %}
-                                    <img class="profile_picture_small"
-                                        src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
+                            <div class="col-9">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <!-- Left side: profile picture + username -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        {% if post.author.profile_picture %}
+                                        <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
+                                        {% else %}
+                                        <img class="profile_picture_small"
+                                            src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
+                                        {% endif %}
+
+                                        <strong>
+                                            <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>
+                                        </strong>
+                                    </div>
+
+                                    <!-- Right side: edit/delete buttons -->
+                                    {% if user == post.author %}
+                                    <div class="d-flex gap-2">
+                                        <button id="edit-post-btn" class="btn btn-outline-primary btn-sm" data-slug="{{ post.slug }}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                        <form action="{% url 'delete_post' post.slug %}" method="post"
+                                            onsubmit="return confirm('Are you sure you want to delete this post? This action cannot be undone.')"
+                                            class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fa-solid fa-square-xmark"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                     {% endif %}
-                                    <strong><a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a></strong>
                                 </div>
                             </div>
-                            <div class="col-5 d-flex flex-column align-items-end">
+                            <div class="col-3 d-flex flex-column align-items-end">
                                 <div class="d-flex align-items-center">
                                     <span class="me-2">{{ post.get_category_display }}</span>
                                     <form class="favourite-form" data-slug="{{ post.slug }}">
@@ -71,7 +80,7 @@
                             {% csrf_token %}
                             <button type="submit" class="btn like-btn">
                                 {% if user in post.likes.all %}
-                                <i class="fa-solid fa-thumbs-up"></i>
+                                <i class="blue fa-solid fa-thumbs-up"></i>
                                 {% else %}
                                 <i class="fa-regular fa-thumbs-up"></i>
                                 {% endif %}
@@ -84,7 +93,7 @@
                             {% endif %}
                             <div class="right">
                                 {{ post.comment_count }} comment{{ post.comment_count | pluralize }}</i>
-                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#commentModal">
+                                <button type="button" class="reply-btn btn" data-bs-toggle="modal" data-bs-target="#commentModal">
                                     <i class="fa-solid fa-comments"></i>
                                 </button>
                             </div>
