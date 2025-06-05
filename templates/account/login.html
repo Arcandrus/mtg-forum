@@ -1,33 +1,56 @@
 {% extends "base.html" %}
 
-{% load i18n %}
-
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block head_title %}Sign In{% endblock %}
 
 {% block content %}
 
 <div class="container scroll content">
     <div class="row">
         <div class="col-md-8 mt-3 offset-md-2">
-            <h3>{% trans "Sign In" %}</h3>
+            <h3>Sign In</h3>
 
-            <p>{% blocktrans %}Welcome back to MTG Forum. To leave a comment or like a post, please log in. If
-                you
-                have not created an account yet, then <a class="link" href="{{ signup_url }}">sign up</a>
-                first.{% endblocktrans %}</p>
+            <p>
+                Welcome back to MTG Forum. To leave a comment or like a post, please log in. If
+                you have not created an account yet, then <a class="link" href="{{ signup_url }}">sign up</a>
+                first.
+            </p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-8 mt-3 offset-md-2">
             <form class="login" method="POST" action="{% url 'account_login' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form.non_field_errors }}
+
+                <div class="mb-3 d-flex align-items-center">
+                    {{ form.login.label_tag }}
+                    <div class="flex-grow-1 ms-3">
+                        {{ form.login }}
+                        {{ form.login.errors }}
+                    </div>
+                </div>
+
+                <div class="mb-3 d-flex align-items-center">
+                    {{ form.password.label_tag }}
+                    <div class="flex-grow-1 ms-3">
+                        {{ form.password }}
+                        {{ form.password.errors }}
+                    </div>
+                </div>
+
+                <div class="mb-3 d-flex align-items-center checkbox-inline">
+                    {{ form.remember.label_tag }}
+                    {{ form.remember }}
+                </div>
+
                 {% if redirect_field_value %}
                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 {% endif %}
-                <button class="btn btn-signup right" type="submit">{% trans "Sign In" %}</button>
+
+                <button class="btn btn-signup float-end" type="submit">Sign In</button>
             </form>
         </div>
     </div>
 </div>
+
 {% endblock %}
