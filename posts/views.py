@@ -18,11 +18,20 @@ from .models import Post, Comment
 # Create your views here.
 
 class PostList(generic.ListView):
+    """
+    Display a paginated list of all posts on the site.
+    Uses the 'posts/index.html' template and shows 6 posts per page.
+    """
     model = Post
     template_name = "posts/index.html"
     paginate_by = 6
 
+
 def post_detail(request, slug):
+    """
+    Display a detailed view of a single post identified by its slug.
+    Handles displaying top-level comments and processing new comment submissions.
+    """
     post = get_object_or_404(Post, slug=slug)
     comments = post.comments.filter(parent__isnull=True)
 
@@ -44,8 +53,14 @@ def post_detail(request, slug):
         'comment_form': form,
     })
 
+
 @login_required
 def like_post(request, slug):
+    """
+    Toggle like status for the current user on the specified post.
+    Supports AJAX requests by returning JSON with updated like info,
+    otherwise redirects back to the post detail page.
+    """
     post = get_object_or_404(Post, slug=slug)
     user = request.user
 
@@ -64,7 +79,12 @@ def like_post(request, slug):
 
     return redirect('post_detail', slug=slug)
 
+
 def generate_unique_slug(title):
+    """
+    Generate a unique slug for a post based on its title.
+    Appends a counter suffix if the slug already exists.
+    """
     base_slug = slugify(title)
     slug = base_slug
     counter = 1
@@ -74,8 +94,15 @@ def generate_unique_slug(title):
         counter += 1
     return slug
 
+
 @login_required
 def create_post(request):
+    """
+    Display a form to create a new post.
+    On POST, validates and saves the post with the current user as author,
+    generates a unique slug, and creates an excerpt from content.
+    Provides success or error messages accordingly.
+    """
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -92,23 +119,23 @@ def create_post(request):
         form = PostForm()
     return render(request, 'posts/create_post.html', {'form': form})
 
+
 @login_required
 def post_comment(request, slug):
+    """
+    Handle submission of a comment on a post.
+    If POST and form is valid, save comment with author and post linked.
+    Otherwise, display the post detail page with comment form and top-level comments.
+    """
     post = get_object_or_404(Post, slug=slug)
     top_level_comments = post.comments.filter(parent__isnull=True)
 
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
-
             comment = form.save(commit=False)
             comment.post = post
             comment.author = request.user
-
-            # DEBUG: If parent is missing here, this is the problem
-            if not comment.parent:
-                messages("Parent not assigned in form.cleaned_data!")
-
             comment.save()
             return redirect('post_detail', slug=post.slug)
     else:
@@ -120,8 +147,14 @@ def post_comment(request, slug):
         'comments': top_level_comments,
     })
 
+
 @login_required
 def edit_post(request, slug):
+    """
+    Allow the author of a post to edit its content via a form.
+    Handles POST submissions to update the post and returns JSON response with
+    success status and updated content. On GET, renders the edit form HTML.
+    """
     post = get_object_or_404(Post, slug=slug)
     if request.user != post.author:
         return JsonResponse({'success': False, 'error': 'Unauthorized'}, status=403)
@@ -130,7 +163,6 @@ def edit_post(request, slug):
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
-            # Update excerpt: first 200 words of content
             post.excerpt = ' '.join(post.content.split()[:200])
             post.save()
             
@@ -149,9 +181,16 @@ def edit_post(request, slug):
             'post': post,
         }, request=request)
         return HttpResponse(html)
-    
+
+
 @login_required
 def delete_post(request, slug):
+    """
+    Allow the author to delete their post and its comments.
+    Handles POST to delete and redirects to post list.
+    GET requests render a confirmation page.
+    Unauthorized users are redirected with an error message.
+    """
     post = get_object_or_404(Post, slug=slug)
 
     if request.user != post.author:
@@ -168,6 +207,11 @@ def delete_post(request, slug):
 
 @login_required
 def edit_comment(request, comment_id):
+    """
+    Allow the author of a comment to edit it via POST request.
+    On success, redirects back to the associated post detail.
+    Only POST method is allowed.
+    """
     comment = get_object_or_404(Comment, id=comment_id, author=request.user)
 
     if request.method == 'POST':
@@ -179,8 +223,15 @@ def edit_comment(request, comment_id):
 
     return HttpResponseNotAllowed(['POST'])
 
+
 @login_required
 def delete_comment(request, comment_id):
+    """
+    Allow the author of a comment to delete it.
+    Handles POST to delete the comment and redirects to the post detail.
+    GET requests render a confirmation page.
+    Unauthorized users are redirected with an error message.
+    """
     comment = get_object_or_404(Comment, id=comment_id)
 
     if request.user != comment.author:
@@ -195,10 +246,16 @@ def delete_comment(request, comment_id):
 
     return render(request, 'posts/confirm_delete_comment.html', {'comment': comment})
 
+
 CATEGORY_CHOICES = dict(Post.CATEGORY)
 CATEGORY_SLUGS = {slugify(name): id for id, name in CATEGORY_CHOICES.items()}
 
 def category_posts(request, category_name=None):
+    """
+    Display posts filtered by a specific category.
+    If the category name is valid, fetch posts for that category, paginate,
+    and render the categories template. Otherwise, show 'Unknown Category'.
+    """
     categories = CATEGORY_CHOICES 
 
     if category_name in CATEGORY_SLUGS:
@@ -224,9 +281,15 @@ def category_posts(request, category_name=None):
     }
     return render(request, 'posts/categories.html', context)
 
+
 @require_POST
 @login_required
 def toggle_favourite(request, slug):
+    """
+    Toggle the favourite status of a post for the current user.
+    Only accepts AJAX POST requests.
+    Returns JSON with updated favourite status and count.
+    """
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         post = get_object_or_404(Post, slug=slug)
         user = request.user
@@ -243,13 +306,17 @@ def toggle_favourite(request, slug):
             'total_favourites': post.favourites.count()
         })
 
-    # Fallback if not an AJAX request — optional
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
 
 @login_required
 def favourite_posts(request):
+    """
+    Display a paginated list of the current user's favourite posts,
+    ordered by creation date descending.
+    """
     posts = request.user.favourite_posts.all().order_by('-created_on')
-    paginator = Paginator(posts, 4)  # 6 posts per page
+    paginator = Paginator(posts, 4)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -258,7 +325,14 @@ def favourite_posts(request):
         'page_obj': page_obj
     })
 
+
 def popular_posts(request):
+    """
+    Display posts sorted by popularity within a selected time period.
+    Popularity is based on the sum of likes and comments counts.
+    Supports filtering by periods: '24h' (default), '7d', '30d', and 'all'.
+    Results are paginated.
+    """
     period = request.GET.get('period', '24h')
     now = timezone.now()
 
@@ -268,7 +342,7 @@ def popular_posts(request):
         since = now - timedelta(days=30)
     elif period == 'all':
         since = None
-    else:  # default to last 24 hours
+    else:
         since = now - timedelta(days=1)
 
     if since:
@@ -292,7 +366,12 @@ def popular_posts(request):
         'period': period
     })
 
+
 def search_results(request):
+    """
+    Perform a search for posts matching the query string in title, content,
+    or author's username. Displays paginated results.
+    """
     query = request.GET.get('q', '')
     posts = Post.objects.none()
 
