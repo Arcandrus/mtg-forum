@@ -30,9 +30,18 @@
                                         <img class="profile_picture_small"
                                             src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
                                         {% endif %}
-                                        <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>
-                                        | {{ post.created_on | date:"M d, Y" }}
+                                        <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a> | {{ post.created_on|date:"M d, Y" }}
                                     </div>
+                                    <form class="favourite-form m-0" data-slug="{{ post.slug }}">
+                                        {% csrf_token %}
+                                        <button class="btn fav-btn p-0" type="submit" style="font-size: 1.2rem;">
+                                            {% if user in post.favourites.all %}
+                                            <i class="gold fa-solid fa-star"></i>
+                                            {% else %}
+                                            <i class="black fa-regular fa-star"></i>
+                                            {% endif %}
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="row">

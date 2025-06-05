@@ -279,7 +279,7 @@ def popular_posts(request):
         total_activity=F('likes') + F('comments')
     ).order_by('-total_activity')
 
-    paginator = Paginator(posts, 4)  # 4 posts per page
+    paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -290,15 +290,22 @@ def popular_posts(request):
 
 def search_results(request):
     query = request.GET.get('q', '')
-    posts = Post.objects.none() 
+    posts = Post.objects.none()
 
     if query:
         posts = Post.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query)
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(author__username__icontains=query)
         ).distinct()
 
+    paginator = Paginator(posts, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'posts': posts,
         'query': query,
+        'page_obj': page_obj,
     }
+
     return render(request, 'posts/search_results.html', context)
