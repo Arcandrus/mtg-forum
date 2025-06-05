@@ -21,11 +21,26 @@
     <div class="list-group post_list">
         {% for post in posts %}
         <a href="{% url 'post_detail' post.slug %}" class="list-group-item list-group-item-action">
-            <h5>{{ post.title }}</h5>
-            <small class="text-muted">Posted on {{ post.created_on|date:"F j, Y, g:i a" }}</small>
+            <div class="row align-items-center mb-3 mt-3">
+                <div class="col-md-8">
+                        <h5>{{ post.title }}</h5>
+                        <small class="text-muted">Posted on {{ post.created_on|date:"F j, Y, g:i a" }}</small>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-between">
+                        <span>
+                            {{ post.total_likes }} like{{ post.total_likes|pluralize }}
+                            <i class="fa-regular fa-thumbs-up"></i>
+                        </span>
+                        <span>
+                            {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+                            <i class="fa-solid fa-comments"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </a>
         {% endfor %}
-    </div>
     {% else %}
     <p class="text-center">No posts found.</p>
     {% endif %}
