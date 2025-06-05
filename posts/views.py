@@ -258,35 +258,35 @@ def favourite_posts(request):
     })
 
 def popular_posts(request):
-    # Get the 'period' parameter from URL query string, default to 'all'
-    period = request.GET.get('period', 'all')
-
+    period = request.GET.get('period', '24h')
     now = timezone.now()
-    if period == '24h':
-        time_threshold = now - timedelta(hours=24)
-    elif period == '7d':
-        time_threshold = now - timedelta(days=7)
+
+    if period == '7d':
+        since = now - timedelta(days=7)
     elif period == '30d':
-        time_threshold = now - timedelta(days=30)
-    else:  # 'all' or anything else
-        time_threshold = None
+        since = now - timedelta(days=30)
+    elif period == 'all':
+        since = None
+    else:  # default to last 24 hours
+        since = now - timedelta(days=1)
 
-    posts = Post.objects.all()
+    if since:
+        posts = Post.objects.filter(created_on__gte=since)
+    else:
+        posts = Post.objects.all()
 
-    # If filtering by time, filter posts created after the threshold
-    if time_threshold:
-        posts = posts.filter(created_on__gte=time_threshold)
-
-    # Annotate total activity (comments, replies, likes)
     posts = posts.annotate(
-        total_activity=Count('comments') + Count('likes') + Count('comments__replies')
+        total_activity=F('likes') + F('comments')
     ).order_by('-total_activity')
 
-    context = {
-        'posts': posts,
-        'period': period,
-    }
-    return render(request, 'posts/popular.html', context)
+    paginator = Paginator(posts, 4)  # 4 posts per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'posts/popular.html', {
+        'page_obj': page_obj,
+        'period': period
+    })
 
 def search_results(request):
     query = request.GET.get('q', '')

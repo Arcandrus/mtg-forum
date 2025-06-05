@@ -1,36 +1,100 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container d-flex justify-content-center scroll">
-    <div class="text-center" style="max-width: 600px; width: 100%;">
+<div class="container-fluid scroll content">
+    <div class="text-center">
         <h1>Popular Posts</h1>
         {% if user.is_authenticated %}
         <div class="filter-links pb-2">
-            <a href="{% url 'popular_posts' %}?period=24h" class="{% if period == '24h' %}active{% endif %}">Last 24
-                Hours</a> |
-            <a href="{% url 'popular_posts' %}?period=7d" class="{% if period == '7d' %}active{% endif %}">Last 7
-                Days</a> |
-            <a href="{% url 'popular_posts' %}?period=30d" class="{% if period == '30d' %}active{% endif %}">Last 30
-                Days</a> |
-            <a href="{% url 'popular_posts' %}?period=all" class="{% if period == 'all' %}active{% endif %}">All
-                Time</a>
+            <a href="{% url 'popular_posts' %}?period=24h" class="{% if period == '24h' %}active{% endif %}">Last 24 Hours</a> |
+            <a href="{% url 'popular_posts' %}?period=7d" class="{% if period == '7d' %}active{% endif %}">Last 7 Days</a> |
+            <a href="{% url 'popular_posts' %}?period=30d" class="{% if period == '30d' %}active{% endif %}">Last 30 Days</a> |
+            <a href="{% url 'popular_posts' %}?period=all" class="{% if period == 'all' %}active{% endif %}">All Time</a>
         </div>
-        <div class="list-group post_list">
-            {% for post in posts %}
-            <a href="{% url 'post_detail' post.slug %}" class="list-group-item list-group-item-action">
-                <h5>{{ post.title }} — Activity: {{ post.total_activity }}</h5>
-                <small class="text-muted">Posted on {{ post.created_on|date:"F j, Y, g:i a" }}</small>
-            </a>
-            {% empty %}
-            <li>No posts found for this period.</li>
+    </div>
+        {% if page_obj %}
+            {% for post in page_obj %}
+                {% if forloop.counter0|divisibleby:2 %}
+                <div class="row justify-content-center mb-4">
+                {% endif %}
+
+                <div class="col-md-6 mb-3">
+                    <div class="card-small h-100">
+                        <div class="card-inner">
+                            <div class="row mb-2">
+                                <div class="col d-flex justify-content-between align-items-center">
+                                    <div>
+                                        {% if post.author.profile_picture %}
+                                        <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
+                                        {% else %}
+                                        <img class="profile_picture_small"
+                                            src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
+                                        {% endif %}
+                                        <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>
+                                        | {{ post.created_on | date:"M d, Y" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <a href="{% url 'post_detail' post.slug %}">
+                                        <h3>{{ post.title | upper }}</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <p>{{ post.excerpt | safe }}</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <span>{{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i></span>
+                            <span>{{ post.comment_count }} <i class="fa-solid fa-comments"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                {% if forloop.counter|divisibleby:2 or forloop.last %}
+                </div>
+                {% endif %}
             {% endfor %}
-        </div>
+
+            <!-- Pagination controls -->
+            {% if page_obj.has_other_pages %}
+            <div class="pagination justify-content-center mt-4">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{% if period %}period={{ period }}&{% endif %}page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+                    </li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{% if period %}period={{ period }}&{% endif %}page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{% if period %}period={{ period }}&{% endif %}page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+            <!-- End pagination -->
+
         {% else %}
-        <p class="text-center"><small class="text-muted">Only <a href="{% url 'account_login' %}">logged in</a> users
-                can
-                see this page.</small></p>
+        <p>No posts found for this period.</p>
+        {% endif %}
+
+        {% else %}
+        <p class="text-center"><small class="text-muted">Only <a href="{% url 'account_login' %}">logged in</a> users can see this page.</small></p>
         {% endif %}
     </div>
 </div>
-
 {% endblock %}
