@@ -11,7 +11,8 @@ from django.contrib import messages
 from datetime import timedelta
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
-from django.db.models import Count, Q, F
+from django.db.models.functions import Coalesce
+from django.db.models import Count, Q, F, Value, IntegerField
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
 # Create your views here.
@@ -276,7 +277,10 @@ def popular_posts(request):
         posts = Post.objects.all()
 
     posts = posts.annotate(
-        total_activity=F('likes') + F('comments')
+        likes_count=Coalesce(Count('likes'), Value(0), output_field=IntegerField()),
+        comments_count=Coalesce(Count('comments'), Value(0), output_field=IntegerField())
+    ).annotate(
+        total_activity=F('likes_count') + F('comments_count')
     ).order_by('-total_activity')
 
     paginator = Paginator(posts, 4)
