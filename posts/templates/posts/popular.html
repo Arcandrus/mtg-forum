@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid scroll content">
+<div class="container-fluid scroll">
     <div class="text-center">
         <h1>Popular Posts</h1>
         {% if user.is_authenticated %}
@@ -14,7 +14,7 @@
     </div>
 
         {% if page_obj %}
-        <div class="row justify-content-center mb-4">
+        <div class="row content justify-content-center mb-4">
             {% for post in page_obj %}
             <div class="col-md-6 mb-4 d-flex">
                 <div class="card-small w-100">

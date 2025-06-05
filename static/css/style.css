@@ -658,10 +658,13 @@ ul.pagination li {
 
 /* Responsive styles for smaller devices (up to 768px) */
 @media (max-width: 768px) {
-
     /* Reduce base font size */
     html {
         font-size: smaller;
+    }
+
+    .icon {
+        margin-left: 20px;
     }
 
     /* Cards take full width */
