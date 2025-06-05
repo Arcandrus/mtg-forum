@@ -33,10 +33,21 @@ header h1 {
     font-size: 2rem;
 }
 
-.search-wrapper {
+.search-wrapper form {
     display: flex;
     align-items: center;
-    margin-left: 1rem;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.search-wrapper input[type="text"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.4em 0.6em;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
 }
 
 header form {
@@ -56,7 +67,7 @@ header button {
 }
 
 .header-spacer {
-    width: 150px; 
+    width: 150px;
 }
 
 h1 {
@@ -95,96 +106,95 @@ h1 {
 }
 
 .sidebar {
-  max-width: 20%;
-  min-width: 20%;
-  background-color: #f5f5f5;
-  padding: 40px;
-  box-sizing: border-box;
-  margin-top: 0; 
-  padding-top: 100px;
-  height: 100vh;
-  overflow-y: auto;
+    max-width: 20%;
+    min-width: 20%;
+    background-color: #f5f5f5;
+    padding: 40px;
+    box-sizing: border-box;
+    margin-top: 0;
+    padding-top: 60px;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .profile_container {
-  display: flex;
-  align-items: center; 
-  gap: 15px; 
-  margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
 .profile_picture img {
-  width: 80px; 
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #ccc;
-  margin-bottom: 0; 
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ccc;
+    margin-bottom: 0;
 }
 
 .profile_details {
-  text-align: left; 
-  flex: 1; 
+    text-align: left;
+    flex: 1;
 }
 
 .profile_details p {
-  margin: 4px 0;
-  font-size: 14px;
-  color: #333;
+    margin: 4px 0;
+    font-size: 14px;
+    color: #333;
 }
 
 .profile_details i {
-  color: #555;
-  margin-right: 6px;
+    color: #555;
+    margin-right: 6px;
 }
 
-
 .sidebar-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .sidebar-nav ul li {
-  margin-bottom: 12px;
+    margin-bottom: 12px;
 }
 
 .sidebar-nav ul li a {
-  display: flex;
-  align-items: center;
-  color: #333;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 15px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: background-color 0.25s, color 0.25s;
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.25s, color 0.25s;
 }
 
 .sidebar-nav ul li a i {
-  margin-right: 10px;
-  font-size: 16px;
-  min-width: 20px;
-  text-align: center;
-  color: #666;
+    margin-right: 10px;
+    font-size: 16px;
+    min-width: 20px;
+    text-align: center;
+    color: #666;
 }
 
 .sidebar-nav ul li a:hover,
 .sidebar-nav ul li a:focus {
-  background-color: #ccc;
-  color: black;
-  outline: none;
+    background-color: #ccc;
+    color: black;
+    outline: none;
 }
 
 .sidebar-nav ul li a:hover i,
 .sidebar-nav ul li a:focus i {
-  color: black;
+    color: black;
 }
 
 .sidebar-nav ul li hr {
-  border: none;
-  border-top: 1px solid #ddd;
-  margin: 15px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 15px 0;
 }
 
 .content {
@@ -222,7 +232,7 @@ main {
 
 .card {
     display: flex;
-    border: 2px, black, solid;
+    border: 2px solid black;
     max-width: 80%;
     margin: 20px 10%;
     height: fit-content;
@@ -268,7 +278,7 @@ main {
 .card-full {
     display: flex;
     flex-direction: column;
-    border: 2px, black, solid;
+    border: 2px solid black;
     border-radius: 8px;
     max-width: 80%;
     margin: 20px 10%;
@@ -339,7 +349,8 @@ main {
     background-color: #ccc;
 }
 
-#edit-post-btn:hover, .edit-comment-btn:hover {
+#edit-post-btn:hover,
+.edit-comment-btn:hover {
     border: 1px solid black;
     color: white;
     background-color: blue;
@@ -404,6 +415,15 @@ main {
     border: 2px solid #ccc;
 }
 
+.profile_picture_main {
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    margin-bottom: 0;
+}
+
 .post_list {
     max-width: 700px;
     margin-left: auto;
@@ -419,6 +439,62 @@ main {
     padding-left: 30px;
 }
 
+#signup_form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+label {
+    width: 40%;
+    margin-bottom: 0;
+}
+
+.form-check input[type="checkbox"] {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.checkbox-inline label {
+    width: auto;
+    margin-bottom: 0;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+}
+
+.checkbox-inline input[type="checkbox"] {
+    width: 1.2em;
+    height: 1.2em;
+    margin: 0;
+    display: inline-block;
+}
+
+.checkbox-inline {
+    gap: 0.5rem;
+}
+
 footer {
     width: 100%;
     position: absolute;
@@ -427,4 +503,171 @@ footer {
     text-align: center;
     padding: 10px;
     z-index: 10;
+}
+
+.hamburger {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: none;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: black;
+    z-index: 16;
+}
+
+/* Position hamburger in top right of header */
+header .hamburger {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+.pagination {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+}
+
+ul.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.3rem;
+    padding-left: 0;
+    list-style: none;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+ul.pagination li {
+    flex: 0 1 auto;
+    margin: 0 0.2rem;
+}
+
+@media (max-width: 1200px) {
+    .profile_container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile_picture img {
+        max-width: 150px;
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    .profile_details {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: smaller;
+    }
+
+    .card {
+        width: 100%;
+    }
+    
+    header {
+        justify-content: flex-start;
+        padding: 0;
+    }
+
+    .header-spacer {
+        width: 0;
+    }
+
+    header h1 {
+        position: static;
+        transform: none;
+        text-align: left;
+        margin-left: 20px;
+        font-size: 1.5rem;
+    }
+
+    ul.pagination {
+        justify-content: center;
+    }
+
+    ul.pagination li {
+        flex-basis: 5%;
+        text-align: center;
+        margin-bottom: 0.4rem;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 80px;
+        right: 0;
+        left: auto;
+        transform: translateX(100%);
+        width: 40vw;
+        height: calc(100% - 80px);
+        background-color: #f5f5f5;
+        z-index: 15;
+        padding: 20px;
+        overflow-y: auto;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
+        transition: transform 0.3s ease-in-out;
+        max-width: none;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .page-wrapper {
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+    }
+
+    .content {
+        margin-top: 30px;
+        margin-bottom: 130px;
+        margin-left: 0;
+        max-width: 100%;
+    }
+
+    #sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 80px);
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 14;
+    }
+
+    #sidebar-overlay.active {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-wrapper input[type="text"] {
+        font-size: 0.9rem;
+        padding: 0.3em 0.4em;
+    }
+
+    .search-wrapper button {
+        padding: 0.3em 0.6em;
+        font-size: 0.9rem;
+    }
 }
