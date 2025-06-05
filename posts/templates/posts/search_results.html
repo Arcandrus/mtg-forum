@@ -5,58 +5,51 @@
     <div class="text-center">
         <h1>Search Results for "{{ query }}"</h1>
     </div>
-    {% if page_obj %}
-    {% for post in page_obj %}
-    {% if forloop.counter0|divisibleby:2 %}
-    <div class="row justify-content-center mb-4">
-        {% endif %}
 
-        <div class="col-md-6 mb-3">
-            <div class="card-small h-100">
+    {% if page_obj %}
+    <div class="row justify-content-center mb-4">
+        {% for post in page_obj %}
+        <div class="col-md-6 mb-4 d-flex">
+            <div class="card-small w-100">
                 <div class="card-inner">
-                    <div class="row mb-2">
-                        <div class="col d-flex justify-content-between align-items-center">
-                            <div>
-                                {% if post.author.profile_picture %}
-                                <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            {% if post.author.profile_picture %}
+                            <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
+                            {% else %}
+                            <img class="profile_picture_small"
+                                src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
+                            {% endif %}
+                            <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a> |
+                            {{ post.created_on|date:"M d, Y" }}
+                        </div>
+                        <form class="favourite-form m-0" data-slug="{{ post.slug }}">
+                            {% csrf_token %}
+                            <button class="btn fav-btn p-0" type="submit" style="font-size: 1.2rem;">
+                                {% if user in post.favourites.all %}
+                                <i class="gold fa-solid fa-star"></i>
                                 {% else %}
-                                <img class="profile_picture_small"
-                                    src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
+                                <i class="black fa-regular fa-star"></i>
                                 {% endif %}
-                                <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a> | {{ post.created_on|date:"M d, Y" }}
-                            </div>
-                            <form class="favourite-form m-0" data-slug="{{ post.slug }}">
-                                {% csrf_token %}
-                                <button class="btn fav-btn p-0" type="submit" style="font-size: 1.2rem;">
-                                    {% if user in post.favourites.all %}
-                                    <i class="gold fa-solid fa-star"></i>
-                                    {% else %}
-                                    <i class="black fa-regular fa-star"></i>
-                                    {% endif %}
-                                </button>
-                            </form>
-                        </div>
+                            </button>
+                        </form>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <a href="{{ post.get_absolute_url }}">
-                                <h3>{{ post.title|upper }}</h3>
-                            </a>
-                        </div>
-                    </div>
+
+                    <a href="{{ post.get_absolute_url }}">
+                        <h3>{{ post.title|upper }}</h3>
+                    </a>
+
                     <p>{{ post.excerpt|safe }}</p>
                 </div>
+
                 <div class="card-footer d-flex justify-content-between">
                     <span>{{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i></span>
                     <span>{{ post.comment_count }} <i class="fa-solid fa-comments"></i></span>
                 </div>
             </div>
         </div>
-
-        {% if forloop.counter|divisibleby:2 or forloop.last %}
+        {% endfor %}
     </div>
-    {% endif %}
-    {% endfor %}
 
     <!-- Pagination controls -->
     {% if page_obj.has_other_pages %}
@@ -88,9 +81,9 @@
         </ul>
     </div>
     {% endif %}
+
     {% else %}
     <p>No posts found matching your query.</p>
     {% endif %}
-</div>
 </div>
 {% endblock %}

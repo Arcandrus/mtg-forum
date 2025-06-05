@@ -4,57 +4,52 @@
 {% block content %}
 <div class="row content scroll">
     <h1 class="text-center">My Favourite Posts</h1>
-
     {% if page_obj.object_list %}
-    {% for post in page_obj %}
-    {% if forloop.counter0|divisibleby:2 %}
-    <div class="row justify-content-center mb-4">
-        {% endif %}
-
-        <div class="col-md-6 mb-3">
-            <div class="card-small h-100">
-                <div class="card-inner">
-                    <div class="col d-flex justify-content-between align-items-center">
-                        <div>
-                            {% if post.author.profile_picture %}
-                            <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
-                            {% else %}
-                            <img class="profile_picture_small"
-                                src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
-                            {% endif %}
-                            <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a> | {{ post.created_on|date:"M d, Y" }}
-                        </div>
-                        <form class="favourite-form m-0" data-slug="{{ post.slug }}">
-                            {% csrf_token %}
-                            <button class="btn fav-btn p-0" type="submit" style="font-size: 1.2rem;">
-                                {% if user in post.favourites.all %}
-                                <i class="gold fa-solid fa-star"></i>
+        <div class="row justify-content-center mb-4">
+            {% for post in page_obj %}
+            <div class="col-md-6 mb-4 d-flex">
+                <div class="card-small w-100">
+                    <div class="card-inner">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if post.author.profile_picture %}
+                                <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
                                 {% else %}
-                                <i class="black fa-regular fa-star"></i>
+                                <img class="profile_picture_small"
+                                    src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
                                 {% endif %}
-                            </button>
-                        </form>
-                    </div>
-                    <div class="row">
-                        <div class="col">
+                                <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a> |
+                                {{ post.created_on|date:"M d, Y" }}
+                            </div>
+                            <form class="favourite-form m-0" data-slug="{{ post.slug }}">
+                                {% csrf_token %}
+                                <button class="btn fav-btn p-0" type="submit" style="font-size: 1.2rem;">
+                                    {% if user in post.favourites.all %}
+                                    <i class="gold fa-solid fa-star"></i>
+                                    {% else %}
+                                    <i class="black fa-regular fa-star"></i>
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </div>
+
+                        <div>
                             <a href="{% url 'post_detail' post.slug %}">
                                 <h3>{{ post.title|upper }}</h3>
                             </a>
                         </div>
+
+                        <p>{{ post.excerpt|safe }}</p>
                     </div>
-                    <p>{{ post.excerpt|safe }}</p>
-                </div>
-                <div class="card-footer d-flex justify-content-between">
-                    <span>{{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i></span>
-                    <span>{{ post.comment_count }} <i class="fa-solid fa-comments"></i></span>
+                    <div class="card-footer d-flex justify-content-between">
+                        <span>{{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i></span>
+                        <span>{{ post.comment_count }} <i class="fa-solid fa-comments"></i></span>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-
-        {% if forloop.counter|divisibleby:2 or forloop.last %}
-    </div>
     {% endif %}
-    {% endfor %}
 
     <!-- Pagination controls -->
     {% if page_obj.has_other_pages %}
@@ -87,9 +82,5 @@
     </div>
     {% endif %}
     <!-- End pagination -->
-
-    {% else %}
-    <p>You haven't favourited any posts yet.</p>
-    {% endif %}
 </div>
 {% endblock %}

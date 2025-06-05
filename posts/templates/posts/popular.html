@@ -12,90 +12,83 @@
             <a href="{% url 'popular_posts' %}?period=all" class="{% if period == 'all' %}active{% endif %}">All Time</a>
         </div>
     </div>
-        {% if page_obj %}
-            {% for post in page_obj %}
-                {% if forloop.counter0|divisibleby:2 %}
-                <div class="row justify-content-center mb-4">
-                {% endif %}
 
-                <div class="col-md-6 mb-3">
-                    <div class="card-small h-100">
-                        <div class="card-inner">
-                            <div class="row mb-2">
-                                <div class="col d-flex justify-content-between align-items-center">
-                                    <div>
-                                        {% if post.author.profile_picture %}
-                                        <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
-                                        {% else %}
-                                        <img class="profile_picture_small"
-                                            src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
-                                        {% endif %}
-                                        <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a> | {{ post.created_on|date:"M d, Y" }}
-                                    </div>
-                                    <form class="favourite-form m-0" data-slug="{{ post.slug }}">
-                                        {% csrf_token %}
-                                        <button class="btn fav-btn p-0" type="submit" style="font-size: 1.2rem;">
-                                            {% if user in post.favourites.all %}
-                                            <i class="gold fa-solid fa-star"></i>
-                                            {% else %}
-                                            <i class="black fa-regular fa-star"></i>
-                                            {% endif %}
-                                        </button>
-                                    </form>
-                                </div>
+        {% if page_obj %}
+        <div class="row justify-content-center mb-4">
+            {% for post in page_obj %}
+            <div class="col-md-6 mb-4 d-flex">
+                <div class="card-small w-100">
+                    <div class="card-inner">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                {% if post.author.profile_picture %}
+                                <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
+                                {% else %}
+                                <img class="profile_picture_small"
+                                    src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
+                                {% endif %}
+                                <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a> |
+                                {{ post.created_on|date:"M d, Y" }}
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <a href="{% url 'post_detail' post.slug %}">
-                                        <h3>{{ post.title | upper }}</h3>
-                                    </a>
-                                </div>
-                            </div>
-                            <p>{{ post.excerpt | safe }}</p>
+                            <form class="favourite-form m-0" data-slug="{{ post.slug }}">
+                                {% csrf_token %}
+                                <button class="btn fav-btn p-0" type="submit" style="font-size: 1.2rem;">
+                                    {% if user in post.favourites.all %}
+                                    <i class="gold fa-solid fa-star"></i>
+                                    {% else %}
+                                    <i class="black fa-regular fa-star"></i>
+                                    {% endif %}
+                                </button>
+                            </form>
                         </div>
-                        <div class="card-footer d-flex justify-content-between">
-                            <span>{{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i></span>
-                            <span>{{ post.comment_count }} <i class="fa-solid fa-comments"></i></span>
-                        </div>
+
+                        <a href="{% url 'post_detail' post.slug %}">
+                            <h3>{{ post.title|upper }}</h3>
+                        </a>
+
+                        <p>{{ post.excerpt|safe }}</p>
+                    </div>
+
+                    <div class="card-footer d-flex justify-content-between">
+                        <span>{{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i></span>
+                        <span>{{ post.comment_count }} <i class="fa-solid fa-comments"></i></span>
                     </div>
                 </div>
-
-                {% if forloop.counter|divisibleby:2 or forloop.last %}
-                </div>
-                {% endif %}
-            {% endfor %}
-
-            <!-- Pagination controls -->
-            {% if page_obj.has_other_pages %}
-            <div class="pagination justify-content-center mt-4">
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?{% if period %}period={{ period }}&{% endif %}page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
-                    </li>
-                    {% endif %}
-
-                    {% for num in page_obj.paginator.page_range %}
-                    {% if page_obj.number == num %}
-                    <li class="page-item active">
-                        <span class="page-link">{{ num }}</span>
-                    </li>
-                    {% else %}
-                    <li class="page-item">
-                        <a class="page-link" href="?{% if period %}period={{ period }}&{% endif %}page={{ num }}">{{ num }}</a>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
-
-                    {% if page_obj.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?{% if period %}period={{ period }}&{% endif %}page={{ page_obj.next_page_number }}">Next &raquo;</a>
-                    </li>
-                    {% endif %}
-                </ul>
             </div>
-            {% endif %}
-            <!-- End pagination -->
+            {% endfor %}
+        </div>
+
+        <!-- Pagination controls -->
+        {% if page_obj.has_other_pages %}
+        <div class="pagination justify-content-center mt-4">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% if period %}period={{ period }}&{% endif %}page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+                </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% if period %}period={{ period }}&{% endif %}page={{ num }}">{{ num }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% if period %}period={{ period }}&{% endif %}page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+        <!-- End pagination -->
 
         {% else %}
         <p>No posts found for this period.</p>
