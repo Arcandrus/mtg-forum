@@ -1,24 +1,24 @@
 function applyResponsiveClass() {
-  const body = document.body;
-  const width = window.visualViewport ? window.visualViewport.width : window.innerWidth;
-  const isTouchLandscape = window.matchMedia("(orientation: landscape) and (pointer: coarse)").matches;
+    const body = document.body;
+    const width = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+    const isTouchLandscape = window.matchMedia("(orientation: landscape) and (pointer: coarse)").matches;
 
-  body.classList.remove('mobile-layout', 'medium-layout', 'default-layout');
+    body.classList.remove('mobile-layout', 'medium-layout', 'default-layout');
 
-  if (width <= 768) {
-    body.classList.add('mobile-layout');
-  } else if (width > 768 && isTouchLandscape) {
-    body.classList.add('mobile-layout');
-  } else if (width > 768 && width < 1200) {
-    body.classList.add('medium-layout');
-  } else {
-    body.classList.add('default-layout');
-  }
+    if (width <= 768) {
+        body.classList.add('mobile-layout');
+    } else if (width > 768 && isTouchLandscape) {
+        body.classList.add('mobile-layout');
+    } else if (width > 768 && width < 1200) {
+        body.classList.add('medium-layout');
+    } else {
+        body.classList.add('default-layout');
+    }
 }
 
 window.addEventListener('load', () => {
-  // Delay to let viewport settle
-  setTimeout(applyResponsiveClass, 100);
+    // Delay to let viewport settle
+    setTimeout(applyResponsiveClass, 100);
 });
 
 window.addEventListener('resize', applyResponsiveClass);
