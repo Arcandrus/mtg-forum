@@ -61,51 +61,99 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Edit comments functionality: handles loading comment content into a modal form with Summernote editor
-document.addEventListener('DOMContentLoaded', () => {
-    const editModal = document.getElementById('editCommentModal'); // Modal element for editing
-    const editForm = document.getElementById('editCommentForm'); // Form inside the modal
-    const editContent = document.getElementById('editCommentContent'); // Textarea for comment content in modal
-    const editParent = document.getElementById('editCommentParent'); // Hidden input for parent comment ID in modal
+// Edit comment: loads an inline summernote form to allow users to edit the comment
+document.addEventListener('DOMContentLoaded', function () {
+    // When an edit-comment-btn is clicked
+    document.addEventListener('click', function (e) {
+        const editBtn = e.target.closest('.edit-comment-btn, .edit-reply-btn');
+        if (editBtn) {
+            console.log('Edit button clicked');
+            const commentId = editBtn.getAttribute('data-comment-id');
+            const displayDiv = document.getElementById(`comment-display-${commentId}`);
 
-    // Variables to temporarily store current comment data to edit
-    let pendingContent = '';  
-    let pendingCommentId = ''; 
-    let pendingParentId = '';  
+            if (!displayDiv) {
+                console.error('Display div not found for comment id:', commentId);
+                return;
+            }
 
-    // Initialize Summernote editor when modal is shown
-    $(editModal).on('shown.bs.modal', function () {
-        $(editContent).summernote({
-            height: 150, // Set editor height
-            focus: true  // Automatically focus the editor
-        });
+            // Remove any existing edit form before inserting a new one
+            const existingForm = displayDiv.querySelector('form.comment-edit-form');
+            if (existingForm) {
+                existingForm.remove();
+                // Also restore original content if any
+                const originalContent = displayDiv.getAttribute('data-original-content');
+                if (originalContent !== null) {
+                    displayDiv.innerHTML = originalContent;
+                }
+            }
 
-        // Set the editor content to the comment text stored in pendingContent
-        $(editContent).summernote('code', pendingContent);
+            // Save the current content before replacing it with the form
+            displayDiv.setAttribute('data-original-content', displayDiv.innerHTML);
 
-        // Set the form's action URL dynamically to submit the edited comment
-        editForm.action = `/comments/edit/${pendingCommentId}/`;
-
-        // Set the hidden parent ID input value in the form
-        editParent.value = pendingParentId || '';
+            fetch(`/comment/${commentId}/edit/`)
+                .then(res => {
+                    if (!res.ok) throw new Error('Failed to load edit form');
+                    return res.text();
+                })
+                .then(html => {
+                    displayDiv.innerHTML = html;
+                })
+                .catch(err => console.error('Fetch error loading edit form:', err));
+        }
     });
 
-    // Clean up Summernote editor and reset form when modal is hidden
-    $(editModal).on('hidden.bs.modal', function () {
-        $(editContent).summernote('destroy'); // Destroy the Summernote editor instance
-        editForm.action = '';                  // Reset form action
-        pendingContent = '';                   // Clear temporary variables
-        pendingCommentId = '';
-        pendingParentId = '';
-        editParent.value = '';                 // Clear hidden parent input
+    // When comment-edit-form is submitted
+    document.addEventListener('submit', function (e) {
+        const form = e.target;
+        if (form.classList.contains('comment-edit-form')) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const commentId = form.getAttribute('data-comment-id');
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                },
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // Replace with updated content (no form)
+                        document.getElementById(`comment-display-${commentId}`).innerHTML = data.updated_content;
+                    } else {
+                        console.error('Form submission error:', data.errors);
+                        // Optionally display errors inside the form
+                    }
+                })
+                .catch(err => console.error('Fetch error submitting comment edit:', err));
+        }
     });
 
-    // Set pending comment data (content, comment ID, parent ID) when an edit button is clicked
-    document.querySelectorAll('.edit-comment-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            pendingCommentId = button.getAttribute('data-comment-id'); // Get comment ID
-            pendingContent = button.getAttribute('data-content');      // Get comment content
-            pendingParentId = button.getAttribute('data-parent-id') || ''; // Get parent ID, or empty
-        });
+    // Cancel edit button
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('cancel-comment-edit')) {
+            e.preventDefault();
+
+            const btn = e.target;
+            const commentId = btn.getAttribute('data-comment-id');
+            const displayDiv = document.getElementById(`comment-display-${commentId}`);
+
+            if (!displayDiv) {
+                console.error('Display div not found for comment id:', commentId);
+                return;
+            }
+
+            // Restore original comment content saved on data attribute
+            const originalContent = displayDiv.getAttribute('data-original-content');
+            if (originalContent !== null) {
+                displayDiv.innerHTML = originalContent;
+            } else {
+                // fallback: reload page if no saved content
+                location.reload();
+            }
+        }
     });
 });
