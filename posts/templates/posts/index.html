@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-8">
                                 <div>{% if post.author.profile_picture %}
-                                    <img class="profile_picture_small" src="{{ post.author.profile_picture.url }}">
+                                    <img class="profile_picture_small" alt="Profile Picture" src="{{ post.author.profile_picture.url }}">
                                     {% else %}
                                     <img class="profile_picture_small"
                                         src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
@@ -28,7 +28,7 @@
                                     <span class="me-2">{{ post.get_category_display }}</span>
                                     <form class="favourite-form" data-slug="{{ post.slug }}">
                                         {% csrf_token %}
-                                        <button class="btn fav-btn p-0" type="submit" style="font-size: 1.2rem;">
+                                        <button class="btn fav-btn p-0" aria-label="Favourite Button" type="submit" style="font-size: 1.2rem;">
                                             {% if user in post.favourites.all %}
                                             <i class="gold fa-solid fa-star"></i>
                                             {% else %}
@@ -56,7 +56,7 @@
                         {% if user.is_authenticated %}
                         <form class="like-form" data-ajax="true" data-slug="{{ post.slug }}" method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="btn like-btn">
+                            <button type="submit" aria-label="Like Button" class="btn like-btn">
                                 {% if user in post.likes.all %}
                                 <i class="blue fa-solid fa-thumbs-up"></i>
                                 {% else %}
