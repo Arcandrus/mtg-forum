@@ -5,11 +5,24 @@
     <div class="text-center">
         <h1>Popular Posts</h1>
         {% if user.is_authenticated %}
-        <div class="filter-links pb-2">
-            <a href="{% url 'popular_posts' %}?period=24h" class="{% if period == '24h' %}active{% endif %}">Last 24 Hours</a> |
-            <a href="{% url 'popular_posts' %}?period=7d" class="{% if period == '7d' %}active{% endif %}">Last 7 Days</a> |
-            <a href="{% url 'popular_posts' %}?period=30d" class="{% if period == '30d' %}active{% endif %}">Last 30 Days</a> |
-            <a href="{% url 'popular_posts' %}?period=all" class="{% if period == 'all' %}active{% endif %}">All Time</a>
+        <div class="nav-wrapper">
+            <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+                Select Period
+            </button>
+            <ul id="nav-menu" class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'popular_posts' %}?period=24h" class="{% if period == '24h' %}active{% endif %}" role="menuitem">Last 24 Hours</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'popular_posts' %}?period=7d" class="{% if period == '7d' %}active{% endif %}" role="menuitem">Last 7 Days</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'popular_posts' %}?period=30d" class="{% if period == '30d' %}active{% endif %}" role="menuitem">Last 30 Days</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'popular_posts' %}?period=all" class="{% if period == 'all' %}active{% endif %}" role="menuitem">All Time</a>
+                </li>
+            </ul>
         </div>
     </div>
 

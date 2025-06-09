@@ -3,22 +3,29 @@
 {% block content %}
 <div class="scroll">
     <h2 class="text-center">Posts by {{ profile_user.username }}</h2>
-    <ul class="nav justify-content-center">
-        {% with username=profile_user.username %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' username %}">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'user_posts' username %}">Posts by {{ username }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'user_commented_posts' username %}">Commented Posts</a>
-        </li>
-        {% endwith %}
-    </ul>
+        <div class="row">
+            <div class="nav-wrapper">
+                <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+                Menu
+                </button>
+                <ul id="nav-menu" class="nav justify-content-center">
+                {% with username=profile_user.username %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' username %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_posts' username %}">Posts by {{ username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_commented_posts' username %}">Commented Posts</a>
+                </li>
+                {% endwith %}
+                </ul>
+            </div>
+        </div>
     {% if user.is_authenticated %}
     {% if posts %}
-    <div class="list-group post_list">
+    <div class="list-group post-list">
         {% for post in posts %}
         <a href="{% url 'post_detail' post.slug %}" class="list-group-item list-group-item-action">
             <div class="row align-items-center mb-3 mt-3">

@@ -5,7 +5,11 @@
     <div class="mx-auto" style="max-width: 800px;">
         <h2 class="text-center">User Profile for <strong>{{ profile_user.username }}</strong></h2>
         <div class="row">
-            <ul class="nav justify-content-center">
+            <div class="nav-wrapper">
+                <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+                Menu
+                </button>
+                <ul id="nav-menu" class="nav justify-content-center">
                 {% with username=profile_user.username %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profile' username %}">Profile</a>
@@ -17,7 +21,8 @@
                     <a class="nav-link" href="{% url 'user_commented_posts' username %}">Commented Posts</a>
                 </li>
                 {% endwith %}
-            </ul>
+                </ul>
+            </div>
         </div>
 
         <div class="row mt-4 justify-content-center align-items-center">
