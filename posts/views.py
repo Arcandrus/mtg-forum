@@ -208,21 +208,36 @@ def delete_post(request, slug):
 @login_required
 def edit_comment(request, comment_id):
     """
-    Allow the author of a comment to edit it via POST request.
-    On success, redirects back to the associated post detail.
-    Only POST method is allowed.
+    Allow the author of a comment to edit its content via a form.
+    Handles POST submissions to update the comment and returns JSON response with
+    success status and updated content. On GET, renders the edit form HTML.
     """
-    comment = get_object_or_404(Comment, id=comment_id, author=request.user)
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.user != comment.author:
+        return JsonResponse({'success': False, 'error': 'Unauthorized'}, status=403)
 
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            messages.success(request, "Comment updated successfully.")
-            return redirect('post_detail', slug=comment.post.slug)
 
-    return HttpResponseNotAllowed(['POST'])
+            # Return JSON response like your post_edit view
+            return JsonResponse({
+                'success': True,
+                'updated_content': comment.content,
+                'updated_on': django_date_format(localtime(comment.updated_on), 'N j, Y, P') if hasattr(comment, 'updated_on') else ''
+            })
 
+        return JsonResponse({'success': False, 'errors': form.errors})
+
+    else:
+        form = CommentForm(instance=comment)
+        html = render_to_string('posts/edit_comment.html', {
+            'form': form,
+            'comment': comment,
+        }, request=request)
+        return HttpResponse(html)
+    
 
 @login_required
 def delete_comment(request, comment_id):

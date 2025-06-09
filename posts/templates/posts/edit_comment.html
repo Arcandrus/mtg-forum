@@ -1,10 +1,11 @@
-{% extends "base.html" %}
-{% block content %}
-<h2>Edit Comment</h2>
-<form method="POST">
+<form id="editCommentForm" class="comment-edit-form" method="post" action="{% url 'edit_comment' comment.id %}"
+    data-comment-id="{{ comment.id }}">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-    <a href="{% url 'post_detail' comment.post.slug %}" class="btn btn-secondary">Cancel</a>
+    {{ form.content }}
+    {{ form.parent }}
+    <div class="right align-content-center">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="cancel-comment-edit btn btn-secondary"
+            data-comment-id="{{ comment.id }}">Cancel</button>
+    </div>
 </form>
-{% endblock %}

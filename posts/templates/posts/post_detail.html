@@ -30,7 +30,8 @@
                                     <!-- Right side: edit/delete buttons -->
                                     {% if user == post.author %}
                                     <div class="d-flex gap-2">
-                                        <button id="edit-post-btn" class="btn btn-outline-primary btn-sm" data-slug="{{ post.slug }}">
+                                        <button id="edit-post-btn" class="btn btn-outline-primary btn-sm"
+                                            data-slug="{{ post.slug }}">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
                                         <form action="{% url 'delete_post' post.slug %}" method="post"
@@ -88,74 +89,31 @@
                             <span class="like-count">
                                 {{ post.total_likes }} like{{ post.total_likes | pluralize}}
                             </span>
-                                <div class="right">
-                                    {{ post.comment_count }} comment{{ post.comment_count | pluralize }}</i>
-                                    <button type="button" class="reply-btn btn" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                        <i class="fa-solid fa-comments"></i>
-                                    </button>
-                                </div>
-                                {% else %}
-                                {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
-                                <div class="right">
-                                    {{ post.comment_count }} comment{{ post.comment_count | pluralize }}<i class="p-2 fa-solid fa-comments"></i>
-                                </div>
-                            {% endif %}
+                            <div class="right">
+                                {{ post.comment_count }} comment{{ post.comment_count | pluralize }}</i>
+                                <button type="button" class="reply-btn btn" data-bs-toggle="modal"
+                                    data-bs-target="#commentModal">
+                                    <i class="fa-solid fa-comments"></i>
+                                </button>
                             </div>
+                            {% else %}
+                            {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                            <div class="right">
+                                {{ post.comment_count }} comment{{ post.comment_count | pluralize }}<i
+                                    class="p-2 fa-solid fa-comments"></i>
+                            </div>
+                            {% endif %}
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    <div class="comments justify-content-center">
-        <div class="row col-12">
-            {% for comment in comments %}
-            <div class="comment-thread" id="comment-{{ comment.id }}">
-                <div class="comment">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <div>
-                            <strong>
-                                <a href="{% url 'profile' comment.author.username %}">
-                                    {{ comment.author.username }}
-                                </a>
-                            </strong> said:
-                        </div>
-                        <small class="text-muted">{{ comment.created_on }}</small>
-                    </div>
-                    <span class="comment-content">{{ comment.content|safe }}</span>
-                    <div class="d-flex gap-2 align-items-center">
-                        <button type="button" class="btn reply-btn btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#commentModal" data-comment-id="{{ comment.id }}">
-                            <i class="fa-solid fa-reply"></i>
-                        </button>
-                        {% if comment.replies.exists %}
-                        <button class="btn btn-link btn-sm toggle-replies" type="button"
-                            data-bs-target="#replies-{{ comment.id }}" aria-expanded="false"
-                            aria-controls="replies-{{ comment.id }}">
-                            Show Replies ({{ comment.replies.count }})
-                        </button>
-                        {% endif %}
-                        {% if user == comment.author %}
-                        <button class="btn btn-sm btn-outline-primary edit-comment-btn" data-bs-toggle="modal"
-                            data-bs-target="#editCommentModal" data-comment-id="{{ comment.id }}"
-                            data-content="{{ comment.content|safe }}" {% if comment.parent %}
-                            data-parent-id="{{ comment.parent.id }}" {% else %} data-parent-id="" {% endif %}>
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <form action="{% url 'delete_comment' comment.id %}" method="post" style="display:inline;"
-                            onsubmit="return confirm('Are you sure you want to delete this comment? This cannot be undone.')">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                <i class="fa-solid fa-square-xmark"></i>
-                            </button>
-                        </form>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="collapse replies-container" id="replies-{{ comment.id }}">
-                    {% include 'posts/comment_replies.html' with replies=comment.replies.all parent_id=comment.id %}
-                </div>
+        <div class="comments justify-content-center">
+            <div class="row col-12">
+                {% for comment in comments %}
+                    {% include 'posts/comments.html' with comments=comment.all slug=post.slug %}
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 </div>
@@ -181,26 +139,4 @@
     </div>
 </div>
 
-<!-- Edit Comment Modal -->
-<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="editCommentForm" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="parent" id="editCommentParent" value="">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editCommentModalLabel">Edit Comment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <textarea name="content" id="editCommentContent" class="summernote"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-{% endblock content %}
+{% endblock %}

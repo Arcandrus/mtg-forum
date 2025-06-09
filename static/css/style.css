@@ -631,6 +631,12 @@ ul.pagination li {
     margin: 0 0.2rem;
 }
 
+/* Ensure Summernote popovers and toolbars display correctly inside Bootstrap modals */
+.note-popover,
+.note-editor {
+    z-index: 1056 !important; /* Bootstrap modal z-index is 1055 */
+}
+
 /* Responsive styles for medium screens (up to 1200px) */
 @media (max-width: 1200px) {
 
