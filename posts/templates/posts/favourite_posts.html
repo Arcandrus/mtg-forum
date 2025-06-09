@@ -2,9 +2,10 @@
 {% load static %}
 
 {% block content %}
-<div class="row scroll">
-    <h1 class="text-center">My Favourite Posts</h1>
-    {% if page_obj.object_list %}
+<div class="container-fluid scroll">
+    <div class="row content justify-content-center mb-4">
+        <h1 class="text-center">My Favourite Posts</h1>
+        {% if page_obj.object_list %}
         <div class="row content justify-content-center mb-4">
             {% for post in page_obj %}
             <div class="col-md-6 mb-4 d-flex">
@@ -49,38 +50,39 @@
             </div>
             {% endfor %}
         </div>
-    {% endif %}
+        {% endif %}
 
-    <!-- Pagination controls -->
-    {% if page_obj.has_other_pages %}
-    <div class="pagination justify-content-center mt-4">
-        <ul class="pagination">
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
-            </li>
-            {% endif %}
+        <!-- Pagination controls -->
+        {% if page_obj.has_other_pages %}
+        <div class="pagination justify-content-center mt-4">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+                </li>
+                {% endif %}
 
-            {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-            <li class="page-item active">
-                <span class="page-link">{{ num }}</span>
-            </li>
-            {% else %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-            </li>
-            {% endif %}
-            {% endfor %}
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
 
-            {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
-            </li>
-            {% endif %}
-        </ul>
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+        <!-- End pagination -->
     </div>
-    {% endif %}
-    <!-- End pagination -->
 </div>
-{% endblock %}
+    {% endblock %}

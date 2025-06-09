@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4 content scroll">
+<div class="scroll">
     <h2 class="text-center">Posts Commented on by {{ profile_user.username }}</h2>
     <ul class="nav justify-content-center">
         {% with username=profile_user.username %}

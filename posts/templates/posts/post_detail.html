@@ -30,7 +30,7 @@
                                     <!-- Right side: edit/delete buttons -->
                                     {% if user == post.author %}
                                     <div class="d-flex gap-2">
-                                        <button id="edit-post-btn" class="btn btn-outline-primary btn-sm"
+                                        <button id="edit-post-btn" class="btn btn-primary btn-sm"
                                             data-slug="{{ post.slug }}">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
@@ -69,7 +69,7 @@
                         <div id="post-content">
                             <p>{{ post.content | safe }}</p>
                         </div>
-                        <div id="post-updated-on" style="font-size: small; color: gray;">
+                        <div id="post-updated-on" class="text-muted">
                             {% if post.is_edited %}
                             Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
                             {% endif %}

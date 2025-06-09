@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4 content scroll">
+<div class="scroll">
     <div class="mx-auto" style="max-width: 800px;">
         <h2 class="text-center">User Profile for <strong>{{ profile_user.username }}</strong></h2>
         <div class="row">
@@ -20,16 +20,16 @@
             </ul>
         </div>
 
-        <div class="scroll content row align-items-center">
+        <div class="row mt-4 justify-content-center align-items-center">
             <!-- Profile Picture -->
-            <div class="col-md-4 text-center mb-3 mb-md-0">
+            <div class="col-md-6 text-center mb-3 mb-md-0">
                 <img class="profile_picture_main img-fluid"
                     src="{{ profile_user.profile_picture.url|default:'/static/images/default_profile.png' }}"
                     alt="Profile Picture">
             </div>
 
             <!-- Profile Details -->
-            <div class="col-md-8">
+            <div class="col-md-6">
                 {% if user.is_authenticated %}
                 {% if profile_user == user %}
                 <p><strong>Full Name:</strong> {{ profile_user.full_name | default:"Not set" }}</p>

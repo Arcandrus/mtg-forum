@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Gold solid star if favourited, regular star if not
                     button.innerHTML = data.favourited 
                         ? '<i class="gold fa-solid fa-star"></i>' 
-                        : '<i class="fa-regular fa-star"></i>';
+                        : '<i class="black fa-regular fa-star"></i>';
 
                     // Optionally, update count if included in response
                     if (countSpan && data.favourite_count !== undefined) {
