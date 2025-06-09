@@ -14,7 +14,7 @@ html {
 /* Link Styling*/
 a {
     text-decoration: none;
-    color: #999999;
+    color: #fff;
 }
 
 a:hover {
@@ -144,7 +144,7 @@ h2 {
 .sidebar {
     max-width: 20%;
     min-width: 20%;
-    background-color: #999;
+    background-color: #555;
     padding: 40px;
     box-sizing: border-box;
     margin-top: 0;
@@ -153,10 +153,16 @@ h2 {
     overflow-y: auto;
 }
 
+.sidebar i {
+    color: #999 !important;
+}
+
 /* Profile section in sidebar */
 .profile_container {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 15px;
     margin-bottom: 30px;
 }
@@ -171,19 +177,94 @@ h2 {
 }
 
 .profile_details {
-    text-align: left;
     flex: 1;
 }
 
 .profile_details p {
     margin: 4px 0;
     font-size: 14px;
-    color: #333;
+    color: white;
 }
 
 .profile_details i {
-    color: #555;
+    color: #999;
     margin-right: 6px;
+}
+
+.nav-toggle {
+    display: none;
+}
+
+/* Nav style */
+.nav-wrapper {
+    position: relative;
+    height: 80px;
+}
+
+.nav-toggle {
+    display: block;
+    width: 200px;
+    background-color: #666;
+    color: white;
+    border: none;
+    padding: 0.75em;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
+.nav {
+    position: relative;
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    margin: 0 auto;
+    width: 200px;
+    border-radius: 8px;
+    transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+}
+
+.nav.show {
+    margin: 0 auto;
+    max-height: 500px;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    width: 200px;
+    border-radius: 8px;
+}
+
+.nav li {
+    border-bottom: 1px solid #ddd;
+}
+
+.nav li:last-child {
+    border-bottom: none;
+}
+
+.nav li:first-child {
+    border-top: 1px solid #ddd;
+}
+
+.nav-link {
+    background-color: #666;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-link:hover {
+    text-decoration: none;
+    color: #bbb;
+}
+
+.nav-link:active {
+    text-decoration: none;
+    color: #bbb;
 }
 
 /* Navigation list in sidebar */
@@ -200,7 +281,7 @@ h2 {
 .sidebar-nav ul li a {
     display: flex;
     align-items: center;
-    color: #333;
+    color: white;
     text-decoration: none;
     font-weight: 600;
     font-size: 15px;
@@ -243,7 +324,7 @@ h2 {
 
 /* Profile Lists */
 .list-group-item {
-    color: #999;
+    color: white;
     background: #333;
     border-radius: 8px;
     border: 1px solid #999;
@@ -517,35 +598,14 @@ main {
 }
 
 /* Post listing container */
-.post_list {
-    max-width: 700px;
+.post-list {
+    max-width: 80%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
     padding-right: 15px;
     width: 100%;
     box-sizing: border-box;
-}
-
-/* Separator styling in nav menu */
-.nav-item:not(:last-child) .nav-link::after {
-    content: " |";
-    padding-left: 30px;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #999999;
-}
-
-.nav-link:hover {
-    text-decoration: none;
-    color: #bbb;
-}
-
-.nav-link:active {
-    text-decoration: none;
-    color: #bbb;
 }
 
 /* Signup form styling */
@@ -623,6 +683,10 @@ footer {
     /* Ensures footer stays above other content */
 }
 
+footer>p {
+    margin: 0;
+}
+
 /* Hamburger menu button - initially hidden and positioned top-right */
 .hamburger {
     position: absolute;
@@ -693,7 +757,7 @@ ul.pagination li {
     border: 1px solid #999;
 }
 
-.active > .page-link {
+.active>.page-link {
     color: white;
     background: #666;
     border: 1px solid #999;
@@ -702,173 +766,134 @@ ul.pagination li {
 /* Ensure Summernote popovers and toolbars display correctly inside Bootstrap modals */
 .note-popover,
 .note-editor {
-    z-index: 1056 !important; /* Bootstrap modal z-index is 1055 */
+    z-index: 1056 !important;
+    /* Bootstrap modal z-index is 1055 */
 }
 
-/* Responsive styles for medium screens (up to 1200px) */
-@media (max-width: 1200px) {
-
-    /* Profile container stacks vertically, center aligned */
-    .profile_container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    /* Profile picture size limited, circular shape */
-    .profile_picture img {
-        max-width: 150px;
-        width: 100%;
-        height: auto;
-        border-radius: 50%;
-        /* Make image circular */
-    }
-
-    /* Profile details take full width on smaller screens */
-    .profile_details {
-        width: 100%;
-    }
+body.medium-layout .sidebar {
+    padding: 30px 8px 0 8px;
 }
 
 /* Responsive styles for smaller devices (up to 768px) */
-@media (max-width: 768px) {
-    /* Reduce base font size */
-    html {
-        font-size: smaller;
-    }
+body.mobile-layout html {
+    font-size: smaller;
+}
 
-    a {
-        text-decoration: underline;
-    }
+body.mobile-layout a {
+    text-decoration: underline;
+}
 
-    .icon {
-        margin-left: 20px;
-    }
+body.mobile-layout .post-list {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-    /* Cards take full width */
-    .card {
-        width: 100%;
-    }
+body.mobile-layout .list-group-item {
+    width: 100%;
+}
 
-    .card-small {
-        margin: 0;
-    }
+body.mobile-layout .icon {
+    margin-left: 20px;
+}
 
-    /* Header adjustments */
-    header {
-        justify-content: flex-start;
-        /* Align header content to left */
-        padding: 0;
-    }
+body.mobile-layout .card {
+    width: 100%;
+}
 
-    /* Remove header spacer width */
-    .header-spacer {
-        width: 0;
-    }
+body.mobile-layout .card-small {
+    margin: 0;
+}
 
-    /* Header title positioning */
-    header h1 {
-        position: static;
-        /* Remove absolute positioning */
-        transform: none;
-        /* Remove transform */
-        text-align: left;
-        margin-left: 20px;
-        font-size: 1.5rem;
-    }
+body.mobile-layout header {
+    justify-content: flex-start;
+    padding: 0;
+}
 
-    /* Pagination centering */
-    ul.pagination {
-        justify-content: center;
-    }
+body.mobile-layout .header-spacer {
+    width: 0;
+}
 
-    /* Pagination items take 5% width, center text, add bottom margin */
-    ul.pagination li {
-        flex-basis: 5%;
-        text-align: center;
-        margin-bottom: 0.4rem;
-    }
+body.mobile-layout header h1 {
+    position: static;
+    transform: none;
+    text-align: left;
+    margin-left: 20px;
+    font-size: 1.5rem;
+}
 
-    /* Sidebar styling for mobile: fixed, hidden offscreen initially */
-    .sidebar {
-        position: fixed;
-        top: 80px;
-        /* Below header */
-        right: 0;
-        left: auto;
-        transform: translateX(100%);
-        /* Move sidebar off screen */
-        width: 60vw;
-        height: calc(100% - 80px);
-        /* Full height minus header */
-        z-index: 15;
-        padding: 20px;
-        overflow-y: auto;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease-in-out;
-        /* Smooth slide in/out */
-        max-width: none;
-        /* Remove max width constraint */
-    }
+body.mobile-layout ul.pagination {
+    justify-content: center;
+}
 
-    /* Sidebar visible state: slide back into view */
-    .sidebar.open {
-        transform: translateX(0);
-    }
+body.mobile-layout ul.pagination li {
+    flex-basis: 5%;
+    text-align: center;
+    margin-bottom: 0.4rem;
+}
 
-    /* Show hamburger menu button on small screens */
-    .hamburger {
-        display: block;
-    }
+body.mobile-layout .sidebar {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    left: auto;
+    transform: translateX(100%);
+    width: 60vw;
+    height: calc(100% - 80px);
+    z-index: 15;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    max-width: none;
+}
 
-    /* Page wrapper stacks vertically, no padding/margin */
-    .page-wrapper {
-        flex-direction: column;
-        padding: 0;
-        margin: 0;
-    }
+body.mobile-layout .sidebar.open {
+    transform: translateX(0);
+}
 
-    /* Content margins adjusted for mobile */
-    .content {
-        margin-top: 30px;
-        margin-bottom: 130px;
-        margin-left: 0;
-        max-width: 100%;
-    }
+body.mobile-layout .hamburger {
+    display: block;
+}
 
-    /* Overlay behind sidebar - hidden by default */
-    #sidebar-overlay {
-        display: none;
-        position: fixed;
-        top: 80px;
-        /* Matches sidebar top */
-        left: 0;
-        width: 100%;
-        height: calc(100% - 80px);
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Semi-transparent black */
-        z-index: 14;
-        /* Below sidebar */
-    }
+body.mobile-layout .page-wrapper {
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+}
 
-    /* Show overlay when active */
-    #sidebar-overlay.active {
-        display: block;
-    }
+body.mobile-layout .content {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    margin-left: 0;
+    max-width: 100%;
+}
+
+body.mobile-layout #sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 80px);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 14;
+}
+
+body.mobile-layout #sidebar-overlay.active {
+    display: block;
 }
 
 /* Responsive tweaks for very small devices (up to 480px) */
-@media (max-width: 480px) {
+body.mobile-layout .search-wrapper input[type="text"] {
+    font-size: 0.9rem;
+    padding: 0.3em 0.4em;
+}
 
-    /* Smaller font and padding for search input */
-    .search-wrapper input[type="text"] {
-        font-size: 0.9rem;
-        padding: 0.3em 0.4em;
-    }
-
-    /* Smaller font and padding for search button */
-    .search-wrapper button {
-        padding: 0.3em 0.6em;
-        font-size: 0.9rem;
-    }
+body.mobile-layout .search-wrapper button {
+    padding: 0.3em 0.6em;
+    font-size: 0.9rem;
 }
