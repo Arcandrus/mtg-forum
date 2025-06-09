@@ -3,8 +3,8 @@
 
 {% block content %}
 <div class="container-fluid scroll">
-    <div class="row content justify-content-center mb-4">
-        <h1 class="text-center">My Favourite Posts</h1>
+    <h1 class="text-center">My Favourite Posts</h1>
+    <div class="row justify-content-center mb-4">
         {% if page_obj.object_list %}
         <div class="row justify-content-center mb-4">
             {% for post in page_obj %}
