@@ -6,72 +6,80 @@
 <!-- index.html content starts here -->
 <div class="container-fluid scroll content">
     <div class="row">
-
         <!-- Blog Entries Column -->
         <div class="col-12 mt-3 left">
             {% for post in object_list %}
-            <div class="row">
-                <div class="card">
-                    <div class="card-inner">
-                        <div class="row">
-                            <div class="col-8">
-                                <div>{% if post.author.profile_picture %}
-                                    <img class="profile_picture_small" alt="Profile Picture" src="{{ post.author.profile_picture.url }}">
-                                    {% else %}
-                                    <img class="profile_picture_small"
-                                        src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
-                                    {% endif %}<strong><a href="{% url 'profile' post.author.username %}">{{post.author.username }}</a></strong>
-                                </div>
-                            </div>
-                            <div class="col-4 d-flex flex-column align-items-end">
-                                <div class="d-flex align-items-center">
-                                    <span class="me-2">{{ post.get_category_display }}</span>
-                                    <form class="favourite-form" data-slug="{{ post.slug }}">
-                                        {% csrf_token %}
-                                        <button class="btn fav-btn p-0" aria-label="Favourite Button" type="submit" style="font-size: 1.2rem;">
-                                            {% if user in post.favourites.all %}
-                                            <i class="gold fa-solid fa-star"></i>
-                                            {% else %}
-                                            <i class="black fa-regular fa-star"></i>
-                                            {% endif %}
-                                        </button>
-                                    </form>
-                                </div>
-                                <div class="mt-1">{{ post.created_on|date:"M d, Y, P" }}</div>
-                            </div>
-                        </div>
-                        <div class="row col-12">
-                            <a href="{% url 'post_detail' post.slug %}">
-                                <h3>{{ post.title|upper }}</h3>
-                            </a>
-                        </div>
-                        <p>{{ post.excerpt | safe }}</p>
-                        <div id="post-updated-on" style="font-size: small; color: gray;">
-                            {% if post.is_edited %}
-                                Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
+            <div class="card">
+                <div class="card-inner">
+                    <div class="top-row d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="profile-info d-flex align-items-center">
+                            {% if post.author.profile_picture %}
+                            <img class="profile_picture_small" alt="Profile Picture"
+                                src="{{ post.author.profile_picture.url }}">
+                            {% else %}
+                            <img class="profile_picture_small"
+                                src="https://res.cloudinary.com/dpbcyiayr/image/upload/v1/samples/cloudinary-icon.jpg">
                             {% endif %}
+                            <strong><a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a></strong>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        {% if user.is_authenticated %}
-                        <form class="like-form" data-ajax="true" data-slug="{{ post.slug }}" method="POST">
+
+                        <form class="favourite-form" data-slug="{{ post.slug }}">
                             {% csrf_token %}
-                            <button type="submit" aria-label="Like Button" class="btn like-btn">
-                                {% if user in post.likes.all %}
-                                <i class="blue fa-solid fa-thumbs-up"></i>
+                            <button class="btn fav-btn p-0" aria-label="Favourite Button" type="submit"
+                                style="font-size: 1.2rem;">
+                                {% if user in post.favourites.all %}
+                                <i class="gold fa-solid fa-star"></i>
                                 {% else %}
-                                <i class="fa-regular fa-thumbs-up"></i>
+                                <i class="black fa-regular fa-star"></i>
                                 {% endif %}
                             </button>
-                            <span class="like-count">
-                                {{ post.total_likes }} like{{ post.total_likes | pluralize}}
-                            </span>
+                        </form>
+                    </div>
+
+                    <div class="second-row d-flex justify-content-between mt-2">
+                        <span>{{ post.created_on|date:"M d, Y, P" }}</span>
+                        <span>{{ post.get_category_display }}</span>
+                    </div>
+
+                    <div class="post-title mt-3">
+                        <a href="{% url 'post_detail' post.slug %}">
+                            <h3>{{ post.title|upper }}</h3>
+                        </a>
+                    </div>
+
+                    <p>{{ post.excerpt | safe }}</p>
+
+                    {% if post.is_edited %}
+                    <small id="post-updated-on" style="color: gray; font-size: small;">
+                        Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
+                    </small>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    {% if user.is_authenticated %}
+                    <form class="like-form" data-ajax="true" data-slug="{{ post.slug }}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" aria-label="Like Button" class="btn like-btn">
+                            {% if user in post.likes.all %}
+                            <i class="blue fa-solid fa-thumbs-up"></i>
                             {% else %}
-                            {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                            <i class="fa-regular fa-thumbs-up"></i>
                             {% endif %}
-                        <div class="right">
-                            {{ post.comment_count }} comment{{ post.comment_count | pluralize }}<i class="p-2 fa-solid fa-comments"></i>
-                        </div>
+                        </button>
+                        <span class="like-count">
+                            {{ post.total_likes }} like{{ post.total_likes|pluralize }}
+                        </span>
+                    </form>
+                    {% else %}
+                    <span>
+                        {{ post.total_likes }} <i class="fa-regular fa-thumbs-up"></i>
+                    </span>
+                    {% endif %}
+
+                    <div class="right">
+                        {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+                        <i class="p-2 fa-solid fa-comments"></i>
                     </div>
                 </div>
             </div>
