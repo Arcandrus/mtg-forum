@@ -586,12 +586,22 @@ The delete button will prompt to user to confirm, and upon confrimation witll de
 #Testing
 
 HTML
+[W3C HTML validator](#https://validator.w3.org) seemed to really struggle with the Django generateed content so I instead validated the raw HTML after Django rendering, which showed no errors
+
+(screenshot of html pass)
 
 CSS
+[W3C CSS Validator](#https://jigsaw.w3.org/css-validator/) showed no errors.
+
+(screenshot of css pass)
 
 JS
+[BeautifyTools JS Validator](#https://beautifytools.com/javascript-validator.php) was used to validate all my js scripts and each returned no errors. I've included one screenshot.
+
+(screenshot of Js pass)
 
 Python
 
+[Pep8 CI](#https://pep8ci.herokuapp.com) was used to validate all *.py files and with the exception of a couple of trailing whitespaces and incorrect spacing, which I then fixed, everything came back clear.
 
 # Credits
