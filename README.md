@@ -15,7 +15,7 @@
 ![](./readme-assets/responsive_ui.png)
 
 ## Demo
-A live demo to the website can be found [here](https://arcandrus.github.io/milestone-2/index.html)
+A live demo to the website can be found [here]([https://mtg-forum-cea7e47cbcff.herokuapp.com/posts/])
 
 # User Stories
 When deciding on what I wanted to add to this project I looked at several soical media and forum style websites and took the greatest amount of inspiration from Reddit. To this effect, I wrote my user stories based on what I considered the cornerstone features of such a platform and split them into two Epics, User Profile and Content Interaction, detailed below, along with the acceptance criteria I decided for each user story. The kanban board for this project can be found [here](https://github.com/users/Arcandrus/projects/4/views/1)
