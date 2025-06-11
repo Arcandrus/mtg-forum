@@ -31,37 +31,35 @@ As a user, I want to create an account so that I can post, comment and interact.
 As a user I want to be able to view a profile page with my information and the ability to see my posted content
 + User can access a profile page
 + Users profile page shows listed content created by the user
-+ User has their own details displayed with certain fields allowing editing (display name)
-
++ User has their own details displayed with certain fields allowing editing (display name)<br><br>
 
 As a user I want to be able to change certain settings to enable me to customise and enjoy my experience better
 + User can reset password
-+ User can delete account
++ User can delete account<br><br>
 
 ### CONTENT INTERACTION:
 
 As a user I want to be able to create posts so I can share my thoughts in the forum
 + User can login and create post
 + User can see a list of their created posts
-+ User can select a category for the post
-
++ User can select a category for the post<br><br>
 
 As a user I want to be able to like and comment on posts so I can express my feelings about the content
 + User can click a like button that tracks the number of total likes
 + User can post a comment to reply to any post
 + User can post a comment in a nested thread to reply to other comments
-+ User can tag a post as a favourite
-
-
-As a user I want to be able to see what posts are popular to enable me to navigate quickly to active posts
-+ User can view popular posts
-+ User can filter by activity in a given time frame (24 hrs / 7 days / 30 days / All Time)
-
-
-As a user I want to be able to view the website on a mobile device to enable me to access the site from any device
-+ Implement responsive design to allow for multiple screen sizes
++ User can tag a post as a favourite<br><br>
 
 As a user I want to be able to edit or delete my own content as needed
 + User can edit posts/ comments as needed
-+ User can delete posts/ comment as needed
++ User can delete posts/ comment as needed<br><br>
+
+As a user I want to be able to see what posts are popular to enable me to navigate quickly to active posts
++ User can view popular posts
++ User can filter by activity in a given time frame (24 hrs / 7 days / 30 days / All Time)<br><br>
+
+As a user I want to be able to view the website on a mobile device to enable me to access the site from any device
++ Implement responsive design to allow for multiple screen sizes<br><br>
+
+
 
