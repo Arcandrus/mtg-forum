@@ -689,7 +689,7 @@ The delete button will prompt to user to confirm, and upon confrimation witll de
 
 ## Validation
 
-HTML
+**HTML** <br>
 [W3C HTML validator](#https://validator.w3.org) seemed to really struggle with the Django generateed content so I instead validated the raw HTML after Django rendering, which showed no errors
 
 <details>
@@ -698,7 +698,7 @@ HTML
 ![](./mtg-forum-assets/pass_html.png)
 </details>
 
-CSS
+**CSS** <br>
 [W3C CSS Validator](#https://jigsaw.w3.org/css-validator/) showed no errors.
 
 <details>
@@ -707,7 +707,7 @@ CSS
 ![](./mtg-forum-assets/pass_css.png)
 </details>
 
-JS
+**JS** <br>
 [BeautifyTools JS Validator](#https://beautifytools.com/javascript-validator.php) was used to validate all my js scripts and each returned no errors. I've included one screenshot, but I ran every script through the validator.
 
 <details>
@@ -716,10 +716,10 @@ JS
 ![](./mtg-forum-assets/js_pass.png)
 </details>
 
-Python
+**Python** <br>
 [Pep8 CI](#https://pep8ci.herokuapp.com) was used to validate all *.py files and with the exception of a couple of trailing whitespaces and incorrect spacing, which I then fixed, everything came back clear.
 
-Lighthouse
+**Lighthouse** <br>
 DevTools Lighthouse Scores. The big problem with the Best Practices score was the third party cookies, most of which were the cloudinary images, and I'm not sure how to make this any better.
 
 <details>
