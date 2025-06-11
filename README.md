@@ -265,17 +265,31 @@ To keep things cohesive and intuative, I had decided on having a sidebar navigat
 
 <details>
    <summary>Screenshot of sidebar</summary>
+   
 ![](./mtg-forum-assets/sidebar.png)
 </details>
 
 The colour scheme I chose was a very calming and simple slate grey and white combination for maximum contrast and clarity while still being easier on the eyes than a plain white background with black text.
 
-(screenshot of color scheme here)
-(color palette here)
+<details>
+   <summary>Color Palette</summary>
+   
+![](./mtg-forum-assets/palette.png)
+</details>
 
 For visual clarity, links have a colour change when hovered, however, I considered mobile device users would not have this feature, and so, as part of my responsive design practice, I made links display with the default underline on smaller screens to make it clear what is a clickable link.
 
-(Example gif to be added here)
+<details>
+   <summary>Example showing colour change</summary>
+   
+![](./mtg-forum-assets/link_example.gif)
+</details>
+
+<details>
+   <summary>Example showing mobile links</summary>
+   
+![](./mtg-forum-assets/mobile_link.png)
+</details>
 
 ## Technologies
 **HTML** - To create a basic site skeleton and add the content. The site consists of HTML template partials loaded within the **base.html** template.
@@ -489,31 +503,62 @@ I used Django AllAuth to enable users to register an account for creation of con
         return user
 </details>
 
-(screenshot of custom signup form)
+<details>
+   <summary>Screenshot of custom sign-up form</summary>
+   
+![](./mtg-forum-assets/sign_up.png)
+</details>
 
 ### User Profiles
 Users also have access to profile pages. Thier own page will display all of their information and allow for them to use a form to edit this information.
 
-(screenshot of full profile page)
+<details>
+   <summary>Full Profile veiw, some information redacted</summary>
+   
+![](./mtg-forum-assets/profile_full.png)
+</details>
 
 But if it is not your own profile page, it will hide senstive information like your name and email, and not give you the option to edit.
 
-(scrreshot of minimised profile page)
+<details>
+   <summary>Minimal Profile veiw</summary>
+   
+![](./mtg-forum-assets/profile_min.png)
+</details>
 
 The menu at the top allows any user to see the profile, posts made by the user, and any posts the user has left a comment on.
 
-(screeshot of menu and user comments, user posts)
+<details>
+   <summary>Menu and User filters</summary>
+
+User Profile Menu
+![](./mtg-forum-assets/user_profile_menu.png)
+
+Posts by User
+![](./mtg-forum-assets/posts_by_user.png)
+
+Posts user has commented on
+![](./mtg-forum-assets/comments_by_user.png)
+</details>
 
 ## Content Interactions
 
 ### New Posts
 Users have the ability to create a new post from scratch. To do this, I implemented SummerNote rich-text editor to allow for greater flexibility and customisation to the user experience.
 
-(screeshot of new post form)
+<details>
+   <summary>New post form</summary>
+   
+![](./mtg-forum-assets/new_post_form.png)
+</details>
 
 Upon saving, the user will be redirected to that posts display page.
 
-(screeshot of post details)
+<details>
+   <summary>Redirect to post detail</summary>
+   
+![](./mtg-forum-assets/post_detail.png)
+</details>
 
 This is the main display for each post, and as per my wireframe, there are several interactive elements on these pages.
 + Clicking on the authors username wil take the user to that persons profile page
