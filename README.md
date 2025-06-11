@@ -1,5 +1,5 @@
 # MTG FORUM - A social media/ network platform for Magic: the Gathering players.
-# Code Intstitute Milstone Project 3 - Full Stack Django Development
+# Code Institute Milestone Project 3 - Full Stack Django Development
 
 ## Table of Contents
 
@@ -45,7 +45,7 @@ A live demo to the website can be found [here](https://mtg-forum-cea7e47cbcff.he
    
 ![](./mtg-forum-assets/erd.png)
 </details>
-The database plan I had for this is simple enough. Almost everything is tied to the Author (Username) of the content. Posts use the title and "slugify" it into a unique indentifier, and it is tied to its Author. The comments are tied to thier Author and also the slug of the post, and as such will cascade on delete and be removed if the Authors account is deleted or removed or if the post is deleted or removed. Replies work in a similar way to the comments.
+The database plan I had for this is simple enough. Almost everything is tied to the Author (Username) of the content. Posts use the title and "slugify" it into a unique identifier, and it is tied to its Author. The comments are tied to their Author and also the slug of the post, and as such will cascade on delete and be removed if the Authors account is deleted or removed or if the post is deleted or removed. Replies work in a similar way to the comments.
 
 ### CustomUser Model
    + username: CharField, Unique to each user, used as ForeignKey in Posts model
@@ -116,7 +116,7 @@ The database plan I had for this is simple enough. Almost everything is tied to 
    + updated_on: DateTimeField, auto_now=True sets the date/time when posts are edited
    + likes: ManyToManyField, CustomUser, realated_name='post_likes' has the logged in user liked this post
    + favourites: ManyToManyField, CustomUser, related_name='favourites' has the logged in user favourited this post
-      + META, <code>ordeing = ["-created_on"]</code> shows the posts in descending order from most recent
+      + META, <code>ordering = ["-created_on"]</code> shows the posts in descending order from most recent
       + is_edited, Returns True if post has been edited and displays updated on date/time
       + total_likes, Returns total amount of likes the post has
       + comment_count, Returns total amount of comments the post has had
@@ -191,7 +191,7 @@ The database plan I had for this is simple enough. Almost everything is tied to 
    + content: TextField, main body content of the comment
    + created_on: DateTimeField, auto_now_add=True Logs the date and time the comment was made
    + parent: ForeignKey, Hidden input, set to null to indicate a top level comment, otherwise, assigns the parent id for the comment its replying to. using this method, both comments and replies can be handled by the same model
-      + META, <code>ordeing = ["-created_on"]</code> shows the posts in descending order from most recent
+      + META, <code>ordering = ["-created_on"]</code> shows the posts in descending order from most recent
 
 <details>
    <summary>Comment model shown here</summary>
@@ -220,7 +220,7 @@ The database plan I had for this is simple enough. Almost everything is tied to 
 </details>
 
 # User Stories
-When deciding on what I wanted to add to this project I looked at several soical media and forum style websites and took the greatest amount of inspiration from Reddit. To this effect, I wrote my user stories based on what I considered the cornerstone features of such a platform and split them into two Epics, User Profile and Content Interaction, detailed below, along with the acceptance criteria I decided for each user story. The kanban board for this project can be found [here](https://github.com/users/Arcandrus/projects/4/views/1)
+When deciding on what I wanted to add to this project I looked at several social media and forum style websites and took the greatest amount of inspiration from Reddit. To this effect, I wrote my user stories based on what I considered the cornerstone features of such a platform and split them into two Epics, User Profile and Content Interaction, detailed below, along with the acceptance criteria I decided for each user story. The kanban board for this project can be found [here](https://github.com/users/Arcandrus/projects/4/views/1)
 
 ## Epics
 
@@ -267,7 +267,7 @@ As a user I want to be able to view the website on a mobile device to enable me 
 ## Design
 Taking into account Strategy, Scope, Structure, Skeleton and surface, together with User Stories and desired outcomes, this is what I considered while building this project.
 
-To keep things cohesive and intuative, I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be accessed in the [technologies](#technologies) section. I felt this enabled the most cohesive and consistent display of all the controls and options while giving plenty of space to display content to the user. I wanted all the controls for the user to be persitent and easy to understand, which is why I used the sidebar approach, included icon labels using FontAwesome. 
+To keep things cohesive and intuitive, I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be accessed in the [technologies](#technologies) section. I felt this enabled the most cohesive and consistent display of all the controls and options while giving plenty of space to display content to the user. I wanted all the controls for the user to be persistent and easy to understand, which is why I used the sidebar approach, included icon labels using FontAwesome. 
 
 <details>
    <summary>Screenshot of sidebar</summary>
@@ -464,10 +464,10 @@ For visual clarity, links have a colour change when hovered, however, I consider
 
 **Javascript** - This is where most of the work for this project was done, as much of the system runs on Javascript
 + comments.js - Contains the functionality to post comments, post replies and edit/ delete both
-+ favourite.js - Enables AJAX js for the favourtie button, both processing the form and updating the button
++ favourite.js - Enables AJAX js for the favourite button, both processing the form and updating the button
 + like.js - Enables the like button functionality in a similar vein to the favourite button
 + messages.js - Controls the display of Django messages
-+ post_edit.js - Enables the inline form to allow users to edit any of thier own posts
++ post_edit.js - Enables the inline form to allow users to edit any of their own posts
 + screen_check.js - As part of responsive design, this js file checks for screen size changes as well as orientation changes
 
 **Django** - This was the meat of the project, enabling full user controlled CRUD functionality. Implementing a CustomUser model as well as creating custom templates for much of the Django AllAuth library to allow for greater access and customisation across the sites features. 
@@ -477,12 +477,12 @@ For visual clarity, links have a colour change when hovered, however, I consider
 **Bootstrap** - To ensure responsive design and usability across all devices, I use a combination of Bootstrap classes and custom css.
 
 # Features
-Most of the features I implemented were the direct responses to the User Stories listed above, as such, here follows an explaination of them in greater detail.
+Most of the features I implemented were the direct responses to the User Stories listed above, as such, here follows an explanation of them in greater detail.
 
 ## Account Registration & User Profile
 
 ### Registration
-I used Django AllAuth to enable users to register an account for creation of content. The AllAuth form template was replaced by a custom form to allow for adding feilds and greater control of styling.
+I used Django AllAuth to enable users to register an account for creation of content. The AllAuth form template was replaced by a custom form to allow for adding fields and greater control of styling.
 
 <details>
     <summary>The custom sign up form can be seen here</summary>
@@ -516,18 +516,18 @@ I used Django AllAuth to enable users to register an account for creation of con
 </details>
 
 ### User Profiles
-Users also have access to profile pages. Thier own page will display all of their information and allow for them to use a form to edit this information.
+Users also have access to profile pages. Their own page will display all of their information and allow for them to use a form to edit this information.
 
 <details>
-   <summary>Full Profile veiw, some information redacted</summary>
+   <summary>Full Profile view, some information redacted</summary>
    
 ![](./mtg-forum-assets/profile_full.png)
 </details>
 
-But if it is not your own profile page, it will hide senstive information like your name and email, and not give you the option to edit.
+But if it is not your own profile page, it will hide sensitive information like your name and email, and not give you the option to edit.
 
 <details>
-   <summary>Minimal Profile veiw</summary>
+   <summary>Minimal Profile view</summary>
    
 ![](./mtg-forum-assets/profile_min.png)
 </details>
@@ -567,10 +567,10 @@ Upon saving, the user will be redirected to that posts display page.
 </details>
 
 This is the main display for each post, and as per my wireframe, there are several interactive elements on these pages.
-+ Clicking on the authors username wil take the user to that persons profile page
++ Clicking on the authors username will take the user to that persons profile page
 + Clicking the Favourite star will tag the post as one of your favourites, meaning it will be listed on your favourites page, and the icon will turn from black to gold
 + Clicking the like button, styled to include the thumbs up icon, will "Like" the post and update the like count automatically, and the icon will turn into a solid thumbs up as opposed to an outline
-+ Clicking the "Reply" button, styled to include the speech bubble icon and labelled with the current comment count for that post will open a modal to allow the user to leavea  comment on the post
++ Clicking the "Reply" button, styled to include the speech bubble icon and labelled with the current comment count for that post will open a modal to allow the user to leave a comment on the post
 
 <details>
    <summary>Control Buttons</summary>
@@ -614,7 +614,7 @@ The categories page will enable users to filter all posts within one of the five
 ![](./mtg-forum-assets/category_menu.png)
 </details>
 
-Once chosen, the title will update to show the selected category and the posts within that will be displayed in a paginated by 4 format, displaying on a minimal card in a 2x2 grid, including the like count, comment count, date/time of creation, authors information and favourite star. The favourite star and username profile links are available on theis page but the like and comment are disabled to encourage the user to visit the post to engage further.
+Once chosen, the title will update to show the selected category and the posts within that will be displayed in a paginated by 4 format, displaying on a minimal card in a 2x2 grid, including the like count, comment count, date/time of creation, authors information and favourite star. The favourite star and username profile links are available on their page but the like and comment are disabled to encourage the user to visit the post to engage further.
 
 <details>
    <summary>Category Chosen</summary>
@@ -632,7 +632,7 @@ The favourites page will show, in the same paginated by 4 style, the posts that 
 </details>
 
 ### Popular Posts
-On the popular posts page, using the same paginated by 4 style, it shows the posts sorted by an "Activity" score which takes into account hte amount of likes and comments a post has had in a given time period. A dropdown menu will allow the user to decide which time frame they wish to veiw by, 24hrs, 7 days, 30 days or All time.
+On the popular posts page, using the same paginated by 4 style, it shows the posts sorted by an "Activity" score which takes into account the amount of likes and comments a post has had in a given time period. A dropdown menu will allow the user to decide which time frame they wish to view by, 24hrs, 7 days, 30 days or All time.
 
 <details>
    <summary>Popular Filter Menu</summary>
@@ -647,7 +647,7 @@ On the popular posts page, using the same paginated by 4 style, it shows the pos
 </details>
 
 ### Search
-Old reliable, I've included a search functionality within the sidebar, which displays a paginated by 4 style again, and will show any results that include the serach phrase or username entered by the user.
+Old reliable, I've included a search functionality within the sidebar, which displays a paginated by 4 style again, and will show any results that include the search phrase or username entered by the user.
 
 <details>
    <summary>Search Results</summary>
@@ -656,9 +656,9 @@ Old reliable, I've included a search functionality within the sidebar, which dis
 </details>
 
 ## Edit & Delete
-If the author of a post or comment is looking at thier own content, there will be two control buttons displayed, one for editing and one for deleting. These only appear on content the logged in user has created themselves. 
+If the author of a post or comment is looking at their own content, there will be two control buttons displayed, one for editing and one for deleting. These only appear on content the logged in user has created themselves. 
 
-When clicked the edit button overwrites the element content with a summernote edit form that allows the content to be editted and saved.
+When clicked the edit button overwrites the element content with a SummerNote edit form that allows the content to be edited and saved.
 
 <details>
    <summary>Edit Post</summary>
@@ -672,7 +672,7 @@ When clicked the edit button overwrites the element content with a summernote ed
 ![](./mtg-forum-assets/edit_comment.gif)
 </details>
 
-The delete button will prompt to user to confirm, and upon confrimation witll delete the post/ comment and any nested replies from the database.
+The delete button will prompt to user to confirm, and upon confirmation will delete the post/ comment and any nested replies from the database.
 
 <details>
    <summary>Delete Comment</summary>
@@ -681,7 +681,7 @@ The delete button will prompt to user to confirm, and upon confrimation witll de
 </details>
 
 ## A quick word on image integration with SummerNote
-I wanted to allow users to upload images as part of posts, comments and replies, using SummerNote and Cloudinary integration, however, due to time constraints I was not able to get this feature implemented. My initial attpemts to integrate this feature had several issues and setbacks I was unable to overcome.
+I wanted to allow users to upload images as part of posts, comments and replies, using SummerNote and Cloudinary integration, however, due to time constraints I was not able to get this feature implemented. My initial attempts to integrate this feature had several issues and setbacks I was unable to overcome.
 
 # Deployment 
 1. Log in to Heroku if you already have an account with them. If not, create an account.
@@ -699,7 +699,7 @@ I wanted to allow users to upload images as part of posts, comments and replies,
 ## Validation
 
 **HTML** <br>
-[W3C HTML validator](#https://validator.w3.org) seemed to really struggle with the Django generateed content so I instead validated the raw HTML after Django rendering, which showed no errors
+[W3C HTML validator](#https://validator.w3.org) seemed to really struggle with the Django generated content so I instead validated the raw HTML after Django rendering, which showed no errors
 
 <details>
    <summary>HTML Pass</summary>
@@ -746,38 +746,38 @@ All these features were manually tested by me and several others, these are the 
 | Feature | Expectation | Action | Result |
 | ---------- | ---------- | ------------ | ----------- |
 |Registering an account| Users can submit a form to register an account | I had several people sign up and create accounts, using the "Register" link |Working as intended|
-|Logging in| Users can use thier credentials to log in | Myself and several testers checked the functionality using the "Login" link |Working as intended|
-|Logging out| Users can log out to keep thier account secure | Myself and several testers checked the functionality using the "Logout" link|Working as intended|
-|Veiwing profiles| Clicking on a username or the profile link displays a user profile | Myself and several testers checked the functionality both by clicking on a username and using the "Profile" link |Working as intended|
+|Logging in| Users can use their credentials to log in | Myself and several testers checked the functionality using the "Login" link |Working as intended|
+|Logging out| Users can log out to keep their account secure | Myself and several testers checked the functionality using the "Logout" link | Working as intended|
+|Viewing profiles| Clicking on a username or the profile link displays a user profile | Myself and several testers checked the functionality both by clicking on a username and using the "Profile" link |Working as intended|
 |Creating a post| Users can select "New Post" and create a new post | Myself and several testers checked the functionality by using the "New Post" link and posting several new posts |Working as intended|
 |Posting a comment| Users can reply to posts with a "Comment" | Myself and several testers checked the functionality using the "Reply" button on a post |Working as intended|
 |Posting a reply| Users can create nested "Reply" chains by replying to comments | Myself and several testers checked the functionality by replying sometimes three layers deep to make sure it kept working |Working as intended|
 |Liking a post| Users can "Like" a post either on the main page or the detailed view | Myself and several testers checked the functionality using both the "Like" buttons |Working as intended|
-|Adding a post to favourites| Users can click the "Favourite" start button to add a post to a list of thier favourites | Myself and several testers checked the functionality, and checked that clicking it again removes it from favourites |Working as intended|
+|Adding a post to favourites| Users can click the "Favourite" start button to add a post to a list of their favourites | Myself and several testers checked the functionality, and checked that clicking it again removes it from favourites |Working as intended|
 |Browsing by category| Users can filter posts by category on the categories page | Myself and several testers checked the functionality using the filtered options |Working as intended|
 |Browsing by popular| Users can see a display of the most popular posts for a given time period | Myself and several testers checked the functionality and tested each time period, all displayed correctly |Working as intended|
 |Searching for content| Users can type a string into the search bar to find specific content | Myself and several testers checked the functionality, initially it didn't include the ability to search usernames but I have updated it to include this functionality |Working as intended|
 |Editing posts| Users can click the "Edit" button if they are the author of the post to make changes using an inline form approach | Myself and several testers checked the functionality |Working as intended|
 |Editing Comments| Users can click the "Edit" button if they are the author of the comment/reply to make changes using an inline form approach | Myself and several testers checked the functionality |Working as intended|
-|Editing profile information| Users can edit thier profile information to change thier full name, username, email and profile picture | Myself and several testers checked the functionality using the "Edit Profile" button on the profile page when logged in |Working as intended|
-|Reseting passwords| Users can reset thier password by reciveing an email with a reset link | I tested this with a dummy profile |Working as intended|
+|Editing profile information| Users can edit their profile information to change their full name, username, email and profile picture | Myself and several testers checked the functionality using the "Edit Profile" button on the profile page when logged in |Working as intended|
+|Resetting passwords| Users can reset their password by receiving an email with a reset link | I tested this with a dummy profile |Working as intended|
 |Deleting posts| Users can remove posts if they are the author | Myself and several testers checked the functionality using the "Delete" button, all comments and replies are deleted as part of CASCADE |Working as intended|
 |Deleting comments| Users can remove comments/replies if they are the author | Myself and several testers checked the functionality using the "Delete" button, all comments and replies are deleted as part of CASCADE |Working as intended|
-|Deleting account| Users can delete thier account | I tested this with a dummy profile |Working as intended|
+|Deleting account| Users can delete their account | I tested this with a dummy profile |Working as intended|
 
 While developing this project, I mainly relied on DevTools, Google, ChatGPT and StackOverFlow to help me with troubleshooting and bug fixing.
 
-I have also asked several users to explore the website on different devices including iPhone 14, iPad, Oppo mobile devices, Sony mobile devices and several different PC and Laptop setups to ensure consitency and usability across multiple platforms.
+I have also asked several users to explore the website on different devices including iPhone 14, iPad, Oppo mobile devices, Sony mobile devices and several different PC and Laptop setups to ensure consistency and usability across multiple platforms.
 
 ## Major Bugs & Errors
-There was only one moment I had a site breaking error. I had my js set up to read my buttons based on the innertext of said button, for example "Reply". This text was always supposed to be considered placeholder, but I didn't make the correct adjustments to the js when I switched the button to display icons instead of text. As such the whole comments system broke into pieces and I spent several hours until I figured out ths issue and made the corrections. After this, everything worked as expected.
+There was only one moment I had a site breaking error. I had my js set up to read my buttons based on the innertext of said button, for example "Reply". This text was always supposed to be considered placeholder, but I didn't make the correct adjustments to the js when I switched the button to display icons instead of text. As such the whole comments system broke into pieces and I spent several hours until I figured out this issue and made the corrections. After this, everything worked as expected.
 
-The other minor bug to work around was the edit button was saving the content as RTF and rendering it with {{ post.content | safe }}. Little did I know at the time because of the way I had implemented my js, the contents of the button would change if any HTML markup characters were used in the edited content, like "". I solved this issue by creating a hidden div to store the content before it was saved and then inject that content into the correct div in the HTML, thus bypassing the buttons interaction with the content dorectly.
+The other minor bug to work around was the edit button was saving the content as RTF and rendering it with {{ post.content | safe }}. Little did I know at the time because of the way I had implemented my js, the contents of the button would change if any HTML markup characters were used in the edited content, like "". I solved this issue by creating a hidden div to store the content before it was saved and then inject that content into the correct div in the HTML, thus bypassing the buttons interaction with the content directly.
 
 # Credits
 I would like to thank my mentor, Medale Oluwafemi, for his insights and support during this project.
 
-MASSIVE thank you to my best friends Rew and Emma for thier continued support and belief in me as I've progressed as well as thier help testing functionality and features and thier valuable feedback, I love you both.
+MASSIVE thank you to my best friends Rew and Emma for their continued support and belief in me as I've progressed as well as their help testing functionality and features and their valuable feedback, I love you both.
 
 Thanks go to the Frome MTG club who have also helped me with testing and troubleshooting. 
 
