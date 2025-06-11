@@ -47,6 +47,54 @@ The database plan I had for this is simple enough. Almost everything is tied to 
       + comment_count: Returns count of comments made by the user
       + user_status: Returns the current admn status of the user (Superuser, Staff, Active, Inactive)
 
+<details>
+<summary>CustomUser model is shown here</summary>
+    
+    class CustomUser(AbstractUser):
+        """
+        Custom user model extending Django's AbstractUser.
+        Adds full_name, unique email, and profile picture via Cloudinary.
+        """
+        full_name = models.CharField(max_length=255, blank=True, null=True)
+        username = models.CharField(max_length=255, blank=True, null=True, unique=True)
+        email = models.EmailField(unique=True)
+        profile_picture = CloudinaryField(
+            'image',
+            blank=True,
+            null=True,
+            default='samples/cloudinary-icon'
+        )
+        
+    @property
+    def post_count(self):
+        """Returns the count of posts authored by this user."""
+        return self.posts.count()
+
+    @property
+    def comment_count(self):
+        """Returns the count of comments authored by this user."""
+        return self.comments.count()
+
+    @property
+    def user_status(self):
+        """
+        Returns a string representing the user's status:
+        'Superuser', 'Staff', 'Active', or 'Inactive'.
+        """
+        if self.is_superuser:
+            return "Superuser"
+        elif self.is_staff:
+            return "Staff"
+        elif self.is_active:
+            return "Active"
+        else:
+            return "Inactive"
+
+    def __str__(self):
+        return self.username
+
+</details>
+
 ### Post Model
    + CATEGORY: const tuple, Selectable list of categories for posts
    + title: CharField, Unique title of the post
@@ -63,7 +111,70 @@ The database plan I had for this is simple enough. Almost everything is tied to 
       + is_edited, Returns True if post has been edited and displays updated on date/time
       + total_likes, Returns total amount of likes the post has
       + comment_count, Returns total amount of comments the post has had
+      + get_absolute_url, fetch the url of the post_detail, injecting the correct slug
       + get_category_display_name, converts the Integer id of the category into text for display purposes
+
+<details>
+   <summary>Post model shown here</summary>
+   
+      class Post(models.Model):
+       """
+       Model representing a forum post with categories, author, content,
+       likes, favourites, and timestamps. Supports tracking likes and comments count,
+       and provides utility methods for display and URLs.
+       """
+       CATEGORY = (
+           (0, "Deck Techs"),
+           (1, "Combos & Strategy"),
+           (2, "Rules & Card Help"),
+           (3, "Looking for Games"), 
+           (4, "Social & Trading")
+           )
+       title = models.CharField(max_length=200, unique=True)
+       slug = models.SlugField(max_length=200, unique=True)
+       author = models.ForeignKey(
+           settings.AUTH_USER_MODEL,
+           related_name='posts',
+           on_delete=models.CASCADE
+       )
+       category = models.IntegerField(choices=CATEGORY, default=0)
+       content = SummernoteTextField()
+       created_on = models.DateTimeField(auto_now_add=True)
+       excerpt = models.TextField(blank=True)
+       updated_on = models.DateTimeField(auto_now=True)
+       likes = models.ManyToManyField(CustomUser, related_name='post_likes')
+       favourites = models.ManyToManyField(CustomUser, related_name='favourite_posts', blank=True)
+   
+       class Meta:
+           ordering = ["-created_on"]
+   
+       @property
+       def is_edited(self):
+           """Returns True if the post has been updated after creation."""
+           return (self.updated_on - self.created_on) > timedelta(seconds=1)
+       
+       @property
+       def total_likes(self):
+           """Returns the total number of likes for the post."""
+           return self.likes.count()
+       
+       @property
+       def comment_count(self):
+           """Returns the total number of comments associated with the post."""
+           return self.comments.count()
+   
+       def __str__(self):
+           """Returns a string representation of the post."""
+           return f"{self.title} | written by {self.author}"
+       
+       def get_absolute_url(self):
+           """Returns the URL to access a detail view of this post."""
+           return reverse('post_detail', kwargs={'slug': self.slug})
+       
+       def get_category_display_name(self):
+           """Returns the display name of the category."""
+           return dict(self.CATEGORY).get(self.category)
+</details>
 
 ### Comment Model
    + post: ForeignKey, Post, related_name='comments' The Post the comment has been made on pulled from Post model
@@ -71,6 +182,33 @@ The database plan I had for this is simple enough. Almost everything is tied to 
    + content: TextField, main body content of the comment
    + created_on: DateTimeField, auto_now_add=True Logs the date and time the comment was made
    + parent: ForeignKey, Hidden input, set to null to indicate a top level comment, otherwise, assigns the parent id for the comment its replying to. using this method, both comments and replies can be handled by the same model
+      + META, <code>ordeing = ["-created_on"]</code> shows the posts in descending order from most recent
+
+<details>
+   <summary>Comment model shown here</summary>
+   
+      class Comment(models.Model):
+       """
+       Model representing a comment on a Post, including support for threaded replies
+       via a self-referential foreign key to a parent comment.
+       """
+       post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+       author = models.ForeignKey(
+           settings.AUTH_USER_MODEL,
+           related_name='comments',
+           on_delete=models.CASCADE
+       )
+       content = models.TextField()
+       created_on = models.DateTimeField(auto_now_add=True)
+       parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
+   
+       class Meta:
+           ordering = ['-created_on']
+   
+       def __str__(self):
+           """Returns a string representation of the comment."""
+           return f"Comment by {self.author} on {self.post}"
+</details>
 
 # User Stories
 When deciding on what I wanted to add to this project I looked at several soical media and forum style websites and took the greatest amount of inspiration from Reddit. To this effect, I wrote my user stories based on what I considered the cornerstone features of such a platform and split them into two Epics, User Profile and Content Interaction, detailed below, along with the acceptance criteria I decided for each user story. The kanban board for this project can be found [here](https://github.com/users/Arcandrus/projects/4/views/1)
@@ -307,54 +445,6 @@ For visual clarity, links have a colour change when hovered, however, I consider
 + screen_check.js - As part of responsive design, this js file checks for screen size changes as well as orientation changes
 
 **Django** - This was the meat of the project, enabling full user controlled CRUD functionality. Implementing a CustomUser model as well as creating custom templates for much of the Django AllAuth library to allow for greater access and customisation across the sites features. 
-
-<details>
-<summary>CustomUser model is shown here</summary>
-    
-    class CustomUser(AbstractUser):
-        """
-        Custom user model extending Django's AbstractUser.
-        Adds full_name, unique email, and profile picture via Cloudinary.
-        """
-        full_name = models.CharField(max_length=255, blank=True, null=True)
-        username = models.CharField(max_length=255, blank=True, null=True, unique=True)
-        email = models.EmailField(unique=True)
-        profile_picture = CloudinaryField(
-            'image',
-            blank=True,
-            null=True,
-            default='samples/cloudinary-icon'
-        )
-        
-    @property
-    def post_count(self):
-        """Returns the count of posts authored by this user."""
-        return self.posts.count()
-
-    @property
-    def comment_count(self):
-        """Returns the count of comments authored by this user."""
-        return self.comments.count()
-
-    @property
-    def user_status(self):
-        """
-        Returns a string representing the user's status:
-        'Superuser', 'Staff', 'Active', or 'Inactive'.
-        """
-        if self.is_superuser:
-            return "Superuser"
-        elif self.is_staff:
-            return "Staff"
-        elif self.is_active:
-            return "Active"
-        else:
-            return "Inactive"
-
-    def __str__(self):
-        return self.username
-
-</details>
 
 **Balsamiq** - To create a wireframe, [here](mtg-forum-assets/mtg_forum.pdf) (pdf format)
 
