@@ -94,7 +94,7 @@ For visual clarity, links have a colour change when hovered, however, I consider
 
 <details>
 <summary>CustomUser model is shown here</summary>
-```python
+<code>
 class CustomUser(AbstractUser):
     """
     Custom user model extending Django's AbstractUser.
@@ -137,7 +137,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
+</code>
 </details>
 
 **Balsamiq** - To create a wireframe.
