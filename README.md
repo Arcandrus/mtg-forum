@@ -30,7 +30,9 @@
     + [Edit & Delete](#edit--delete)
 8. [Deployment](#deployment)
 9. [Testing](#testing)
-10. [Credits](#credits)
+   + [Validation](#validation)
+   + [Manual Testing](#manual-testing)   
+11. [Credits](#credits)
 
 ![](./readme-assets/responsive_ui.png)
 
@@ -685,7 +687,7 @@ The delete button will prompt to user to confirm, and upon confrimation witll de
 8. I used manual deployment throughout this project, so once I had done a GitHub push, I navigated here and clicked Deploy Branch. If you enabled automatic deploys, every time you push changes to GitHub, the app will be automatically deployed every time, just like you would with a webpage deployed on GitHub Pages.
 8. The app can take a couple of minutes until it's deployed. Once it's done, you'll see the message Your app was successfully deployed and a "Open App" button will be displayed at the top of the screen, where you can see your deployed app.
 
-#Testing
+# Testing
 
 ## Validation
 
@@ -736,25 +738,25 @@ All these features were manually tested by me and several others, these are the 
 
 | Feature | Expectation | Action | Result |
 | ---------- | ---------- | ------------ | ----------- |
-|Registering an account| | |Working as intended|
-|Logging in| | |Working as intended|
-|Logging out| | |Working as intended|
-|Veiwing profiles| | |Working as intended|
-|Creating a post| | |Working as intended|
-|Posting a comment| | |Working as intended|
-|Posting a reply| | |Working as intended|
-|Liking a post| | |Working as intended|
-|Adding a post to favourites| | |Working as intended|
-|Browsing by category| | |Working as intended|
-|Browsing by popular| | |Working as intended|
-|Searching for content| | |Working as intended|
-|Editing posts| | |Working as intended|
-|Editing Comments| | |Working as intended|
-|Editing profile information| | |Working as intended|
-|Reseting passwords| | |Working as intended|
-|Deleting posts| | |Working as intended|
-|Deleting comments| | |Working as intended|
-|Deleting account| | |Working as intended|
+|Registering an account| Users can submit a form to register an account | I had several people sign up and create accounts, using the "Register" link |Working as intended|
+|Logging in| Users can use thier credentials to log in | Myself and several testers checked the functionality using the "Login" link |Working as intended|
+|Logging out| Users can log out to keep thier account secure | Myself and several testers checked the functionality using the "Logout" link|Working as intended|
+|Veiwing profiles| Clicking on a username or the profile link displays a user profile | Myself and several testers checked the functionality both by clicking on a username and using the "Profile" link |Working as intended|
+|Creating a post| Users can select "New Post" and create a new post | Myself and several testers checked the functionality by using the "New Post" link and posting several new posts |Working as intended|
+|Posting a comment| Users can reply to posts with a "Comment" | Myself and several testers checked the functionality using the "Reply" button on a post |Working as intended|
+|Posting a reply| Users can create nested "Reply" chains by replying to comments | Myself and several testers checked the functionality by replying sometimes three layers deep to make sure it kept working |Working as intended|
+|Liking a post| Users can "Like" a post either on the main page or the detailed view | Myself and several testers checked the functionality using both the "Like" buttons |Working as intended|
+|Adding a post to favourites| Users can click the "Favourite" start button to add a post to a list of thier favourites | Myself and several testers checked the functionality, and checked that clicking it again removes it from favourites |Working as intended|
+|Browsing by category| Users can filter posts by category on the categories page | Myself and several testers checked the functionality using the filtered options |Working as intended|
+|Browsing by popular| Users can see a display of the most popular posts for a given time period | Myself and several testers checked the functionality and tested each time period, all displayed correctly |Working as intended|
+|Searching for content| Users can type a string into the search bar to find specific content | Myself and several testers checked the functionality, initially it didn't include the ability to search usernames but I have updated it to include this functionality |Working as intended|
+|Editing posts| Users can click the "Edit" button if they are the author of the post to make changes using an inline form approach | Myself and several testers checked the functionality |Working as intended|
+|Editing Comments| Users can click the "Edit" button if they are the author of the comment/reply to make changes using an inline form approach | Myself and several testers checked the functionality |Working as intended|
+|Editing profile information| Users can edit thier profile information to change thier full name, username, email and profile picture | Myself and several testers checked the functionality using the "Edit Profile" button on the profile page when logged in |Working as intended|
+|Reseting passwords| Users can reset thier password by reciveing an email with a reset link | I tested this with a dummy profile |Working as intended|
+|Deleting posts| Users can remove posts if they are the author | Myself and several testers checked the functionality using the "Delete" button, all comments and replies are deleted as part of CASCADE |Working as intended|
+|Deleting comments| Users can remove comments/replies if they are the author | Myself and several testers checked the functionality using the "Delete" button | Myself and several testers checked the functionality using the "Delete" button, all comments and replies are deleted as part of CASCADE |Working as intended|
+|Deleting account| Users can delete thier account | I tested this with a dummy profile |Working as intended|
 
 While developing this project, I mainly relied on DevTools, Google, ChatGPT and StackOverFlow to help me with troubleshooting and bug fixing.
 
