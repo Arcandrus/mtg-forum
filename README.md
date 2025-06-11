@@ -78,7 +78,167 @@ For visual clarity, links have a colour change when hovered, however, I consider
 (Example gif to be added here)
 
 ## Technologies
-**HTML** - To create a basic site skeleton and add the content
+**HTML** - To create a basic site skeleton and add the content. The site consists of HTML template partials loaded within the **base.html** template.
+
+<details>
+<summary>base.html is shown here</summary>
+    
+    {% load static %}
+    {% url 'posts' as posts_url %}
+    {% url 'account_login' as login_url %}
+    {% url 'account_signup' as signup_url %}
+    {% url 'account_logout' as logout_url %}
+    
+    <!DOCTYPE html>
+    <html lang="en-US">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+    
+        <!-- FontAwesome Import -->
+        <script src="https://kit.fontawesome.com/9ea763a632.js" crossorigin="anonymous"></script>
+        <!-- Bootstrap CSS Import -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+        <!-- jQuery (required by Summernote) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Bootstrap JS (required by Summernote) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Summernote CSS & JS -->
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <title>MTG Forum</title>
+    </head>
+    
+    <body class="">
+        <header>
+            <img class="icon" alt="Brand Icon" src="{% static 'image/card.png' %}">
+            <h1>MTG FORUM</h1>
+                <div class="header-spacer"></div>
+                <button id="menu-toggle" class="right hamburger" aria-label="Toggle sidebar">
+                    &#9776;
+                </button>
+        </header>
+    
+        <div class="page-wrapper d-flex"> <!-- Flex container -->
+    
+            <aside class="sidebar">
+                {% if user.is_authenticated %}
+                <div class="profile_container">
+                    <div class="profile_picture">
+                        <img src="{{ user.profile_picture.url }}" alt="Profile Picture">
+                    </div>
+                    <div class="profile_details">
+                        <p><strong>{{ user }}</strong></p>
+                        <p><strong><i class="fa-solid fa-pencil"></i> Posts:</strong> {{ user.post_count }}</p>
+                        <p><strong><i class="fa-solid fa-comment"></i> Comments:</strong> {{ user.comment_count }}</p>
+                        <p><strong><i class="fa-solid fa-circle-check"></i> Status:</strong> {{ user.user_status }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="search-wrapper">
+                    <form method="GET" action="{% url 'search_results' %}">
+                        <input type="text" name="q" placeholder="Search posts..." required>
+                        <button class="btn search-btn btn-primary" type="submit" aria-label="Search">
+                            <i class="fas fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                </div>
+    
+                <nav class="sidebar-nav" aria-label="Sidebar navigation">
+                    <ul>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'create_post' %}"><i class="fa-solid fa-plus"></i> New Post</a></li>
+                        <li><a href="{% url 'account_logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                        </li>
+                        {% else %}
+                        <li><a href="{% url 'account_signup' %}"><i class="fa-solid fa-user-plus"></i> Register</a></li>
+                        <li><a href="{% url 'account_login' %}"><i class="fa-solid fa-right-to-bracket"></i> Login</a></li>
+                        {% endif %}
+    
+                        <li>
+                            <hr>
+                        </li>
+    
+                        <li><a href="{% url 'post_list' %}"><i class="fa-solid fa-house"></i> Home</a></li>
+                        <li><a href="{% url 'category_list' %}"><i class="fa-solid fa-list"></i> Categories</a></li>
+                        <li><a href="{% url 'favourite_posts' %}"><i class="fa-solid fa-star"></i> Favourites</a></li>
+                        <li><a href="{% url 'popular_posts' %}"><i class="fa-solid fa-fire"></i> Popular</a></li>
+    
+                        <li>
+                            <hr>
+                        </li>
+    
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'profile' username=request.user.username %}"><i class="fa-solid fa-user"></i>
+                                Profile</a></li>
+                        <li><a href="{% url 'user_settings' %}"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                        {% else %}
+                        <li><a href="{% url 'account_login' %}"><i class="fa-solid fa-user"></i> Profile</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </aside>
+            <div id="sidebar-overlay"></div>
+    
+            <main class="content flex-grow-1 p-3">
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                        {{ message }}
+                        </li>
+                        {% endfor %}
+                </ul>
+                {% endif %}
+    
+                {% block content %}
+                <!-- Content Goes here -->
+                {% endblock content %}
+            </main>
+    
+        </div>
+    
+        <footer>
+            <p>Copyright Eric Harper 2025</p>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'js/like.js' %}"></script>
+        <script src="{% static 'js/comments.js' %}"></script>
+        <script src="{% static 'js/post_edit.js' %}"></script>
+        <script src="{% static 'js/messages.js' %}"></script>
+        <script src="{% static 'js/favourite.js' %}"></script>
+        <script src="{% static 'js/screen_check.js' %}"></script>
+    
+        <!-- Hamburger -->
+        <script>
+            const toggleBtn = document.getElementById('menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+    
+            function toggleSidebar() {
+                const isOpen = sidebar.classList.toggle('open');
+                overlay.classList.toggle('active', isOpen);
+            }
+    
+            toggleBtn.addEventListener('click', toggleSidebar);
+    
+            // Dismiss sidebar when clicking the overlay
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        </script>
+    </body>
+    
+    </html>
+</details>
 
 **CSS** - To create a controlled and consistent display for each element and to give a great user experience. Using js, I applied a class based responsive design to the site.
 
