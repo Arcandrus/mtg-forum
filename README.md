@@ -64,7 +64,7 @@ As a user I want to be able to view the website on a mobile device to enable me 
 ## Design
 Taking into account Strategy, Scope, Structure, Skeleton and surface, together with User Stories and desired outcomes, this is what I considered while building this project.
 
-To keep things cohesive and intuative, I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be accessed in the technologies section. I felt this enabled the most cohesive and consistent display of all the controls and options while giving plenty of space to display content to the user. I wanted all the controls for the user to be persitent and easy to understand, which is why I used the sidebar approach, included icon labels using FontAwesome. 
+To keep things cohesive and intuative, I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be accessed in the [technologies](#technologies) section. I felt this enabled the most cohesive and consistent display of all the controls and options while giving plenty of space to display content to the user. I wanted all the controls for the user to be persitent and easy to understand, which is why I used the sidebar approach, included icon labels using FontAwesome. 
 
 (screenshot of sidebar)
 
