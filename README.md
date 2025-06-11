@@ -61,5 +61,8 @@ As a user I want to be able to see what posts are popular to enable me to naviga
 As a user I want to be able to view the website on a mobile device to enable me to access the site from any device
 + Implement responsive design to allow for multiple screen sizes<br><br>
 
+## Design
 
+### Initial design and UX considerations
 
+I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be seen [here](#mtg-forum-assets/mtg_forum.pdf) (pdf format)
