@@ -4,7 +4,8 @@
 ## Table of Contents
 
 1. [Live Demo](#demo)
-2. [User Stories](#user-stories)
+2. [Database ERD](#database-erd)
+3. [User Stories](#user-stories)
    + [Epics](#epics)
         + [User Profile](#user-profile)
         + [Content Interaction](#content-interaction)     
@@ -32,6 +33,44 @@
 
 ## Demo
 A live demo to the website can be found [here](https://mtg-forum-cea7e47cbcff.herokuapp.com/posts/)
+
+# Database ERD
+(picture of database ERD)
+The database plan I had for this is simple enough. Almost everything is tied to the Author (Username) of the content. Posts use the title and "slugify" it into a unique indentifier, and it is tied to its Author. The comments are tied to thier Author and also the slug of the post, and as such will cascade on delete and be removed if the Authors account is deleted or removed or if the post is deleted or removed. Replies work in a similar way to the comments.
+
+### CustomUser Model
+   + username: CharField, Unique to each user, used as ForeignKey in Posts model
+   + full_name: CharField, Full Name of the user
+   + email: EmailField, Unique to each user, so each user must have a unique email
+   + profile_picture: CloudinaryField, user provided profile picture with a default fallback.
+      + post_count: Returns count of posts made by the user
+      + comment_count: Returns count of comments made by the user
+      + user_status: Returns the current admn status of the user (Superuser, Staff, Active, Inactive)
+
+### Post Model
+   + CATEGORY: const tuple, Selectable list of categories for posts
+   + title: CharField, Unique title of the post
+   + slug: SlugField, Unique slug for the posts navigation
+   + author: ForeignKey, taken from CustomUser model username, with related_name='posts'
+   + category: IntegerField, Chosen id of the category for the post
+   + content: SummernoteTextField, RTF textarea for the posts main body content
+   + created_on: DateTimeField, auto_now=True sets the date and time the post was created
+   + excerpt: TextField, Auto generated from the first 200 words in a given post
+   + updated_on: DateTimeField, auto_now=True sets the date/time when posts are edited
+   + likes: ManyToManyField, CustomUser, realated_name='post_likes' has the logged in user liked this post
+   + favourites: ManyToManyField, CustomUser, related_name='favourites' has the logged in user favourited this post
+      + META, <code>ordeing = ["-created_on"]</code> shows the posts in descending order from most recent
+      + is_edited, Returns True if post has been edited and displays updated on date/time
+      + total_likes, Returns total amount of likes the post has
+      + comment_count, Returns total amount of comments the post has had
+      + get_category_display_name, converts the Integer id of the category into text for display purposes
+
+### Comment Model
+   + post: ForeignKey, Post, related_name='comments' The Post the comment has been made on pulled from Post model
+   + author: ForeignKey, taken from CustomUser model username, with related_name='posts'
+   + content: TextField, main body content of the comment
+   + created_on: DateTimeField, auto_now_add=True Logs the date and time the comment was made
+   + parent: ForeignKey, Hidden input, set to null to indicate a top level comment, otherwise, assigns the parent id for the comment its replying to. using this method, both comments and replies can be handled by the same model
 
 # User Stories
 When deciding on what I wanted to add to this project I looked at several soical media and forum style websites and took the greatest amount of inspiration from Reddit. To this effect, I wrote my user stories based on what I considered the cornerstone features of such a platform and split them into two Epics, User Profile and Content Interaction, detailed below, along with the acceptance criteria I decided for each user story. The kanban board for this project can be found [here](https://github.com/users/Arcandrus/projects/4/views/1)
