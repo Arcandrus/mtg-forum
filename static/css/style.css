@@ -121,13 +121,14 @@ h2 {
 
 /* Individual message styling */
 .messages li {
-    background-color: #f0f0f0;
+    background-color: #333;
     border: 1px solid #ccc;
     padding: 10px 15px;
     margin-bottom: 10px;
     border-radius: 5px;
     opacity: 1;
     transition: opacity 1s ease-out;
+    color: white;
     /* Fade out effect */
 }
 
@@ -491,6 +492,11 @@ main {
     width: 100%;
 }
 
+.modal-content {
+    background-color: #333;
+    color: white;
+}
+
 /* Button styling */
 .btn {
     border: 1px solid #999;
@@ -671,6 +677,11 @@ textarea:focus {
 
 .checkbox-inline {
     gap: 0.5rem;
+}
+
+#id_profile_picture {
+    color: white;
+    background-color: #333;
 }
 
 /* Footer styling: full width, fixed at bottom, bisque background, centered text */

@@ -18,37 +18,69 @@
     </div>
     <div class="row">
         <div class="col-md-8 mt-3 offset-md-2">
-            <form class="login" method="POST" action="{% url 'account_login' %}">
+            <form method="POST" enctype="multipart/form-data" class="w-100" style="max-width: 600px;">
                 {% csrf_token %}
-                {{ form.non_field_errors }}
 
+                <!-- Full Name -->
                 <div class="mb-3 d-flex align-items-center">
-                    {{ form.login.label_tag }}
+                    {{ form.full_name.label_tag }}
                     <div class="flex-grow-1 ms-3">
-                        {{ form.login }}
-                        {{ form.login.errors }}
+                        {{ form.full_name }}
+                        {{ form.full_name.errors }}
                     </div>
                 </div>
 
+                <!-- Username -->
                 <div class="mb-3 d-flex align-items-center">
-                    {{ form.password.label_tag }}
+                    {{ form.username.label_tag }}
                     <div class="flex-grow-1 ms-3">
-                        {{ form.password }}
-                        {{ form.password.errors }}
+                        {{ form.username }}
+                        {{ form.username.errors }}
                     </div>
                 </div>
 
+                <!-- Email -->
+                <div class="mb-3 d-flex align-items-center">
+                    {{ form.email.label_tag }}
+                    <div class="flex-grow-1 ms-3">
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+                </div>
+
+                <!-- Profile Picture with label above and image preview -->
+                <div class="mb-3">
+                    <div class="mb-2 fw-bold">
+                        {{ form.profile_picture.label_tag }}
+                    </div>
+                    <div class="d-flex align-items-start">
+                        {% if user.profile_picture %}
+                        <div>
+                            <img src="{{ user.profile_picture.url }}" alt="Current Profile Picture"
+                                class="img-thumbnail" style="max-width: 150px;">
+                        </div>
+                        {% endif %}
+                        <div class="ms-4 flex-grow-1">
+                            <div class="form-control p-2">
+                                {{ form.profile_picture }}
+                            </div>
+                            <div class="text-danger small mt-1">
+                                {{ form.profile_picture.errors }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clear Profile Picture Checkbox -->
                 <div class="mb-3 d-flex align-items-center checkbox-inline">
-                    {{ form.remember.label_tag }}
-                    {{ form.remember }}
+                    {{ form.clear_profile_picture.label_tag }}
+                    {{ form.clear_profile_picture }}
                 </div>
 
-                {% if redirect_field_value %}
-                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                {% endif %}
-
-                <button class="btn btn-signup float-end" type="submit">Sign In</button>
+                <!-- Submit Button -->
+                <button class="btn btn-primary float-end mt-3" type="submit">Update</button>
             </form>
+
         </div>
     </div>
 </div>

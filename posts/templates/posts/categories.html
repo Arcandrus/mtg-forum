@@ -25,7 +25,11 @@
             </ul>
         </div>
     </div>
-
+    {% if not selected_category %}
+        <div class="text-center">
+            <p>Please use the menu above to select your category</p>
+        </div>
+    {% endif %}
     <div class="row content">
         {% if selected_category %}
         {% if page_obj.object_list %}
@@ -116,7 +120,9 @@
             <!-- End pagination -->
 
         {% else %}
-        <p>No posts in this category yet.</p>
+        <div class="text-center">
+            <p>No posts in this category yet.</p>
+        </div>
         {% endif %}
     {% endif %}
     </div>
