@@ -76,3 +76,22 @@ The colour scheme I chose was a very calming and simple slate grey and white com
 For visual clarity, links have a colour change when hovered, however, I considered mobile device users would not have this feature, and so, as part of my responsive design practice, I made links display with the default underline on smaller screens to make it clear what is a clickable link.
 
 (Example gif to be added here)
+
+## Technologies
+**HTML** - To create a basic site skeleton and add the content
+
+**CSS** - To create a controlled and consistent display for each element and to give a great user experience. Using js, I applied a class based responsive design to the site.
+
+**Javascript** - This is where most of the work for this project was done, as much of the system runs on Javascript
++ comments.js - Contains the functionality to post comments, post replies and edit/ delete both
++ favourite.js - Enables AJAX js for the favourtie button, both processing the form and updating the button
++ like.js - Enables the like button functionality in a similar vein to the favourite button
++ messages.js - Controls the display of Django messages
++ post_edit.js - Enables the inline form to allow users to edit any of thier own posts
++ screen_check.js - As part of responsive design, this js file checks for screen size changes as well as orientation changes
+
+**Django** - This was the meat of the prject, enabling full user controlled CRUD functionality.
+
+**Balsamiq** - To create a wireframe.
+
+**Bootstrap** - To ensure responsive design and usability across all devices, I use a combination of Bootstrap classes and custom css.
