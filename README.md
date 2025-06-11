@@ -622,7 +622,7 @@ The favourites page will show, in the same paginated by 4 style, the posts that 
 <details>
    <summary>Favourites page</summary>
    
-![](./mtg-forum-assets/favourites.png)
+![](./mtg-forum-assets/favourites_page.png)
 </details>
 
 ### Popular Posts
@@ -637,7 +637,7 @@ On the popular posts page, using the same paginated by 4 style, it shows the pos
 <details>
    <summary>Popular page display</summary>
    
-![](./mtg-forum-assets/popular.png)
+![](./mtg-forum-assets/popular_page.png)
 </details>
 
 ### Search
@@ -695,7 +695,7 @@ HTML
 <details>
    <summary>HTML Pass</summary>
    
-![](./mtg-forum-assets/html_pass.png)
+![](./mtg-forum-assets/pass_html.png)
 </details>
 
 CSS
@@ -704,7 +704,7 @@ CSS
 <details>
    <summary>CSS Pass</summary>
    
-![](./mtg-forum-assets/css_pass.png)
+![](./mtg-forum-assets/pass_css.png)
 </details>
 
 JS
@@ -719,6 +719,15 @@ JS
 Python
 
 [Pep8 CI](#https://pep8ci.herokuapp.com) was used to validate all *.py files and with the exception of a couple of trailing whitespaces and incorrect spacing, which I then fixed, everything came back clear.
+
+Lighthouse
+DevTools Lighthouse Scores. The big problem with the Best Practices score was the third party cookies, most of which were the cloudinary images, and I'm not sure how to make this any better.
+
+<details>
+   <summary>Lighthouse</summary>
+   
+![](./mtg-forum-assets/lighthouse_scores.png)
+</details>
 
 ## Manual Testing
 
