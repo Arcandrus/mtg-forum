@@ -532,7 +532,7 @@ The menu at the top allows any user to see the profile, posts made by the user, 
    <summary>Menu and User filters</summary>
 
 User Profile Menu
-![](./mtg-forum-assets/user_profile_menu.png)
+![](./mtg-forum-assets/users_profile_menu.png)
 
 Posts by User
 ![](./mtg-forum-assets/posts_by_user.png)
@@ -557,7 +557,7 @@ Upon saving, the user will be redirected to that posts display page.
 <details>
    <summary>Redirect to post detail</summary>
    
-![](./mtg-forum-assets/post_detail.png)
+![](./mtg-forum-assets/post_details.png)
 </details>
 
 This is the main display for each post, and as per my wireframe, there are several interactive elements on these pages.
@@ -566,13 +566,27 @@ This is the main display for each post, and as per my wireframe, there are sever
 + Clicking the like button, styled to include the thumbs up icon, will "Like" the post and update the like count automatically, and the icon will turn into a solid thumbs up as opposed to an outline
 + Clicking the "Reply" button, styled to include the speech bubble icon and labelled with the current comment count for that post will open a modal to allow the user to leavea  comment on the post
 
-(buttons screenshot)
+<details>
+   <summary>Control Buttons</summary>
+
+Like, Reply, Edit, Delete, Favourite
+![](./mtg-forum-assets/buttons.png)
+</details>
 
 ### Comments
 Using the "Reply" button users can leave comments by filling the information into a modal window, which will save the comment content as a top level comment with no parent comment, but linked to the post via a related-name within the model.
 
-(screenshot comment modal)
-(screenshot comment)
+<details>
+   <summary>Comment Modal</summary>
+   
+![](./mtg-forum-assets/comment_modal.png)
+</details>
+
+<details>
+   <summary>Comment displayed under post</summary>
+   
+![](./mtg-forum-assets/comment.png)
+</details>
 
 ### Nested Replies
 Each comment will render with its own reply button, allowing for users to reply in nested threads and have conversations about a topic. This button opens the same comment modal but this time saves a hidden input in the form of the comment parent id, so that each reply know which comment it should be nested below.
