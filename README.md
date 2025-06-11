@@ -303,3 +303,123 @@ For visual clarity, links have a colour change when hovered, however, I consider
 **Balsamiq** - To create a wireframe, [here](mtg-forum-assets/mtg_forum.pdf) (pdf format)
 
 **Bootstrap** - To ensure responsive design and usability across all devices, I use a combination of Bootstrap classes and custom css.
+
+# Features
+Most of the features I implemented were the direct responses to the User Stories listed above, as such, here follows an explaination of them in greater detail.
+
+## Account Registraion & User Profile
+
+### Registration
+I used Django AllAuth to enable users to register an account for creation of content. The AllAuth form template was replaced by a custom form to allow for adding feilds and greater control of styling.
+
+<details>
+    <summary>The custom sign up form can be seen here</summary>
+    
+    class CustomSignupForm(SignupForm):
+    """
+    Custom signup form extending allauth's SignupForm.
+    Adds fields for full name, username, email, and optional profile picture.
+    Overrides save() to populate additional user fields.
+    """
+    full_name = forms.CharField(max_length=30, label='Full Name')
+    username = forms.CharField(max_length=30, label='Username')
+    email = forms.EmailField()
+    profile_picture = forms.ImageField(required=False)
+
+    def save(self, request):
+        """
+        Saves the user instance with additional fields from the signup form.
+        """
+        user = super(CustomSignupForm, self).save(request)
+        user.full_name = self.cleaned_data['full_name']
+        user.profile_picture = self.cleaned_data.get('profile_picture')
+        user.save()
+        return user
+</details>
+
+(screenshot of custom signup form)
+
+### User Profiles
+Users also have access to profile pages. Thier own page will display all of their information and allow for them to use a form to edit this information.
+
+(screenshot of full profile page)
+
+But if it is not your own profile page, it will hide senstive information like your name and email, and not give you the option to edit.
+
+(scrreshot of minimised profile page)
+
+The menu at the top allows any user to see the profile, posts made by the user, and any posts the user has left a comment on.
+
+(screeshot of menu and user comments, user posts)
+
+## Content Interaction
+
+### New Posts
+Users have the ability to create a new post from scratch. To do this, I implemented SummerNote rich-text editor to allow for greater flexibility and customisation to the user experience.
+
+(screeshot of new post form)
+
+Upon saving, the user will be redirected to that posts display page.
+
+(screeshot of post details)
+
+This is the main display for each post, and as per my wireframe, there are several interactive elements on these pages.
++ Clicking on the authors username wil take the user to that persons profile page
++ Clicking the Favourite star will tag the post as one of your favourites, meaning it will be listed on your favourites page, and the icon will turn from black to gold
++ Clicking the like button, styled to include the thumbs up icon, will "Like" the post and update the like count automatically, and the icon will turn into a solid thumbs up as opposed to an outline
++ Clicking the "Reply" button, styled to include the speech bubble icon and labelled with the current comment count for that post will open a modal to allow the user to leavea  comment on the post
+
+(buttons screenshot)
+
+### Comments
+Using the "Reply" button users can leave comments by filling the information into a modal window, which will save the comment content as a top level comment with no parent comment, but linked to the post via a related-name within the model.
+
+(screenshot comment modal)
+(screenshot comment)
+
+### Nested Replies
+Each comment will render with its own reply button, allowing for users to reply in nested threads and have conversations about a topic. This button opens the same comment modal but this time saves a hidden input in the form of the comment parent id, so that each reply know which comment it should be nested below.
+
+(screenshot of nested reply)
+
+## Post Filtering & Finding
+
+### Categories
+The categories page will enable users to filter all posts within one of the five defined categories by using the dropdown menu at the top.
+
+(screeshot of menu)
+
+Once chosen, the title will update to show the selected category and the posts within that will be displayed in a paginated by 4 format, displaying on a minimal card in a 2x2 grid, including the like count, comment count, date/time of creation, authors information and favourite star. The favourite star and username profile links are available on theis page but the like and comment are disabled to encourage the user to visit the post to engage further.
+
+(screeshot of selected category)
+
+### Favourites
+The favourites page will show, in the same paginated by 4 style, the posts that the user has tagged as a favourite, with the star being gold.
+
+(screenshot of favourites page)
+
+### Popular Posts
+On the popular posts page, using the same paginated by 4 style, it shows the posts sorted by an "Activity" score which takes into account hte amount of likes and comments a post has had in a given time period. A dropdown menu will allow the user to decide which time frame they wish to veiw by, 24hrs, 7 days, 30 days or All time.
+
+(screeshot of menu)
+(screeshot of popular page)
+
+### Search
+Old reliable, I've included a search functionality within the sidebar, which displays a paginated by 4 style again, and will show any results that include the serach phrase or username entered by the user.
+
+(screenshot of serach results)
+
+## Edit & Delete
+If the author of a post or comment is looking at thier own content, there will be two control buttons displayed, one for editing and one for deleting. These only appear on content the logged in user has created themselves. 
+
+(screenshot of edit/delete buttons)
+
+When clicked the edit button overwrites the element content with a summernote edit form that allows the content to be editted and saved.
+
+(screeshot of edit post)
+(screeshot of edit comment)
+
+The delete button will prompt to user to confirm, and upon confrimation witll delete the post/ comment and any nested replies from the database.
+
+(screenshot of delete prompt)
+
