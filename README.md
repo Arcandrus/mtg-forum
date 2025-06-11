@@ -40,7 +40,11 @@
 A live demo to the website can be found [here](https://mtg-forum-cea7e47cbcff.herokuapp.com/posts/)
 
 # Database ERD
-(picture of database ERD)
+<details>
+   <summary>ERD</summary>
+   
+![](./mtg-forum-assets/erd.png)
+</details>
 The database plan I had for this is simple enough. Almost everything is tied to the Author (Username) of the content. Posts use the title and "slugify" it into a unique indentifier, and it is tied to its Author. The comments are tied to thier Author and also the slug of the post, and as such will cascade on delete and be removed if the Authors account is deleted or removed or if the post is deleted or removed. Replies work in a similar way to the comments.
 
 ### CustomUser Model
