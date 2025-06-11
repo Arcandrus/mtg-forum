@@ -14,7 +14,7 @@
     + [Account Registration & User Profile](#account-registration--user-profile)
         + [Registration](#registration)
         + [User Profiles](#user-profiles)
-    + [Content Interaction](#content-interaction)
+    + [Content Interaction](#content-interactions)
         + [New Posts](#new-posts)
         + [Comments](#comments)
         + [Nested Replies](#nested-replies)
@@ -369,7 +369,7 @@ The menu at the top allows any user to see the profile, posts made by the user, 
 
 (screeshot of menu and user comments, user posts)
 
-## Content Interaction
+## Content Interactions
 
 ### New Posts
 Users have the ability to create a new post from scratch. To do this, I implemented SummerNote rich-text editor to allow for greater flexibility and customisation to the user experience.
