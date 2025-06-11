@@ -680,7 +680,7 @@ The delete button will prompt to user to confirm, and upon confrimation witll de
 ![](./mtg-forum-assets/delete_comment.gif)
 </details>
 
-# A quick word on image integration with SummerNote
+## A quick word on image integration with SummerNote
 I wanted to allow users to upload images as part of posts, comments and replies, using SummerNote and Cloudinary integration, however, due to time constraints I was not able to get this feature implemented. My initial attpemts to integrate this feature had several issues and setbacks I was unable to overcome.
 
 # Deployment 
