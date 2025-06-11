@@ -762,7 +762,7 @@ All these features were manually tested by me and several others, these are the 
 |Editing profile information| Users can edit thier profile information to change thier full name, username, email and profile picture | Myself and several testers checked the functionality using the "Edit Profile" button on the profile page when logged in |Working as intended|
 |Reseting passwords| Users can reset thier password by reciveing an email with a reset link | I tested this with a dummy profile |Working as intended|
 |Deleting posts| Users can remove posts if they are the author | Myself and several testers checked the functionality using the "Delete" button, all comments and replies are deleted as part of CASCADE |Working as intended|
-|Deleting comments| Users can remove comments/replies if they are the author | Myself and several testers checked the functionality using the "Delete" button | Myself and several testers checked the functionality using the "Delete" button, all comments and replies are deleted as part of CASCADE |Working as intended|
+|Deleting comments| Users can remove comments/replies if they are the author | Myself and several testers checked the functionality using the "Delete" button, all comments and replies are deleted as part of CASCADE |Working as intended|
 |Deleting account| Users can delete thier account | I tested this with a dummy profile |Working as intended|
 
 While developing this project, I mainly relied on DevTools, Google, ChatGPT and StackOverFlow to help me with troubleshooting and bug fixing.
