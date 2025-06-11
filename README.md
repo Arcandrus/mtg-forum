@@ -265,7 +265,7 @@ To keep things cohesive and intuative, I had decided on having a sidebar navigat
 
 <details>
    <summary>Screenshot of sidebar</summary>
-   ![](./mtg-forum-assets/sidebar.png)
+![](./mtg-forum-assets/sidebar.png)
 </details>
 
 The colour scheme I chose was a very calming and simple slate grey and white combination for maximum contrast and clarity while still being easier on the eyes than a plain white background with black text.
