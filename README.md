@@ -531,7 +531,7 @@ The menu at the top allows any user to see the profile, posts made by the user, 
 <details>
    <summary>Menu and User filters</summary>
 
-User Profile Menu
+User Profile Menu<br>
 ![](./mtg-forum-assets/users_profile_menu.png)
 
 Posts by User
@@ -569,7 +569,7 @@ This is the main display for each post, and as per my wireframe, there are sever
 <details>
    <summary>Control Buttons</summary>
 
-Like, Reply, Edit, Delete, Favourite
+Like, Reply, Edit, Delete, Favourite<br>
 ![](./mtg-forum-assets/buttons.png)
 </details>
 
@@ -591,48 +591,88 @@ Using the "Reply" button users can leave comments by filling the information int
 ### Nested Replies
 Each comment will render with its own reply button, allowing for users to reply in nested threads and have conversations about a topic. This button opens the same comment modal but this time saves a hidden input in the form of the comment parent id, so that each reply know which comment it should be nested below.
 
-(screenshot of nested reply)
+<details>
+   <summary>Nested replies example</summary>
+   
+![](./mtg-forum-assets/replies.gif)
+</details>
 
 ## Post Filtering & Finding
 
 ### Categories
 The categories page will enable users to filter all posts within one of the five defined categories by using the dropdown menu at the top.
 
-(screeshot of menu)
+<details>
+   <summary>Category Menu</summary>
+   
+![](./mtg-forum-assets/category_menu.png)
+</details>
 
 Once chosen, the title will update to show the selected category and the posts within that will be displayed in a paginated by 4 format, displaying on a minimal card in a 2x2 grid, including the like count, comment count, date/time of creation, authors information and favourite star. The favourite star and username profile links are available on theis page but the like and comment are disabled to encourage the user to visit the post to engage further.
 
-(screeshot of selected category)
+<details>
+   <summary>Category Chosen</summary>
+   
+![](./mtg-forum-assets/category_chosen.png)
+</details>
 
 ### Favourites
 The favourites page will show, in the same paginated by 4 style, the posts that the user has tagged as a favourite, with the star being gold.
 
-(screenshot of favourites page)
+<details>
+   <summary>Favourites page</summary>
+   
+![](./mtg-forum-assets/favourites.png)
+</details>
 
 ### Popular Posts
 On the popular posts page, using the same paginated by 4 style, it shows the posts sorted by an "Activity" score which takes into account hte amount of likes and comments a post has had in a given time period. A dropdown menu will allow the user to decide which time frame they wish to veiw by, 24hrs, 7 days, 30 days or All time.
 
-(screeshot of menu)
-(screeshot of popular page)
+<details>
+   <summary>Popular Filter Menu</summary>
+   
+![](./mtg-forum-assets/popular_menu.png)
+</details>
+
+<details>
+   <summary>Popular page display</summary>
+   
+![](./mtg-forum-assets/popular.png)
+</details>
 
 ### Search
 Old reliable, I've included a search functionality within the sidebar, which displays a paginated by 4 style again, and will show any results that include the serach phrase or username entered by the user.
 
-(screenshot of serach results)
+<details>
+   <summary>Search Results</summary>
+   
+![](./mtg-forum-assets/search_results.png)
+</details>
 
 ## Edit & Delete
 If the author of a post or comment is looking at thier own content, there will be two control buttons displayed, one for editing and one for deleting. These only appear on content the logged in user has created themselves. 
 
-(screenshot of edit/delete buttons)
-
 When clicked the edit button overwrites the element content with a summernote edit form that allows the content to be editted and saved.
 
-(screeshot of edit post)
-(screeshot of edit comment)
+<details>
+   <summary>Edit Post</summary>
+   
+![](./mtg-forum-assets/edit_post.gif)
+</details>
+
+<details>
+   <summary>Edit Comment</summary>
+   
+![](./mtg-forum-assets/edit_comment.gif)
+</details>
 
 The delete button will prompt to user to confirm, and upon confrimation witll delete the post/ comment and any nested replies from the database.
 
-(screenshot of delete prompt)
+<details>
+   <summary>Delete Comment</summary>
+   
+![](./mtg-forum-assets/delete_comment.gif)
+</details>
 
 # Deployment 
 1. Log in to Heroku if you already have an account with them. If not, create an account.
@@ -652,17 +692,29 @@ The delete button will prompt to user to confirm, and upon confrimation witll de
 HTML
 [W3C HTML validator](#https://validator.w3.org) seemed to really struggle with the Django generateed content so I instead validated the raw HTML after Django rendering, which showed no errors
 
-(screenshot of html pass)
+<details>
+   <summary>HTML Pass</summary>
+   
+![](./mtg-forum-assets/html_pass.png)
+</details>
 
 CSS
 [W3C CSS Validator](#https://jigsaw.w3.org/css-validator/) showed no errors.
 
-(screenshot of css pass)
+<details>
+   <summary>CSS Pass</summary>
+   
+![](./mtg-forum-assets/css_pass.png)
+</details>
 
 JS
-[BeautifyTools JS Validator](#https://beautifytools.com/javascript-validator.php) was used to validate all my js scripts and each returned no errors. I've included one screenshot.
+[BeautifyTools JS Validator](#https://beautifytools.com/javascript-validator.php) was used to validate all my js scripts and each returned no errors. I've included one screenshot, but I ran every script through the validator.
 
-(screenshot of Js pass)
+<details>
+   <summary>JS Pass</summary>
+   
+![](./mtg-forum-assets/js_pass.png)
+</details>
 
 Python
 
