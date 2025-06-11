@@ -676,6 +676,9 @@ The delete button will prompt to user to confirm, and upon confrimation witll de
 ![](./mtg-forum-assets/delete_comment.gif)
 </details>
 
+# A quick word on image integration with SummerNote
+I wanted to allow users to upload images as part of posts, comments and replies, using SummerNote and Cloudinary integration, however, due to time constraints I was not able to get this feature implemented. My initial attpemts to integrate this feature had several issues and setbacks I was unable to overcome.
+
 # Deployment 
 1. Log in to Heroku if you already have an account with them. If not, create an account.
 2. Once signed in, click on the "Create New App" button located above your dashboard. Give your app a unique name, choose the region you're in (United States/Europe) and click "Create app".
@@ -768,4 +771,10 @@ There was only one moment I had a site breaking error. I had my js set up to rea
 The other minor bug to work around was the edit button was saving the content as RTF and rendering it with {{ post.content | safe }}. Little did I know at the time because of the way I had implemented my js, the contents of the button would change if any HTML markup characters were used in the edited content, like "". I solved this issue by creating a hidden div to store the content before it was saved and then inject that content into the correct div in the HTML, thus bypassing the buttons interaction with the content dorectly.
 
 # Credits
-I would also like to thank my mentor, Medale Oluwafemi, for his insights and support during this project and my friends Rew and Emma and the Frome MTG club who have helped me with testing and troubleshooting. I would also like to credit ChatGPT for helping me with specific debugging and formatting issues I faced when building this project.
+I would like to thank my mentor, Medale Oluwafemi, for his insights and support during this project.
+
+MASSIVE thank you to my best friends Rew and Emma for thier continued support and belief in me as I've progressed as well as thier help testing functionality and features and thier valuable feedback, I love you both.
+
+Thanks go to the Frome MTG club who have also helped me with testing and troubleshooting. 
+
+I would also like to credit ChatGPT for helping me with specific debugging and formatting issues I faced when building this project, as well as helping me to refactor redundant code.
