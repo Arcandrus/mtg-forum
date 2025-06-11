@@ -14,71 +14,21 @@
                 you have not created an account yet, then <a class="link" href="{{ signup_url }}">sign up</a>
                 first.
             </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 mt-3 offset-md-2">
-            <form method="POST" enctype="multipart/form-data" class="w-100" style="max-width: 600px;">
+
+            <form method="post" action="{% url 'account_login' %}">
                 {% csrf_token %}
-
-                <!-- Full Name -->
-                <div class="mb-3 d-flex align-items-center">
-                    {{ form.full_name.label_tag }}
-                    <div class="flex-grow-1 ms-3">
-                        {{ form.full_name }}
-                        {{ form.full_name.errors }}
-                    </div>
-                </div>
-
-                <!-- Username -->
-                <div class="mb-3 d-flex align-items-center">
-                    {{ form.username.label_tag }}
-                    <div class="flex-grow-1 ms-3">
-                        {{ form.username }}
-                        {{ form.username.errors }}
-                    </div>
-                </div>
-
-                <!-- Email -->
-                <div class="mb-3 d-flex align-items-center">
-                    {{ form.email.label_tag }}
-                    <div class="flex-grow-1 ms-3">
-                        {{ form.email }}
-                        {{ form.email.errors }}
-                    </div>
-                </div>
-
-                <!-- Profile Picture with label above and image preview -->
                 <div class="mb-3">
-                    <div class="mb-2 fw-bold">
-                        {{ form.profile_picture.label_tag }}
-                    </div>
-                    <div class="d-flex align-items-start">
-                        {% if user.profile_picture %}
-                        <div>
-                            <img src="{{ user.profile_picture.url }}" alt="Current Profile Picture"
-                                class="img-thumbnail" style="max-width: 150px;">
-                        </div>
-                        {% endif %}
-                        <div class="ms-4 flex-grow-1">
-                            <div class="form-control p-2">
-                                {{ form.profile_picture }}
-                            </div>
-                            <div class="text-danger small mt-1">
-                                {{ form.profile_picture.errors }}
-                            </div>
-                        </div>
-                    </div>
+                    <label for="id_login" class="form-label">Username</label>
+                    <input type="text" name="login" class="form-control" id="id_login" required>
                 </div>
 
-                <!-- Clear Profile Picture Checkbox -->
-                <div class="mb-3 d-flex align-items-center checkbox-inline">
-                    {{ form.clear_profile_picture.label_tag }}
-                    {{ form.clear_profile_picture }}
+                <div class="mb-3">
+                    <label for="id_password" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" id="id_password" required>
                 </div>
 
-                <!-- Submit Button -->
-                <button class="btn btn-primary float-end mt-3" type="submit">Update</button>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+                <a href="{% url 'account_reset_password' %}" class="btn btn-link">Forgot Password?</a>
             </form>
 
         </div>
