@@ -26,8 +26,7 @@ When deciding on what I wanted to add to this project I looked at several soical
 
 As a user, I want to create an account so that I can post, comment and interact.
 + User can register an account
-+ User can Login to account
-
++ User can Login to account<br><br>
 
 As a user I want to be able to view a profile page with my information and the ability to see my posted content
 + User can access a profile page
