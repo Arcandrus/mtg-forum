@@ -41,6 +41,7 @@ As a user I want to be able to change certain settings to enable me to customise
 
 As a user I want to be able to create posts so I can share my thoughts in the forum
 + User can login and create post
++ Posts and comments should allow for the inclusion of images
 + User can see a list of their created posts
 + User can select a category for the post<br><br>
 
