@@ -5,6 +5,9 @@
 
 1. [Live Demo](#demo)
 2. [Database ERD](#database-erd)
+   + [CustomUser Model](#customuser-model)
+   + [Post Model](#post-model)
+   + [Comment Model](#comment-model)
 3. [User Stories](#user-stories)
    + [Epics](#epics)
         + [User Profile](#user-profile)
