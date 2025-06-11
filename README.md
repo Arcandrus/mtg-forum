@@ -717,7 +717,6 @@ JS
 </details>
 
 Python
-
 [Pep8 CI](#https://pep8ci.herokuapp.com) was used to validate all *.py files and with the exception of a couple of trailing whitespaces and incorrect spacing, which I then fixed, everything came back clear.
 
 Lighthouse
