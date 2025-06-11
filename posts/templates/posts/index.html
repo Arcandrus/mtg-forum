@@ -47,10 +47,10 @@
                         </a>
                     </div>
 
-                    <p>{{ post.excerpt | safe }}</p>
+                    {{ post.excerpt | safe }}
 
                     {% if post.is_edited %}
-                    <small id="post-updated-on" style="color: gray; font-size: small;">
+                    <small id="post-updated-on-{{ post.slug }}" style="color: gray; font-size: small;">
                         Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
                     </small>
                     {% endif %}
