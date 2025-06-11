@@ -263,7 +263,10 @@ Taking into account Strategy, Scope, Structure, Skeleton and surface, together w
 
 To keep things cohesive and intuative, I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be accessed in the [technologies](#technologies) section. I felt this enabled the most cohesive and consistent display of all the controls and options while giving plenty of space to display content to the user. I wanted all the controls for the user to be persitent and easy to understand, which is why I used the sidebar approach, included icon labels using FontAwesome. 
 
-![](./mtg-forum-assets/sidebar.png)
+<details>
+   <summary>Screenshot of sidebar</summary>
+   ![](./mtg-forum-assets/sidebar.png)
+</details>
 
 The colour scheme I chose was a very calming and simple slate grey and white combination for maximum contrast and clarity while still being easier on the eyes than a plain white background with black text.
 
