@@ -17,6 +17,7 @@ from .forms import PostForm, CommentForm
 from .models import Post, Comment
 # Create your views here.
 
+
 class PostList(generic.ListView):
     """
     Display a paginated list of all posts on the site.
@@ -165,7 +166,6 @@ def edit_post(request, slug):
             post = form.save(commit=False)
             post.excerpt = ' '.join(post.content.split()[:200])
             post.save()
-            
             updated_time = django_date_format(localtime(post.updated_on), 'N j, Y, P')
             return JsonResponse({
                 'success': True,
@@ -201,7 +201,7 @@ def delete_post(request, slug):
         post.delete()
         messages.success(request, "Post and its comments were deleted successfully.")
         return redirect('post_list')
-    
+
     return render(request, 'posts/confirm_delete.html', {'post': post})
 
 
@@ -237,7 +237,7 @@ def edit_comment(request, comment_id):
             'comment': comment,
         }, request=request)
         return HttpResponse(html)
-    
+
 
 @login_required
 def delete_comment(request, comment_id):
@@ -265,13 +265,14 @@ def delete_comment(request, comment_id):
 CATEGORY_CHOICES = dict(Post.CATEGORY)
 CATEGORY_SLUGS = {slugify(name): id for id, name in CATEGORY_CHOICES.items()}
 
+
 def category_posts(request, category_name=None):
     """
     Display posts filtered by a specific category.
     If the category name is valid, fetch posts for that category, paginate,
     and render the categories template. Otherwise, show 'Unknown Category'.
     """
-    categories = CATEGORY_CHOICES 
+    categories = CATEGORY_CHOICES
 
     if category_name in CATEGORY_SLUGS:
         category_id = CATEGORY_SLUGS[category_name]
@@ -289,7 +290,7 @@ def category_posts(request, category_name=None):
 
     context = {
         'categories': categories,
-        'posts': page_obj, 
+        'posts': page_obj,
         'page_obj': page_obj,
         'selected_category': selected_category,
         'category_name': pretty_category_name,

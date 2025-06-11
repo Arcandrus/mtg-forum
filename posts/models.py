@@ -7,17 +7,19 @@ from django.conf import settings
 
 # Create your models here.
 
+
 class Post(models.Model):
     """
     Model representing a forum post with categories, author, content,
-    likes, favourites, and timestamps. Supports tracking likes and comments count,
-    and provides utility methods for display and URLs.
+    likes, favourites, and timestamps. Supports tracking
+    likes and comments count, and provides utility methods
+    for display and URLs.
     """
     CATEGORY = (
         (0, "Deck Techs"),
         (1, "Combos & Strategy"),
         (2, "Rules & Card Help"),
-        (3, "Looking for Games"), 
+        (3, "Looking for Games"),
         (4, "Social & Trading")
         )
     title = models.CharField(max_length=200, unique=True)
@@ -34,7 +36,6 @@ class Post(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(CustomUser, related_name='post_likes')
     favourites = models.ManyToManyField(CustomUser, related_name='favourite_posts', blank=True)
-    is_popular = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-created_on"]
@@ -43,12 +44,12 @@ class Post(models.Model):
     def is_edited(self):
         """Returns True if the post has been updated after creation."""
         return (self.updated_on - self.created_on) > timedelta(seconds=1)
-    
+
     @property
     def total_likes(self):
         """Returns the total number of likes for the post."""
         return self.likes.count()
-    
+
     @property
     def comment_count(self):
         """Returns the total number of comments associated with the post."""
@@ -57,14 +58,15 @@ class Post(models.Model):
     def __str__(self):
         """Returns a string representation of the post."""
         return f"{self.title} | written by {self.author}"
-    
+
     def get_absolute_url(self):
         """Returns the URL to access a detail view of this post."""
         return reverse('post_detail', kwargs={'slug': self.slug})
-    
+
     def get_category_display_name(self):
         """Returns the display name of the category."""
         return dict(self.CATEGORY).get(self.category)
+
 
 class Comment(models.Model):
     """

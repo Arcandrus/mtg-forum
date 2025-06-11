@@ -2,6 +2,7 @@ from django import forms
 from django_summernote.widgets import SummernoteWidget
 from .models import Post, Comment
 
+
 class PostForm(forms.ModelForm):
     """
     Form for creating and editing Post instances.
@@ -18,10 +19,12 @@ class PostForm(forms.ModelForm):
             'category': 'Select a Category',
         }
 
+
 class CommentForm(forms.ModelForm):
     """
     Form for creating and editing Comment instances.
-    Includes fields for comment content and optional parent comment for threaded replies.
+    Includes fields for comment content and optional
+    parent comment for threaded replies.
     Uses Summernote widget for content and hides the parent field in the form.
     """
     class Meta:

@@ -68,12 +68,12 @@
 
                 <!-- Post Content -->
                 <div id="post-content">
-                    <p>{{ post.content | safe }}</p>
+                    {{ post.content | safe }}
                 </div>
 
                 <!-- Post Updated Info -->
                 {% if post.is_edited %}
-                <div id="post-updated-on" class="text-muted">
+                <div id="post-updated-on-{{ post.slug }}" class="text-muted">
                     Last Edited: {{ post.updated_on|date:"N j, Y, P" }}
                 </div>
                 {% endif %}
