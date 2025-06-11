@@ -585,6 +585,8 @@ The delete button will prompt to user to confirm, and upon confrimation witll de
 
 #Testing
 
+## Validation
+
 HTML
 [W3C HTML validator](#https://validator.w3.org) seemed to really struggle with the Django generateed content so I instead validated the raw HTML after Django rendering, which showed no errors
 
@@ -604,4 +606,42 @@ Python
 
 [Pep8 CI](#https://pep8ci.herokuapp.com) was used to validate all *.py files and with the exception of a couple of trailing whitespaces and incorrect spacing, which I then fixed, everything came back clear.
 
+## Manual Testing
+
+### Manual Testing
+
+All these features were manually tested by me and several others, these are the results of those tests.
+
+| Feature | Expectation | Action | Result |
+| ---------- | ---------- | ------------ | ----------- |
+|Registering an account| | |Working as intended|
+|Logging in| | |Working as intended|
+|Logging out| | |Working as intended|
+|Veiwing profiles| | |Working as intended|
+|Creating a post| | |Working as intended|
+|Posting a comment| | |Working as intended|
+|Posting a reply| | |Working as intended|
+|Liking a post| | |Working as intended|
+|Adding a post to favourites| | |Working as intended|
+|Browsing by category| | |Working as intended|
+|Browsing by popular| | |Working as intended|
+|Searching for content| | |Working as intended|
+|Editing posts| | |Working as intended|
+|Editing Comments| | |Working as intended|
+|Editing profile information| | |Working as intended|
+|Reseting passwords| | |Working as intended|
+|Deleting posts| | |Working as intended|
+|Deleting comments| | |Working as intended|
+|Deleting account| | |Working as intended|
+
+While developing this project, I mainly relied on DevTools, Google, ChatGPT and StackOverFlow to help me with troubleshooting and bug fixing.
+
+I have also asked several users to explore the website on different devices including iPhone 14, iPad, Oppo mobile devices, Sony mobile devices and several different PC and Laptop setups to ensure consitency and usability across multiple platforms.
+
+## Major Bugs & Errors
+There was only one moment I had a site breaking error. I had my js set up to read my buttons based on the innertext of said button, for example "Reply". This text was always supposed to be considered placeholder, but I didn't make the correct adjustments to the js when I switched the button to display icons instead of text. As such the whole comments system broke into pieces and I spent several hours until I figured out ths issue and made the corrections. After this, everything worked as expected.
+
+The other minor bug to work around was the edit button was saving the content as RTF and rendering it with {{ post.content | safe }}. Little did I know at the time because of the way I had implemented my js, the contents of the button would change if any HTML markup characters were used in the edited content, like "". I solved this issue by creating a hidden div to store the content before it was saved and then inject that content into the correct div in the HTML, thus bypassing the buttons interaction with the content dorectly.
+
 # Credits
+I would also like to thank my mentor, Medale Oluwafemi, for his insights and support during this project and my friends Rew and Emma and the Frome MTG club who have helped me with testing and troubleshooting. I would also like to credit ChatGPT for helping me with specific debugging and formatting issues I faced when building this project.
