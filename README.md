@@ -62,7 +62,17 @@ As a user I want to be able to view the website on a mobile device to enable me 
 + Implement responsive design to allow for multiple screen sizes<br><br>
 
 ## Design
+Taking into account Strategy, Scope, Structure, Skeleton and surface, together with User Stories and desired outcomes, this is what I considered while building this project.
 
-### Initial design and UX considerations
+To keep things cohesive and intuative, I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be seen [here](mtg-forum-assets/mtg_forum.pdf) (pdf format). I felt this enabled the most cohesive and consistent display of all the controls and options while giving plenty of space to display content to the user. I wanted all the controls for the user to be persitent and easy to understand, which is why I used the sidebar approach, included icon labels using FontAwesome. 
 
-I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be seen [here](mtg-forum-assets/mtg_forum.pdf) (pdf format)
+(screenshot of sidebar)
+
+The colour scheme I chose was a very calming and simple slate grey and white combination for maximum contrast and clarity while still being easier on the eyes than a plain white background with black text.
+
+(screenshot of color scheme here)
+(color palette here)
+
+For visual clarity, links have a colour change when hovered, however, I considered mobile device users would not have this feature, and so, as part of my responsive design practice, I made links display with the default underline on smaller screens to make it clear what is a clickable link.
+
+(Example gif to be added here)
