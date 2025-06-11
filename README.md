@@ -94,22 +94,22 @@ For visual clarity, links have a colour change when hovered, however, I consider
 
 <details>
 <summary>CustomUser model is shown here</summary>
-<code>
-class CustomUser(AbstractUser):
-    """
-    Custom user model extending Django's AbstractUser.
-    Adds full_name, unique email, and profile picture via Cloudinary.
-    """
-    full_name = models.CharField(max_length=255, blank=True, null=True)
-    username = models.CharField(max_length=255, blank=True, null=True, unique=True)
-    email = models.EmailField(unique=True)
-    profile_picture = CloudinaryField(
-        'image',
-        blank=True,
-        null=True,
-        default='samples/cloudinary-icon'
-    )
-
+    
+    class CustomUser(AbstractUser):
+        """
+        Custom user model extending Django's AbstractUser.
+        Adds full_name, unique email, and profile picture via Cloudinary.
+        """
+        full_name = models.CharField(max_length=255, blank=True, null=True)
+        username = models.CharField(max_length=255, blank=True, null=True, unique=True)
+        email = models.EmailField(unique=True)
+        profile_picture = CloudinaryField(
+            'image',
+            blank=True,
+            null=True,
+            default='samples/cloudinary-icon'
+        )
+        
     @property
     def post_count(self):
         """Returns the count of posts authored by this user."""
@@ -137,7 +137,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-</code>
+
 </details>
 
 **Balsamiq** - To create a wireframe.
