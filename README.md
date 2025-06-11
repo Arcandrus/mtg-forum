@@ -5,12 +5,28 @@
 
 1. [Live Demo](#demo)
 2. [User Stories](#user-stories)
-3. [Design](#design)
-4. [Technologies](#technologies)
-5. [Features](#features)
-6. [Deployment](#deployment)
-7. [Testing](#testing)
-8. [Credits](#credits)
+   + [Epics](##epics)
+        + [User Profile](###user-profile)
+        + [Content Interaction](###content-interaction)     
+4. [Design](#design)
+5. [Technologies](#technologies)
+6. [Features](#features)
+    + [Account Registration & User Profile](#account-registration--user-profile)
+        + [Registration](###registration)
+        + [User Profiles](###user-profiles)
+    + [Content Interaction](##content-interaction)
+        + [New Posts](###new-posts)
+        + [Comments](###comments)
+        + [Nested Replies](###nested-replies)
+    + [Post Filtering & Finding](##post-filtering--finding)
+        + [Categories](###categories)
+        + [Favourites](###favourites)
+        + [Popular Posts](###popular-posts)
+        + [Search](###search)
+    + [Edit & Delete](##edit--delete)
+8. [Deployment](#deployment)
+9. [Testing](#testing)
+10. [Credits](#credits)
 
 ![](./readme-assets/responsive_ui.png)
 
@@ -308,7 +324,7 @@ For visual clarity, links have a colour change when hovered, however, I consider
 # Features
 Most of the features I implemented were the direct responses to the User Stories listed above, as such, here follows an explaination of them in greater detail.
 
-## Account Registraion & User Profile
+## Account Registration & User Profile
 
 ### Registration
 I used Django AllAuth to enable users to register an account for creation of content. The AllAuth form template was replaced by a custom form to allow for adding feilds and greater control of styling.
