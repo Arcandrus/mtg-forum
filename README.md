@@ -34,7 +34,7 @@
    + [Manual Testing](#manual-testing)   
 11. [Credits](#credits)
 
-![](./readme-assets/responsive_ui.png)
+![](./mtg-forum-assets/responsive_ui.png)
 
 ## Demo
 A live demo to the website can be found [here](https://mtg-forum-cea7e47cbcff.herokuapp.com/posts/)
