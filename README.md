@@ -826,7 +826,7 @@ There was only one moment I had a site breaking error. I had my js set up to rea
 The other minor bug to work around was the edit button was saving the content as RTF and rendering it with {{ post.content | safe }}. Little did I know at the time because of the way I had implemented my js, the contents of the button would change if any HTML markup characters were used in the edited content, like "". I solved this issue by creating a hidden div to store the content before it was saved and then inject that content into the correct div in the HTML, thus bypassing the buttons interaction with the content directly.
 
 # Credits
-I would like to thank my mentor, Medale Oluwafemi, for his insights and support during this project.
+I would like to thank my mentor, Medale Oluwafemi and my tutor Tom Cowen for their continued insights and support during this project.
 
 MASSIVE thank you to my best friends Rew and Emma for their continued support and belief in me as I've progressed as well as their help testing functionality and features and their valuable feedback, I love you both.
 
