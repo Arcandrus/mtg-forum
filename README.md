@@ -31,7 +31,10 @@
 8. [Deployment](#deployment)
 9. [Testing](#testing)
    + [Validation](#validation)
-   + [Manual Testing](#manual-testing)   
+   + [Manual Testing](#manual-testing)
+   + [Responsive UI Testing](#responsive-ui-testing)
+   + [Browser Compatibility](#broswer-compatibility)
+   + [User Story Testing](#user-story-testing)
 11. [Credits](#credits)
 
 ![](./mtg-forum-assets/responsive_ui.png)
