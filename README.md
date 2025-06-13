@@ -805,6 +805,7 @@ I tested the site on several popular browsers to ensure functionality and usabli
 | Microsoft Edge | None | Good |
 
 ## User Story Testing
+Below follows a breakdown of each of the user stories and the results of the implementation and testing of each.
 
 | User Story | Acceptance criteria | Criteria Met? | Tested | Notes |
 | ---------- | ---------- | ---------- | ---------- | ---------- |
