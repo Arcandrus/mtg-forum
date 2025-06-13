@@ -807,7 +807,7 @@ I tested the site on several popular browsers to ensure functionality and usabli
 ## User Story Testing
 
 | User Story | Acceptance criteria | Criteria Met? | Tested | Notes |
-| ---------- | ---------- | ---------- | ---------- |
+| ---------- | ---------- | ---------- | ---------- | ---------- |
 | EPIC: User Profile | - | - | - | - |
 | #1 As a user, I want to create an account so that I can post, comment and interact. | - User can register an account <br>- User can Login to account | Yes | Yes | - |
 | #2 As a user I want to be able to view a profile page with my information and the ability to see my posted content | - User can access a profile page <br> - Users profile page shows listed content created by the user <br> - User has their own details displayed with certain fields allowing editing | Yes | Yes | - |
