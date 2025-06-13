@@ -772,7 +772,7 @@ While developing this project, I mainly relied on DevTools, Google, ChatGPT and 
 
 I have also asked several users to explore the website on different devices including iPhone 14, iPad, Oppo mobile devices, Sony mobile devices and several different PC and Laptop setups to ensure consistency and usability across multiple platforms.
 
-## Resonpsive UI Testing
+## Responsive UI Testing
 
 I started by using traditional media queries, but quickly realised that I could not have the control I wanted with regard to specific sets of conditions, mainly to have a specific display option for landscape display for better calirty on mobile devices. So to this end, I implemented a class based system to apply different design functionality to the <code>body</code> element combined with js control to ensure a smooth and responsive design.
 
