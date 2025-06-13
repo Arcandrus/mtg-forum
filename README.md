@@ -769,6 +769,39 @@ While developing this project, I mainly relied on DevTools, Google, ChatGPT and 
 
 I have also asked several users to explore the website on different devices including iPhone 14, iPad, Oppo mobile devices, Sony mobile devices and several different PC and Laptop setups to ensure consistency and usability across multiple platforms.
 
+## Resonpsive UI Testing
+
+I started by using traditional media queries, but quickly realised that I could not have the control I wanted with regard to specific sets of conditions, mainly to have a specific display option for landscape display for better calirty on mobile devices. So to this end, I implemented a class based system to apply different design functionality to the <code>body</code> element combined with js control to ensure a smooth and responsive design.
+
+As the screen width gets smaller the elements all adjust to fit. At the small screen breakpoint of 768px wide, the sidebar hides itself behind the hamburger icon in the top right of the header, and this is the same on mobile devices veiwed in landscape regardless of the screen width for better clarity.
+
+Using a combination of Bootstrap and custom classes, I made sure the design remained responsive on all devices. Below are demostrations of the resosive changes on a Desktop display and then on a tablet, the tabklet used to simulate this in DevTools was an iPad Air.
+
+<details>
+   <summary>Responsive Desktop UI</summary>
+   
+![](./mtg-forum-assets/responsive_desktop_ui.gif)
+</details>
+
+<details>
+   <summary>Responsive Tablet UI</summary>
+   
+![](./mtg-forum-assets/tablet_responsive_ui.gif)
+</details>
+
+
+## Browser Compatibility
+
+| Browser | Issues | Functionality |
+| ---------- | ---------- | ------------ |
+| Google Chrome | None | Good |
+| Apple Safari | None | Good |
+| Opera GX | None | Good |
+| Mozilla Firefox | None | Good |
+| Microsoft Edge | None | Good |
+
+## User Story Testing
+
 ## Major Bugs & Errors
 There was only one moment I had a site breaking error. I had my js set up to read my buttons based on the innertext of said button, for example "Reply". This text was always supposed to be considered placeholder, but I didn't make the correct adjustments to the js when I switched the button to display icons instead of text. As such the whole comments system broke into pieces and I spent several hours until I figured out this issue and made the corrections. After this, everything worked as expected.
 
