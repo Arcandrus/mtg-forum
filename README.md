@@ -33,7 +33,7 @@
    + [Validation](#validation)
    + [Manual Testing](#manual-testing)
    + [Responsive UI Testing](#responsive-ui-testing)
-   + [Browser Compatibility](#broswer-compatibility)
+   + [Browser Compatibility](#browser-compatibility)
    + [User Story Testing](#user-story-testing)
 11. [Credits](#credits)
 
@@ -794,6 +794,7 @@ Using a combination of Bootstrap and custom classes, I made sure the design rema
 
 
 ## Browser Compatibility
+I tested the site on several popular browsers to ensure functionality and usablity on each. Here are the results of those tests.
 
 | Browser | Issues | Functionality |
 | ---------- | ---------- | ------------ |
@@ -804,6 +805,14 @@ Using a combination of Bootstrap and custom classes, I made sure the design rema
 | Microsoft Edge | None | Good |
 
 ## User Story Testing
+
+| User Story | Acceptance criteria | Tested | Notes |
+| ---------- | ---------- | ---------- | ---------- |
+| - | EPIC: | User Profile | - |
+| #1 As a user, I want to create an account so that I can post, comment and interact. | User can register an account - Yes
+User can Login to account - Yes | Yes | - |
+| #2 As a user I want to be able to view a profile page with my information and the ability to see my posted content | Yes | Yes | - |
+
 
 ## Major Bugs & Errors
 There was only one moment I had a site breaking error. I had my js set up to read my buttons based on the innertext of said button, for example "Reply". This text was always supposed to be considered placeholder, but I didn't make the correct adjustments to the js when I switched the button to display icons instead of text. As such the whole comments system broke into pieces and I spent several hours until I figured out this issue and made the corrections. After this, everything worked as expected.
