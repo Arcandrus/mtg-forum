@@ -778,7 +778,7 @@ I started by using traditional media queries, but quickly realised that I could 
 
 As the screen width gets smaller the elements all adjust to fit. At the small screen breakpoint of 768px wide, the sidebar hides itself behind the hamburger icon in the top right of the header, and this is the same on mobile devices veiwed in landscape regardless of the screen width for better clarity.
 
-Using a combination of Bootstrap and custom classes, I made sure the design remained responsive on all devices. Below are demostrations of the resosive changes on a Desktop display and then on a tablet, the tabklet used to simulate this in DevTools was an iPad Air.
+Using a combination of Bootstrap and custom classes, I made sure the design remained responsive on all devices. Below are demostrations of the resosive changes on a Desktop display and then on a tablet, the tablet used to simulate this in DevTools was an iPad Air.
 
 <details>
    <summary>Responsive Desktop UI</summary>
