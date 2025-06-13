@@ -808,8 +808,8 @@ I tested the site on several popular browsers to ensure functionality and usabli
 
 | User Story | Acceptance criteria | Tested | Notes |
 | ---------- | ---------- | ---------- | ---------- |
-| - | EPIC: | User Profile | - |
-| #1 As a user, I want to create an account so that I can post, comment and interact. | User can register an account - Yes
+| EPIC: User Profile | - | - | - |
+| #1 As a user, I want to create an account so that I can post, comment and interact. | User can register an account - Yes<br>
 User can Login to account - Yes | Yes | - |
 | #2 As a user I want to be able to view a profile page with my information and the ability to see my posted content | Yes | Yes | - |
 
