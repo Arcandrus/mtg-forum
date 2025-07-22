@@ -1,5 +1,5 @@
 # MTG FORUM - A social media/ network platform for Magic: the Gathering players.
-# Code Intstitute Milstone Project 3 - Full Stack Django Development
+# Code Institute Milestone Project 3 - Full Stack Django Development
 
 ## Table of Contents
 
@@ -30,16 +30,25 @@
     + [Edit & Delete](#edit--delete)
 8. [Deployment](#deployment)
 9. [Testing](#testing)
-10. [Credits](#credits)
+   + [Validation](#validation)
+   + [Manual Testing](#manual-testing)
+   + [Responsive UI Testing](#responsive-ui-testing)
+   + [Browser Compatibility](#browser-compatibility)
+   + [User Story Testing](#user-story-testing)
+11. [Credits](#credits)
 
-![](./readme-assets/responsive_ui.png)
+![](./mtg-forum-assets/responsive_ui.png)
 
 ## Demo
 A live demo to the website can be found [here](https://mtg-forum-cea7e47cbcff.herokuapp.com/posts/)
 
 # Database ERD
-(picture of database ERD)
-The database plan I had for this is simple enough. Almost everything is tied to the Author (Username) of the content. Posts use the title and "slugify" it into a unique indentifier, and it is tied to its Author. The comments are tied to thier Author and also the slug of the post, and as such will cascade on delete and be removed if the Authors account is deleted or removed or if the post is deleted or removed. Replies work in a similar way to the comments.
+<details>
+   <summary>ERD</summary>
+   
+![](./mtg-forum-assets/erd.png)
+</details>
+The database plan I had for this is simple enough. Almost everything is tied to the Author (Username) of the content. Posts use the title and "slugify" it into a unique identifier, and it is tied to its Author. The comments are tied to their Author and also the slug of the post, and as such will cascade on delete and be removed if the Authors account is deleted or removed or if the post is deleted or removed. Replies work in a similar way to the comments.
 
 ### CustomUser Model
    + username: CharField, Unique to each user, used as ForeignKey in Posts model
@@ -110,7 +119,7 @@ The database plan I had for this is simple enough. Almost everything is tied to 
    + updated_on: DateTimeField, auto_now=True sets the date/time when posts are edited
    + likes: ManyToManyField, CustomUser, realated_name='post_likes' has the logged in user liked this post
    + favourites: ManyToManyField, CustomUser, related_name='favourites' has the logged in user favourited this post
-      + META, <code>ordeing = ["-created_on"]</code> shows the posts in descending order from most recent
+      + META, <code>ordering = ["-created_on"]</code> shows the posts in descending order from most recent
       + is_edited, Returns True if post has been edited and displays updated on date/time
       + total_likes, Returns total amount of likes the post has
       + comment_count, Returns total amount of comments the post has had
@@ -185,7 +194,7 @@ The database plan I had for this is simple enough. Almost everything is tied to 
    + content: TextField, main body content of the comment
    + created_on: DateTimeField, auto_now_add=True Logs the date and time the comment was made
    + parent: ForeignKey, Hidden input, set to null to indicate a top level comment, otherwise, assigns the parent id for the comment its replying to. using this method, both comments and replies can be handled by the same model
-      + META, <code>ordeing = ["-created_on"]</code> shows the posts in descending order from most recent
+      + META, <code>ordering = ["-created_on"]</code> shows the posts in descending order from most recent
 
 <details>
    <summary>Comment model shown here</summary>
@@ -214,7 +223,7 @@ The database plan I had for this is simple enough. Almost everything is tied to 
 </details>
 
 # User Stories
-When deciding on what I wanted to add to this project I looked at several soical media and forum style websites and took the greatest amount of inspiration from Reddit. To this effect, I wrote my user stories based on what I considered the cornerstone features of such a platform and split them into two Epics, User Profile and Content Interaction, detailed below, along with the acceptance criteria I decided for each user story. The kanban board for this project can be found [here](https://github.com/users/Arcandrus/projects/4/views/1)
+When deciding on what I wanted to add to this project I looked at several social media and forum style websites and took the greatest amount of inspiration from Reddit. To this effect, I wrote my user stories based on what I considered the cornerstone features of such a platform and split them into two Epics, User Profile and Content Interaction, detailed below, along with the acceptance criteria I decided for each user story. The kanban board for this project can be found [here](https://github.com/users/Arcandrus/projects/4/views/1)
 
 ## Epics
 
@@ -259,20 +268,37 @@ As a user I want to be able to view the website on a mobile device to enable me 
 + Implement responsive design to allow for multiple screen sizes<br><br>
 
 ## Design
-Taking into account Strategy, Scope, Structure, Skeleton and surface, together with User Stories and desired outcomes, this is what I considered while building this project.
+Taking into account Strategy, Scope, Structure, Skeleton and Surface, together with User Stories and desired outcomes, this is what I considered while building this project.
 
-To keep things cohesive and intuative, I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be accessed in the [technologies](#technologies) section. I felt this enabled the most cohesive and consistent display of all the controls and options while giving plenty of space to display content to the user. I wanted all the controls for the user to be persitent and easy to understand, which is why I used the sidebar approach, included icon labels using FontAwesome. 
+To keep things cohesive and intuitive, I had decided on having a sidebar navigation layout, with a persistent header and footer, all loaded and controlled by the **base.html** template. A wireframe of this initial design concept can be accessed in the [technologies](#technologies) section. I felt this enabled the most cohesive and consistent display of all the controls and options while giving plenty of space to display content to the user. I wanted all the controls for the user to be persistent and easy to understand, which is why I used the sidebar approach, included icon labels using FontAwesome. 
 
-(screenshot of sidebar)
+<details>
+   <summary>Screenshot of sidebar</summary>
+   
+![](./mtg-forum-assets/sidebar.png)
+</details>
 
 The colour scheme I chose was a very calming and simple slate grey and white combination for maximum contrast and clarity while still being easier on the eyes than a plain white background with black text.
 
-(screenshot of color scheme here)
-(color palette here)
+<details>
+   <summary>Color Palette</summary>
+   
+![](./mtg-forum-assets/palette.png)
+</details>
 
 For visual clarity, links have a colour change when hovered, however, I considered mobile device users would not have this feature, and so, as part of my responsive design practice, I made links display with the default underline on smaller screens to make it clear what is a clickable link.
 
-(Example gif to be added here)
+<details>
+   <summary>Example showing colour change</summary>
+   
+![](./mtg-forum-assets/link_example.gif)
+</details>
+
+<details>
+   <summary>Example showing mobile links</summary>
+   
+![](./mtg-forum-assets/mobile_link.png)
+</details>
 
 ## Technologies
 **HTML** - To create a basic site skeleton and add the content. The site consists of HTML template partials loaded within the **base.html** template.
@@ -441,10 +467,10 @@ For visual clarity, links have a colour change when hovered, however, I consider
 
 **Javascript** - This is where most of the work for this project was done, as much of the system runs on Javascript
 + comments.js - Contains the functionality to post comments, post replies and edit/ delete both
-+ favourite.js - Enables AJAX js for the favourtie button, both processing the form and updating the button
++ favourite.js - Enables AJAX js for the favourite button, both processing the form and updating the button
 + like.js - Enables the like button functionality in a similar vein to the favourite button
 + messages.js - Controls the display of Django messages
-+ post_edit.js - Enables the inline form to allow users to edit any of thier own posts
++ post_edit.js - Enables the inline form to allow users to edit any of their own posts
 + screen_check.js - As part of responsive design, this js file checks for screen size changes as well as orientation changes
 
 **Django** - This was the meat of the project, enabling full user controlled CRUD functionality. Implementing a CustomUser model as well as creating custom templates for much of the Django AllAuth library to allow for greater access and customisation across the sites features. 
@@ -454,12 +480,12 @@ For visual clarity, links have a colour change when hovered, however, I consider
 **Bootstrap** - To ensure responsive design and usability across all devices, I use a combination of Bootstrap classes and custom css.
 
 # Features
-Most of the features I implemented were the direct responses to the User Stories listed above, as such, here follows an explaination of them in greater detail.
+Most of the features I implemented were the direct responses to the User Stories listed above, as such, here follows an explanation of them in greater detail.
 
 ## Account Registration & User Profile
 
 ### Registration
-I used Django AllAuth to enable users to register an account for creation of content. The AllAuth form template was replaced by a custom form to allow for adding feilds and greater control of styling.
+I used Django AllAuth to enable users to register an account for creation of content. The AllAuth form template was replaced by a custom form to allow for adding fields and greater control of styling.
 
 <details>
     <summary>The custom sign up form can be seen here</summary>
@@ -486,91 +512,179 @@ I used Django AllAuth to enable users to register an account for creation of con
         return user
 </details>
 
-(screenshot of custom signup form)
+<details>
+   <summary>Screenshot of custom sign-up form</summary>
+   
+![](./mtg-forum-assets/sign_up.png)
+</details>
 
 ### User Profiles
-Users also have access to profile pages. Thier own page will display all of their information and allow for them to use a form to edit this information.
+Users also have access to profile pages. Their own page will display all of their information and allow for them to use a form to edit this information.
 
-(screenshot of full profile page)
+<details>
+   <summary>Full Profile view, some information redacted</summary>
+   
+![](./mtg-forum-assets/profile_full.png)
+</details>
 
-But if it is not your own profile page, it will hide senstive information like your name and email, and not give you the option to edit.
+But if it is not your own profile page, it will hide sensitive information like your name and email, and not give you the option to edit.
 
-(scrreshot of minimised profile page)
+<details>
+   <summary>Minimal Profile view</summary>
+   
+![](./mtg-forum-assets/profile_min.png)
+</details>
 
 The menu at the top allows any user to see the profile, posts made by the user, and any posts the user has left a comment on.
 
-(screeshot of menu and user comments, user posts)
+<details>
+   <summary>Menu and User filters</summary>
+
+User Profile Menu<br>
+![](./mtg-forum-assets/users_profile_menu.png)
+
+Posts by User
+![](./mtg-forum-assets/posts_by_user.png)
+
+Posts user has commented on
+![](./mtg-forum-assets/comments_by_user.png)
+</details>
 
 ## Content Interactions
 
 ### New Posts
 Users have the ability to create a new post from scratch. To do this, I implemented SummerNote rich-text editor to allow for greater flexibility and customisation to the user experience.
 
-(screeshot of new post form)
+<details>
+   <summary>New post form</summary>
+   
+![](./mtg-forum-assets/new_post_form.png)
+</details>
 
 Upon saving, the user will be redirected to that posts display page.
 
-(screeshot of post details)
+<details>
+   <summary>Redirect to post detail</summary>
+   
+![](./mtg-forum-assets/post_details.png)
+</details>
 
 This is the main display for each post, and as per my wireframe, there are several interactive elements on these pages.
-+ Clicking on the authors username wil take the user to that persons profile page
++ Clicking on the authors username will take the user to that persons profile page
 + Clicking the Favourite star will tag the post as one of your favourites, meaning it will be listed on your favourites page, and the icon will turn from black to gold
 + Clicking the like button, styled to include the thumbs up icon, will "Like" the post and update the like count automatically, and the icon will turn into a solid thumbs up as opposed to an outline
-+ Clicking the "Reply" button, styled to include the speech bubble icon and labelled with the current comment count for that post will open a modal to allow the user to leavea  comment on the post
++ Clicking the "Reply" button, styled to include the speech bubble icon and labelled with the current comment count for that post will open a modal to allow the user to leave a comment on the post
 
-(buttons screenshot)
+<details>
+   <summary>Control Buttons</summary>
+
+Like, Reply, Edit, Delete, Favourite<br>
+![](./mtg-forum-assets/buttons.png)
+</details>
 
 ### Comments
 Using the "Reply" button users can leave comments by filling the information into a modal window, which will save the comment content as a top level comment with no parent comment, but linked to the post via a related-name within the model.
 
-(screenshot comment modal)
-(screenshot comment)
+<details>
+   <summary>Comment Modal</summary>
+   
+![](./mtg-forum-assets/comment_modal.png)
+</details>
+
+<details>
+   <summary>Comment displayed under post</summary>
+   
+![](./mtg-forum-assets/comment.png)
+</details>
 
 ### Nested Replies
 Each comment will render with its own reply button, allowing for users to reply in nested threads and have conversations about a topic. This button opens the same comment modal but this time saves a hidden input in the form of the comment parent id, so that each reply know which comment it should be nested below.
 
-(screenshot of nested reply)
+<details>
+   <summary>Nested replies example</summary>
+   
+![](./mtg-forum-assets/replies.gif)
+</details>
 
 ## Post Filtering & Finding
 
 ### Categories
 The categories page will enable users to filter all posts within one of the five defined categories by using the dropdown menu at the top.
 
-(screeshot of menu)
+<details>
+   <summary>Category Menu</summary>
+   
+![](./mtg-forum-assets/category_menu.png)
+</details>
 
-Once chosen, the title will update to show the selected category and the posts within that will be displayed in a paginated by 4 format, displaying on a minimal card in a 2x2 grid, including the like count, comment count, date/time of creation, authors information and favourite star. The favourite star and username profile links are available on theis page but the like and comment are disabled to encourage the user to visit the post to engage further.
+Once chosen, the title will update to show the selected category and the posts within that will be displayed in a paginated by 4 format, displaying on a minimal card in a 2x2 grid, including the like count, comment count, date/time of creation, authors information and favourite star. The favourite star and username profile links are available on their page but the like and comment are disabled to encourage the user to visit the post to engage further.
 
-(screeshot of selected category)
+<details>
+   <summary>Category Chosen</summary>
+   
+![](./mtg-forum-assets/category_chosen.png)
+</details>
 
 ### Favourites
 The favourites page will show, in the same paginated by 4 style, the posts that the user has tagged as a favourite, with the star being gold.
 
-(screenshot of favourites page)
+<details>
+   <summary>Favourites page</summary>
+   
+![](./mtg-forum-assets/favourites_page.png)
+</details>
 
 ### Popular Posts
-On the popular posts page, using the same paginated by 4 style, it shows the posts sorted by an "Activity" score which takes into account hte amount of likes and comments a post has had in a given time period. A dropdown menu will allow the user to decide which time frame they wish to veiw by, 24hrs, 7 days, 30 days or All time.
+On the popular posts page, using the same paginated by 4 style, it shows the posts sorted by an "Activity" score which takes into account the amount of likes and comments a post has had in a given time period. A dropdown menu will allow the user to decide which time frame they wish to view by, 24hrs, 7 days, 30 days or All time.
 
-(screeshot of menu)
-(screeshot of popular page)
+<details>
+   <summary>Popular Filter Menu</summary>
+   
+![](./mtg-forum-assets/popular_menu.png)
+</details>
+
+<details>
+   <summary>Popular page display</summary>
+   
+![](./mtg-forum-assets/popular_page.png)
+</details>
 
 ### Search
-Old reliable, I've included a search functionality within the sidebar, which displays a paginated by 4 style again, and will show any results that include the serach phrase or username entered by the user.
+Old reliable, I've included a search functionality within the sidebar, which displays a paginated by 4 style again, and will show any results that include the search phrase or username entered by the user.
 
-(screenshot of serach results)
+<details>
+   <summary>Search Results</summary>
+   
+![](./mtg-forum-assets/search_results.png)
+</details>
 
 ## Edit & Delete
-If the author of a post or comment is looking at thier own content, there will be two control buttons displayed, one for editing and one for deleting. These only appear on content the logged in user has created themselves. 
+If the author of a post or comment is looking at their own content, there will be two control buttons displayed, one for editing and one for deleting. These only appear on content the logged in user has created themselves. 
 
-(screenshot of edit/delete buttons)
+When clicked the edit button overwrites the element content with a SummerNote edit form that allows the content to be edited and saved.
 
-When clicked the edit button overwrites the element content with a summernote edit form that allows the content to be editted and saved.
+<details>
+   <summary>Edit Post</summary>
+   
+![](./mtg-forum-assets/edit_post.gif)
+</details>
 
-(screeshot of edit post)
-(screeshot of edit comment)
+<details>
+   <summary>Edit Comment</summary>
+   
+![](./mtg-forum-assets/edit_comment.gif)
+</details>
 
-The delete button will prompt to user to confirm, and upon confrimation witll delete the post/ comment and any nested replies from the database.
+The delete button will prompt to user to confirm, and upon confirmation will delete the post/ comment and any nested replies from the database.
 
-(screenshot of delete prompt)
+<details>
+   <summary>Delete Comment</summary>
+   
+![](./mtg-forum-assets/delete_comment.gif)
+</details>
+
+## A quick word on image integration with SummerNote
+I wanted to allow users to upload images as part of posts, comments and replies, using SummerNote and Cloudinary integration, however, due to time constraints I was not able to get this feature implemented. My initial attempts to integrate this feature had several issues and setbacks I was unable to overcome.
 
 # Deployment 
 1. Log in to Heroku if you already have an account with them. If not, create an account.
@@ -583,28 +697,48 @@ The delete button will prompt to user to confirm, and upon confrimation witll de
 8. I used manual deployment throughout this project, so once I had done a GitHub push, I navigated here and clicked Deploy Branch. If you enabled automatic deploys, every time you push changes to GitHub, the app will be automatically deployed every time, just like you would with a webpage deployed on GitHub Pages.
 8. The app can take a couple of minutes until it's deployed. Once it's done, you'll see the message Your app was successfully deployed and a "Open App" button will be displayed at the top of the screen, where you can see your deployed app.
 
-#Testing
+# Testing
 
 ## Validation
 
-HTML
-[W3C HTML validator](#https://validator.w3.org) seemed to really struggle with the Django generateed content so I instead validated the raw HTML after Django rendering, which showed no errors
+**HTML** <br>
+[W3C HTML validator](https://validator.w3.org) seemed to really struggle with the Django generated content so I instead validated the raw HTML after Django rendering, which showed no errors
 
-(screenshot of html pass)
+<details>
+   <summary>HTML Pass</summary>
+   
+![](./mtg-forum-assets/pass_html.png)
+</details>
 
-CSS
-[W3C CSS Validator](#https://jigsaw.w3.org/css-validator/) showed no errors.
+**CSS** <br>
+[W3C CSS Validator](https://jigsaw.w3.org/css-validator/) showed no errors.
 
-(screenshot of css pass)
+<details>
+   <summary>CSS Pass</summary>
+   
+![](./mtg-forum-assets/pass_css.png)
+</details>
 
-JS
-[BeautifyTools JS Validator](#https://beautifytools.com/javascript-validator.php) was used to validate all my js scripts and each returned no errors. I've included one screenshot.
+**JS** <br>
+[BeautifyTools JS Validator](https://beautifytools.com/javascript-validator.php) was used to validate all my js scripts and each returned no errors. I've included one screenshot, but I ran every script through the validator.
 
-(screenshot of Js pass)
+<details>
+   <summary>JS Pass</summary>
+   
+![](./mtg-forum-assets/js_pass.png)
+</details>
 
-Python
+**Python** <br>
+[Pep8 CI](https://pep8ci.herokuapp.com) was used to validate all *.py files and with the exception of a couple of trailing whitespaces and incorrect spacing, which I then fixed, everything came back clear.
 
-[Pep8 CI](#https://pep8ci.herokuapp.com) was used to validate all *.py files and with the exception of a couple of trailing whitespaces and incorrect spacing, which I then fixed, everything came back clear.
+**Lighthouse** <br>
+DevTools Lighthouse Scores. The big problem with the Best Practices score was the third party cookies, most of which were the cloudinary images, and I'm not sure how to make this any better.
+
+<details>
+   <summary>Lighthouse</summary>
+   
+![](./mtg-forum-assets/lighthouse_scores.png)
+</details>
 
 ## Manual Testing
 
@@ -614,34 +748,88 @@ All these features were manually tested by me and several others, these are the 
 
 | Feature | Expectation | Action | Result |
 | ---------- | ---------- | ------------ | ----------- |
-|Registering an account| | |Working as intended|
-|Logging in| | |Working as intended|
-|Logging out| | |Working as intended|
-|Veiwing profiles| | |Working as intended|
-|Creating a post| | |Working as intended|
-|Posting a comment| | |Working as intended|
-|Posting a reply| | |Working as intended|
-|Liking a post| | |Working as intended|
-|Adding a post to favourites| | |Working as intended|
-|Browsing by category| | |Working as intended|
-|Browsing by popular| | |Working as intended|
-|Searching for content| | |Working as intended|
-|Editing posts| | |Working as intended|
-|Editing Comments| | |Working as intended|
-|Editing profile information| | |Working as intended|
-|Reseting passwords| | |Working as intended|
-|Deleting posts| | |Working as intended|
-|Deleting comments| | |Working as intended|
-|Deleting account| | |Working as intended|
+|Registering an account| Users can submit a form to register an account | I had several people sign up and create accounts, using the "Register" link |Working as intended|
+|Logging in| Users can use their credentials to log in | Myself and several testers checked the functionality using the "Login" link |Working as intended|
+|Logging out| Users can log out to keep their account secure | Myself and several testers checked the functionality using the "Logout" link | Working as intended|
+|Viewing profiles| Clicking on a username or the profile link displays a user profile | Myself and several testers checked the functionality both by clicking on a username and using the "Profile" link |Working as intended|
+|Creating a post| Users can select "New Post" and create a new post | Myself and several testers checked the functionality by using the "New Post" link and posting several new posts |Working as intended|
+|Posting a comment| Users can reply to posts with a "Comment" | Myself and several testers checked the functionality using the "Reply" button on a post |Working as intended|
+|Posting a reply| Users can create nested "Reply" chains by replying to comments | Myself and several testers checked the functionality by replying sometimes three layers deep to make sure it kept working |Working as intended|
+|Liking a post| Users can "Like" a post either on the main page or the detailed view | Myself and several testers checked the functionality using both the "Like" buttons |Working as intended|
+|Adding a post to favourites| Users can click the "Favourite" start button to add a post to a list of their favourites | Myself and several testers checked the functionality, and checked that clicking it again removes it from favourites |Working as intended|
+|Browsing by category| Users can filter posts by category on the categories page | Myself and several testers checked the functionality using the filtered options |Working as intended|
+|Browsing by popular| Users can see a display of the most popular posts for a given time period | Myself and several testers checked the functionality and tested each time period, all displayed correctly |Working as intended|
+|Searching for content| Users can type a string into the search bar to find specific content | Myself and several testers checked the functionality, initially it didn't include the ability to search usernames but I have updated it to include this functionality |Working as intended|
+|Editing posts| Users can click the "Edit" button if they are the author of the post to make changes using an inline form approach | Myself and several testers checked the functionality |Working as intended|
+|Editing Comments| Users can click the "Edit" button if they are the author of the comment/reply to make changes using an inline form approach | Myself and several testers checked the functionality |Working as intended|
+|Editing profile information| Users can edit their profile information to change their full name, username, email and profile picture | Myself and several testers checked the functionality using the "Edit Profile" button on the profile page when logged in |Working as intended|
+|Resetting passwords| Users can reset their password by receiving an email with a reset link | I tested this with a dummy profile |Working as intended|
+|Deleting posts| Users can remove posts if they are the author | Myself and several testers checked the functionality using the "Delete" button, all comments and replies are deleted as part of CASCADE |Working as intended|
+|Deleting comments| Users can remove comments/replies if they are the author | Myself and several testers checked the functionality using the "Delete" button, all comments and replies are deleted as part of CASCADE |Working as intended|
+|Deleting account| Users can delete their account | I tested this with a dummy profile |Working as intended|
 
 While developing this project, I mainly relied on DevTools, Google, ChatGPT and StackOverFlow to help me with troubleshooting and bug fixing.
 
-I have also asked several users to explore the website on different devices including iPhone 14, iPad, Oppo mobile devices, Sony mobile devices and several different PC and Laptop setups to ensure consitency and usability across multiple platforms.
+I have also asked several users to explore the website on different devices including iPhone 14, iPad, Oppo mobile devices, Sony mobile devices and several different PC and Laptop setups to ensure consistency and usability across multiple platforms.
+
+## Responsive UI Testing
+
+I started by using traditional media queries, but quickly realised that I could not have the control I wanted with regard to specific sets of conditions, mainly to have a specific display option for landscape display for better calirty on mobile devices. So to this end, I implemented a class based system to apply different design functionality to the <code>body</code> element combined with js control to ensure a smooth and responsive design.
+
+As the screen width gets smaller the elements all adjust to fit. At the small screen breakpoint of 768px wide, the sidebar hides itself behind the hamburger icon in the top right of the header, and this is the same on mobile devices veiwed in landscape regardless of the screen width for better clarity.
+
+Using a combination of Bootstrap and custom classes, I made sure the design remained responsive on all devices. Below are demostrations of the resosive changes on a Desktop display and then on a tablet, the tablet used to simulate this in DevTools was an iPad Air.
+
+<details>
+   <summary>Responsive Desktop UI</summary>
+   
+![](./mtg-forum-assets/responsive_desktop_ui.gif)
+</details>
+
+<details>
+   <summary>Responsive Tablet UI</summary>
+   
+![](./mtg-forum-assets/tablet_responsive_ui.gif)
+</details>
+
+
+## Browser Compatibility
+I tested the site on several popular browsers to ensure functionality and usablity on each. Here are the results of those tests.
+
+| Browser | Issues | Functionality |
+| ---------- | ---------- | ------------ |
+| Google Chrome | None | Good |
+| Apple Safari | None | Good |
+| Opera GX | None | Good |
+| Mozilla Firefox | None | Good |
+| Microsoft Edge | None | Good |
+
+## User Story Testing
+Below follows a breakdown of each of the user stories and the results of the implementation and testing of each.
+
+| User Story | Acceptance criteria | Criteria Met? | Tested | Notes |
+| ---------- | ---------- | ---------- | ---------- | ---------- |
+| EPIC: User Profile | - | - | - | - |
+| #1 As a user, I want to create an account so that I can post, comment and interact. | - ✅ User can register an account <br> - ✅ User can Login to account | Yes | Yes | - |
+| #2 As a user I want to be able to view a profile page with my information and the ability to see my posted content | - ✅ User can access a profile page <br> - ✅ Users profile page shows listed content created by the user <br> - ✅ User has their own details displayed with certain fields allowing editing | Yes | Yes | - |
+| #3 As a user I want to be able to change certain settings to enable me to customise and enjoy my experience better | - ✅ User can reset password <br> - ✅ User can delete account | Yes | Yes | - |
+| EPIC: Content Interaction | - | - | - | - |
+| #4 As a user I want to be able to create posts so I can share my thoughts in the forum | - ✅ User can login and create post <br> - ❌ Posts and comments should allow for the inclusion of images <br> - ✅ User can see a list of their created posts <br> - ✅ User can select a category for the post | No | Yes | I could not get the picture inclusion functionality to work, so that feature is not included in this version.
+| #5 As a user I want to be able to like and comment on posts so I can express my feelings about the content | - ✅ User can click a like button that tracks the number of total likes <br> - ✅ User can post a comment to reply to any post <br> - ✅ User can post a comment in a nested thread to reply to other comments <br> - ✅ User can tag a post as a favourite | Yes | Yes | - |
+| #6 As a user I want to be able to edit or delete my own content as needed | - ✅ User can edit posts/ comments as needed <br> - ✅ User can delete posts/ comment as needed | Yes | Yes | - |
+| #7 As a user I want to be able to see what posts are popular to enable me to navigate quickly to active posts | - ✅ User can view popular posts <br> - ✅ User can filter by activity in a given time frame (24 hrs / 7 days / 30 days / All Time) | Yes | Yes | - |
+| #8 As a user I want to be able to view the website on a mobile device to enable me to access the site from any device | - ✅ Implement responsive design to allow for multiple screen sizes | Yes | Yes | - |
 
 ## Major Bugs & Errors
-There was only one moment I had a site breaking error. I had my js set up to read my buttons based on the innertext of said button, for example "Reply". This text was always supposed to be considered placeholder, but I didn't make the correct adjustments to the js when I switched the button to display icons instead of text. As such the whole comments system broke into pieces and I spent several hours until I figured out ths issue and made the corrections. After this, everything worked as expected.
+There was only one moment I had a site breaking error. I had my js set up to read my buttons based on the innertext of said button, for example "Reply". This text was always supposed to be considered placeholder, but I didn't make the correct adjustments to the js when I switched the button to display icons instead of text. As such the whole comments system broke into pieces and I spent several hours until I figured out this issue and made the corrections. After this, everything worked as expected.
 
-The other minor bug to work around was the edit button was saving the content as RTF and rendering it with {{ post.content | safe }}. Little did I know at the time because of the way I had implemented my js, the contents of the button would change if any HTML markup characters were used in the edited content, like "". I solved this issue by creating a hidden div to store the content before it was saved and then inject that content into the correct div in the HTML, thus bypassing the buttons interaction with the content dorectly.
+The other minor bug to work around was the edit button was saving the content as RTF and rendering it with {{ post.content | safe }}. Little did I know at the time because of the way I had implemented my js, the contents of the button would change if any HTML markup characters were used in the edited content, like "". I solved this issue by creating a hidden div to store the content before it was saved and then inject that content into the correct div in the HTML, thus bypassing the buttons interaction with the content directly.
 
 # Credits
-I would also like to thank my mentor, Medale Oluwafemi, for his insights and support during this project and my friends Rew and Emma and the Frome MTG club who have helped me with testing and troubleshooting. I would also like to credit ChatGPT for helping me with specific debugging and formatting issues I faced when building this project.
+I would like to thank my mentor, Medale Oluwafemi and my tutor Tom Cowen for their continued insights and support during this project.
+
+MASSIVE thank you to my best friends Rew and Emma for their continued support and belief in me as I've progressed as well as their help testing functionality and features and their valuable feedback, I love you both.
+
+Thanks go to the Frome MTG club who have also helped me with testing and troubleshooting. 
+
+I would also like to credit ChatGPT for helping me with specific debugging and formatting issues I faced when building this project, as well as helping me to refactor redundant code.
