@@ -57,7 +57,7 @@ The database plan I had for this is simple enough. Almost everything is tied to 
    + profile_picture: CloudinaryField, user provided profile picture with a default fallback.
       + post_count: Returns count of posts made by the user
       + comment_count: Returns count of comments made by the user
-      + user_status: Returns the current admn status of the user (Superuser, Staff, Active, Inactive)
+      + user_status: Returns the current admin status of the user (Superuser, Staff, Active, Inactive)
 
 <details>
 <summary>CustomUser model is shown here</summary>
